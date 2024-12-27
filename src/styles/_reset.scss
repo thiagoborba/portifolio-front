@@ -3,7 +3,6 @@
 * {
   box-sizing: border-box;
   font-family: 'Fira Code';
-  background: variables.$primary-deep-blue;
   color: variables.$secoundary-steel-blue;
   margin: 0;
   padding: 0;
@@ -20,4 +19,10 @@ footer,
 header {
   width: 100%;
   height: variables.$height-header;
+}
+
+body {
+  background: url('../Assets/images/Background\ Blurs.png') center no-repeat;
+  background-size: cover;
+  background-color: variables.$primary-deep-blue;
 }

@@ -2,7 +2,6 @@
 
 header {
   display: flex;
-  background-color: black;
 
   @media (max-width: variables.$responsiveMd) {
     justify-content: space-between;
