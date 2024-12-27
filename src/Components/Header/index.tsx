@@ -1,22 +1,21 @@
 import './styles.scss';
 import { HeaderTabs } from '@/Components';
-// import MenuIcon from '@/Assets/Svg/menu-line.svg';
+import { FaHamburger } from 'react-icons/fa';
 
-// // function Button() {
-// //   return (
-// //     <button onClick={() => alert('olá Adão')} className="header-button">
-// //       <MenuIcon />
-// //     </button>
-// //   );
-// // }
-// // }
+function Button() {
+  return (
+    <button className="header-button">
+      <FaHamburger size={25} />
+    </button>
+  );
+}
 
 export function Header() {
   return (
     <header>
       <div className="name-container">
         <span>thiago-borba</span>
-        {/* <Button /> */}
+        <Button />
       </div>
       <HeaderTabs className="header-tabs" />
     </header>
