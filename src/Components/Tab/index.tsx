@@ -1,5 +1,6 @@
 import styles from './styles.module.scss';
 import cn from 'clsx';
+import Link from 'next/link';
 
 interface TabProps {
   label: string;
@@ -9,7 +10,7 @@ interface TabProps {
 
 export function Tab({ label, active, to, ...props }: TabProps) {
   return (
-    <a
+    <Link
       className={cn(styles['link'], {
         [styles['-active']]: active,
       })}
@@ -17,7 +18,7 @@ export function Tab({ label, active, to, ...props }: TabProps) {
       {...props}
     >
       {label}
-    </a>
+    </Link>
   );
 }
 
