@@ -1,0 +1,50 @@
+@use '../../styles/variables';
+
+header {
+  display: flex;
+  background-color: black;
+
+  @media (max-width: variables.$responsiveMd) {
+    justify-content: space-between;
+  }
+}
+
+.header-button {
+  display: none;
+  border: none;
+  border-radius: 50%;
+  height: 3rem;
+  width: 3rem;
+
+  &:active {
+    opacity: 0.5;
+  }
+
+  @media (max-width: variables.$responsiveMd) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.header-tabs {
+  @media (max-width: variables.$responsiveMd) {
+    display: none !important;
+  }
+}
+
+.name-container {
+  display: flex;
+  align-items: center;
+  width: variables.$side-bar-width;
+  align-self: center;
+  padding-left: variables.$base;
+  border: variables.$border;
+  border-top-left-radius: variables.$radius;
+  height: 100%;
+  @media (max-width: variables.$responsiveMd) {
+    flex: 1;
+    justify-content: space-between;
+    border-top-right-radius: variables.$radius;
+  }
+}

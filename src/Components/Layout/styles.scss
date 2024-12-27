@@ -1,0 +1,12 @@
+@use '../../styles/variables';
+
+main {
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - (variables.$height-header * 2));
+}
+
+.outside-container {
+  width: 100vw;
+  height: 100vh;
+}

@@ -1,0 +1,11 @@
+@use '../../styles/variables';
+
+.side-nav {
+  width: variables.$side-bar-width;
+  height: 100%;
+  border-right: variables.$border;
+
+  @media (max-width: variables.$responsiveMd) {
+    display: none !important;
+  }
+}

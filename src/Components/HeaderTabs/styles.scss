@@ -1,0 +1,31 @@
+@use '../../styles/variables';
+
+.header-tabs {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+
+  list-style-type: none;
+  flex: 1;
+
+  div {
+    flex: 1;
+    border-bottom: variables.$border;
+    border-right: variables.$border;
+    border-top: variables.$border;
+  }
+}
+
+#_contact-me {
+  a {
+    border-top-right-radius: variables.$radius;
+  }
+}
+
+a {
+  text-decoration: none; /* no underline */
+}
+
+nav {
+  flex: 1;
+}

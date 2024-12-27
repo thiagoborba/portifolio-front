@@ -1,0 +1,18 @@
+@use 'responsive';
+@use 'colors';
+
+$typography-family-base: 'Fira Code Retina' !important;
+
+$typography-code-snippets: Calc(Number(1rem) - 2);
+$typography-label: 1rem;
+$typography-body-text: 1rem + 2;
+
+$typography-Subheadline-text: 1rem * 2;
+
+$typography-headline-text: (1rem * 4) - 2;
+
+$border: 1px solid colors.$lines;
+
+$radius: calc(1rem / 2);
+
+$base: 1rem;

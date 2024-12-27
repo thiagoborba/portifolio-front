@@ -1,0 +1,25 @@
+@use '../../styles/variables';
+
+.link {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding: 0 calc(variables.$base * 2);
+  user-select: none;
+  font-size: variables.$typography-label;
+  border: none;
+  border-top: variables.$border;
+  border-right: variables.$border;
+  border-bottom: variables.$border;
+  cursor: pointer;
+  height: 100%;
+
+  &:hover {
+    color: #ffffff;
+  }
+
+  &.-active {
+    border-bottom: 3px solid variables.$accent-coral;
+    color: #ffffff;
+  }
+}
