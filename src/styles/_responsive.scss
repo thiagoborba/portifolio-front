@@ -6,3 +6,11 @@ $responsiveXLg: 1366px;
 $side-bar-width: 312px;
 
 $height-header: 4rem;
+
+$z-index-base: 0;
+$z-index-below: -1;
+$z-index-floating: 10;
+$z-index-fixed: 100;
+$z-index-modal: 1000;
+$z-index-overlay: 9999;
+$z-index-critical: 99999;
