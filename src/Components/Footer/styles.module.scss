@@ -1,5 +1,9 @@
+@use '../../styles/variables';
+
 .footer {
   position: absolute;
   bottom: 0;
   left: 0;
+  z-index: variables.$z-index-fixed;
+  border: 1px solid variables.$lines;
 }
