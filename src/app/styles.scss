@@ -8,14 +8,42 @@
   width: 100%;
 
   .esq {
-    background-color: red;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     width: 80%;
     max-width: 600px;
     height: 475px;
+
+    .top {
+      margin-bottom: 5rem;
+
+      .greeting {
+        color: variables.$white;
+        font-size: calc(variables.$typography-label + 2px);
+      }
+
+      .name {
+        font-size: variables.$typography-headline-text * 2;
+        color: variables.$white;
+        font-weight: normal;
+      }
+
+      .job {
+        color: variables.$blue-velvet;
+        font-size: variables.$typography-headline-text;
+      }
+    }
+
+    .bottom {
+      p:nth-child(n) {
+        margin-bottom: 5px;
+      }
+    }
   }
 
   .dir {
-    background-color: green;
     width: 80%;
     max-width: 600px;
     height: 475px;
