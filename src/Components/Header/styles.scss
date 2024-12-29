@@ -1,7 +1,9 @@
 @use '../../styles/variables';
 
 header {
+  position: relative;
   display: flex;
+  z-index: variables.$z-index-fixed;
 
   @media (max-width: variables.$responsiveMd) {
     justify-content: space-between;
