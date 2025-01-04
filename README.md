@@ -11,7 +11,8 @@ Icons: <https://react-icons.github.io/react-icons/>
 - [x] Corrigir botão hamburguer;
 - [x] Corrigir menu de rotas;
 - [x] Adicionar background;
-- [x] Criar responsividade da página \_hello;
+- [+/-] Criar responsividade da página \_hello;
+- [ ] Corrigir botãop hamburguer;
 - [ ] Criar página `/_hello` ;
 - [ ] Criar barra lateral;
 - [ ] Criar transição, efeito abrir barra lateral, menu de rotas;
