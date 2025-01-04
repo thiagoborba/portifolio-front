@@ -7,13 +7,13 @@
   align-items: center;
   width: 100%;
 
+  padding: 100px;
+
   .esq {
     display: flex;
     flex-direction: column;
     justify-content: center;
 
-    width: 80%;
-    max-width: 600px;
     height: 475px;
 
     .top {
@@ -43,14 +43,11 @@
     }
   }
 
-  .dir {
-    width: 80%;
-    max-width: 600px;
-    height: 475px;
-  }
+  @media screen and (max-width: 1215px) {
+    display: grid;
 
-  @media screen and (max-width: variables.$responsiveMd) {
-    display: flex;
-    flex-direction: column;
+    .dir .esq {
+      width: 100%;
+    }
   }
 }
