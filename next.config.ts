@@ -14,6 +14,4 @@ interface WebpackConfig {
   };
 }
 
-module.exports = {};
-
 export default nextConfig;
