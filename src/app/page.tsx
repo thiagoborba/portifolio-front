@@ -3,9 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import './styles.scss';
 
-export default function Page({}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function Page() {
   return (
     <div className="hello-container ">
       <div className="esq">
