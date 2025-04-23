@@ -1,5 +1,5 @@
 import { Header, Footer } from '@/Components';
-import '@/Components/layout/styles.scss';
+import '@/Components/Layout/styles.scss';
 import '@/styles/_reset.scss';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
