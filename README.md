@@ -1,8 +1,10 @@
 # Portifólio DEV
 
-Figma: <https://www.figma.com/file/1OxvH9eMvKQgjZM8f2Xc0b/Portif%C3%B3lio-DEV?node-id=0%3A1>
+figma: <https://www.figma.com/design/Ct2b4iTdOoo5mJcVCvdSd7/Portfolio-for-Developers-Concept-V.2.1--Community-?node-id=26532-1280&p=f&t=Vv8Uv4j9xsLbid0O-0>
 
 Icons: <https://react-icons.github.io/react-icons/>
+
+Deploy Versel: https://vercel.com/kb/guide/deploying-react-with-vercel
 
 ## Tarefas
 
@@ -12,8 +14,10 @@ Icons: <https://react-icons.github.io/react-icons/>
 - [x] Corrigir menu de rotas;
 - [x] Adicionar background;
 - [+/-] Criar responsividade da página \_hello;
-- [ ] Corrigir botãop hamburguer;
+- [ ] Corrigir botão hamburguer;
 - [ ] Criar página `/_hello` ;
 - [ ] Criar barra lateral;
 - [ ] Criar transição, efeito abrir barra lateral, menu de rotas;
 - [ ] Criar footer;
+- [ ] Criar página de contato
+- [ ] Configurar as github actions para deploy com versel
