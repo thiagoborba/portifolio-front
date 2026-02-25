@@ -1,0 +1,31 @@
+.input {
+  box-shadow: 0 0 0 0;
+  outline: 0;
+  background-color: #020618;
+  padding: 12px;
+  border: 1px solid #314158;
+  border-radius: 8px;
+
+  &:focus {
+    border: 1px solid #cad5e2;
+  }
+
+  &[aria-invalid='true'] {
+    border: 1px solid #fb2c36;
+    background-color: rgba(70, 8, 9, 0.3);
+  }
+}
+
+.v-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.gap {
+  gap: 12px;
+}
+
+.error-message {
+  font-size: 14px;
+  color: #fb2c36;
+}
