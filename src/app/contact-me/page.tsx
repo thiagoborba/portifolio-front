@@ -5,7 +5,13 @@ export default function Contact() {
     <div>
       <Input required name="name" label="_name:" errorMessage="" />
       <Input required name="email" label="_email:" errorMessage="" />
-      <Textarea required name="message" label="_message:" errorMessage="" />
+      <Textarea
+        required
+        name="message"
+        placeholder="your message here..."
+        label="_message:"
+        errorMessage=""
+      />
     </div>
   );
 }

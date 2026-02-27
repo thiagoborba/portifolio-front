@@ -18,8 +18,11 @@
     background-repeat: no-repeat;
     background-position: right 8px center;
   }
-}
 
+  &::placeholder {
+    color: inherit;
+  }
+}
 .v-stack {
   display: flex;
   flex-direction: column;
