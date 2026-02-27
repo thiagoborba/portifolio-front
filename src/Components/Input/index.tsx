@@ -6,20 +6,28 @@ type InputProps = {
   errorMessage?: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
-export function Input({ className, ...props }: InputProps) {
+export function Input({
+  className,
+  errorMessage,
+  label,
+  name,
+  ...props
+}: InputProps) {
   return (
     <div className={'v-stack gap'}>
-      {!!props.label && <label htmlFor={props.name}>{props.label}</label>}
+      {!!label && <label htmlFor={name}>{label}</label>}
       <input
-        id={props.name}
-        className={`input ${className ?? ''}`}
-        aria-invalid={!!props.errorMessage}
-        aria-describedby={props.errorMessage ? 'input-error' : undefined}
+        id={name}
+        className={`input icon ${className ?? ''}`}
+        aria-invalid={!!errorMessage}
+        aria-describedby={errorMessage ? 'input-error' : undefined}
+        autoComplete={name}
         {...props}
       />
-      {!!props.errorMessage && (
+
+      {!!errorMessage && (
         <span className="error-message" id="input-error" role="alert">
-          {props.errorMessage}
+          {errorMessage}
         </span>
       )}
     </div>

@@ -26,6 +26,12 @@
 }
 
 .error-message {
-  font-size: 14px;
+  font-size: 0.9rem;
   color: #fb2c36;
+}
+
+.icon {
+  padding-right: 40px;
+  background: url('../../Assets/Svg/Icon-alert.svg') no-repeat;
+  background-position: right 8px center;
 }
