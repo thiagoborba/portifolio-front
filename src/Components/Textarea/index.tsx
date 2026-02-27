@@ -1,33 +1,32 @@
-import './input.scss';
+import '../Input/input.scss';
 
-type InputProps = {
+interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   name: string;
   label?: string;
   errorMessage?: string;
-} & React.InputHTMLAttributes<HTMLInputElement>;
+}
 
-export function Input({
-  className,
-  errorMessage,
+export const Textarea = ({
   label,
   name,
+  errorMessage,
+  className,
   ...props
-}: InputProps) {
+}: TextAreaProps) => {
   return (
     <div className={'v-stack gap'}>
       {!!label && <label htmlFor={name}>{label}</label>}
-      <input
+      <textarea
         id={name}
         className={`input ${className ?? ''}`}
         aria-invalid={!!errorMessage}
         aria-describedby={errorMessage ? 'input-error' : undefined}
         autoComplete={name}
         {...props}
-      />
-
+      ></textarea>
       <span className="error-message" id="input-error" role="alert">
         {errorMessage}
       </span>
     </div>
   );
-}
+};
