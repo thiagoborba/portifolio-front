@@ -3,6 +3,7 @@
   outline: 0;
   background-color: #020618;
   padding: 12px;
+  padding-right: 40px;
   border: 1px solid #314158;
   border-radius: 8px;
 
@@ -13,6 +14,9 @@
   &[aria-invalid='true'] {
     border: 1px solid #fb2c36;
     background-color: rgba(70, 8, 9, 0.3);
+    background-image: url('../../Assets/Svg/Icon-alert.svg');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
   }
 }
 
@@ -22,16 +26,11 @@
 }
 
 .gap {
-  gap: 12px;
+  gap: 0.5rem;
 }
 
 .error-message {
   font-size: 0.9rem;
   color: #fb2c36;
-}
-
-.icon {
-  padding-right: 40px;
-  background: url('../../Assets/Svg/Icon-alert.svg') no-repeat;
-  background-position: right 8px center;
+  height: 1.5rem;
 }
