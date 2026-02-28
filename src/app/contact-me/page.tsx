@@ -1,4 +1,4 @@
-import { Input, Textarea } from '@/Components';
+import { Input, Textarea, Button } from '@/Components';
 
 export default function Contact() {
   return (
@@ -12,6 +12,9 @@ export default function Contact() {
         label="_message:"
         errorMessage=""
       />
+      <Button variant="secondary" type="submit">
+        submit-message
+      </Button>
     </div>
   );
 }

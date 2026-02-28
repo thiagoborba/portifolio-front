@@ -6,3 +6,4 @@ export { HeaderTabs } from '@/Components/HeaderTabs';
 export { Container } from '@/Components/Container';
 export { Input } from '@/Components/Input';
 export { Textarea } from '@/Components/Textarea';
+export { Button } from '@/Components/Button';
