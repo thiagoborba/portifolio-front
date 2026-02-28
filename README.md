@@ -6,6 +6,10 @@ Icons: <https://react-icons.github.io/react-icons/>
 
 Deploy Versel: https://vercel.com/kb/guide/deploying-react-with-vercel
 
+form lib: https://react-hook-form.com/
+
+temporary app link: https://portifolio-front-five.vercel.app/
+
 ## Tarefas
 
 - [x] Copiar arquivos do projeto em react;
