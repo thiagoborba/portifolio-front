@@ -60,7 +60,9 @@ export default function SidebarContact() {
               <ul>
                 {contacts.map(({ value, href }) => (
                   <li key={value}>
-                    <a href={href}>{value}</a>
+                    <a target="_blank" href={href}>
+                      {value}
+                    </a>
                   </li>
                 ))}
               </ul>
