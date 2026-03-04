@@ -1,5 +1,6 @@
 import Sidebar from '@/Components/Sidebar';
 import { Collapse } from '@/Components/Collapse';
+import { SidebarItem } from '../sidebar-item';
 
 type contact = {
   href: string;
@@ -32,7 +33,7 @@ const data: contacts[] = [
     label: 'find-me-also-in',
     contacts: [
       {
-        value: 'Instagram',
+        value: 'instagram',
         type: 'social',
         href: 'https://www.instagram.com/thiagoborbaa/',
       },
@@ -43,7 +44,7 @@ const data: contacts[] = [
       },
       {
         type: 'social',
-        value: 'Linkedin',
+        value: 'linkedin',
         href: 'https://www.linkedin.com/in/thborba/',
       },
     ],
@@ -57,13 +58,14 @@ export default function SidebarContact() {
         {data.map(({ label, contacts }) => {
           return (
             <Collapse key={label} title={label}>
-              <ul>
-                {contacts.map(({ value, href }) => (
-                  <li key={value}>
-                    <a target="_blank" href={href}>
-                      {value}
-                    </a>
-                  </li>
+              <ul className="ul-sidebar">
+                {contacts.map(({ value, href, type }) => (
+                  <SidebarItem
+                    key={value}
+                    type={type}
+                    value={value}
+                    href={href}
+                  />
                 ))}
               </ul>
             </Collapse>

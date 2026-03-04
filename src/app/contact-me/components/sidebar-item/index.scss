@@ -1,0 +1,28 @@
+.li {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+
+  &:hover {
+    svg {
+      fill: #f8fafc;
+    }
+  }
+
+  a {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    border-style: none;
+    background: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    text-align: left;
+  }
+
+  .sidebar-item-icon {
+    margin: 0 1rem;
+  }
+}

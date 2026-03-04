@@ -17,19 +17,31 @@ export const Collapse = ({ children, title }: CollapseProps) => {
     setOpen(!open);
   }
 
-  const collapseClassName = open ? 'collapse -open' : 'collapse';
+  const collapseClassName = open
+    ? 'collapse-content -open'
+    : 'collapse-content';
+
+  const collapseTitleClassName = open
+    ? 'collapse-title -open'
+    : 'collapse-title';
+
+  const collapsecontainerClassName = open
+    ? 'collapse-container -open'
+    : 'collapse-container';
 
   return (
-    <div className={collapseClassName}>
-      <div className="button">
-        {open ? (
-          <RiArrowDownSFill style={{ fill: fill }} />
-        ) : (
-          <RiArrowRightSFill style={{ fill: fill }} />
-        )}
-        <button onClick={tooggleOpen}>{title}</button>
-      </div>
-      {open && <div>{children}</div>}
+    <div className={collapsecontainerClassName}>
+      <button className="collapse-button" onClick={tooggleOpen}>
+        <div className="collapse-icon">
+          {open ? (
+            <RiArrowDownSFill style={{ fill: fill }} />
+          ) : (
+            <RiArrowRightSFill style={{ fill: fill }} />
+          )}
+        </div>
+        <span className={collapseTitleClassName}>{title}</span>
+      </button>
+      {open && <div className={collapseClassName}>{children}</div>}
     </div>
   );
 };
