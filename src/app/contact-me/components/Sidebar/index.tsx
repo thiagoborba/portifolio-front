@@ -53,25 +53,23 @@ const data: contacts[] = [
 
 export default function SidebarContact() {
   return (
-    <div className="h-stack">
-      <Sidebar>
-        {data.map(({ label, contacts }) => {
-          return (
-            <Collapse key={label} title={label}>
-              <ul className="ul-sidebar">
-                {contacts.map(({ value, href, type }) => (
-                  <SidebarItem
-                    key={value}
-                    type={type}
-                    value={value}
-                    href={href}
-                  />
-                ))}
-              </ul>
-            </Collapse>
-          );
-        })}
-      </Sidebar>
-    </div>
+    <Sidebar>
+      {data.map(({ label, contacts }) => {
+        return (
+          <Collapse key={label} title={label}>
+            <ul className="ul-sidebar">
+              {contacts.map(({ value, href, type }) => (
+                <SidebarItem
+                  key={value}
+                  type={type}
+                  value={value}
+                  href={href}
+                />
+              ))}
+            </ul>
+          </Collapse>
+        );
+      })}
+    </Sidebar>
   );
 }
