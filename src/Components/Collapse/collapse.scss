@@ -1,0 +1,42 @@
+@use '../../styles/variables';
+
+.collapse-container {
+  &.-open {
+    border-bottom: 1px solid variables.$lines !important;
+  }
+}
+
+.collapse-content {
+  display: flex;
+
+  li {
+    list-style: none;
+    margin-bottom: 10px;
+
+    :hover {
+      color: #f8fafc;
+    }
+  }
+}
+
+.collapse-button {
+  width: 100%;
+  background-color: transparent;
+  border-style: none;
+  display: flex;
+  cursor: pointer;
+  padding: 12px 28px;
+  border-bottom: 1px solid variables.$lines;
+
+  .collapse-title {
+    margin-left: 16px;
+
+    &.-open {
+      color: #f8fafc;
+    }
+  }
+
+  :hover {
+    color: #f8fafc;
+  }
+}

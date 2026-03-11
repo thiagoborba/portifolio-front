@@ -1,0 +1,33 @@
+.button {
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-style: none;
+
+  &:disabled {
+    background-color: #314158;
+    color: #62748e;
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled) {
+    &.-primary {
+      background-color: #ffb86a;
+      color: #020618;
+
+      &:active {
+        background-color: #ffd6a7;
+      }
+    }
+
+    &.-secondary {
+      background-color: #45556c;
+      color: #f8fafc;
+
+      &:active {
+        background-color: #5c6570;
+      }
+    }
+  }
+}

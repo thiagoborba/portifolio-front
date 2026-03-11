@@ -1,0 +1,7 @@
+@use '../../styles/variables';
+
+.sidebar {
+  width: variables.$side-bar-width;
+  border-right: 1px solid variables.$lines;
+  border-left: 1px solid variables.$lines;
+}
