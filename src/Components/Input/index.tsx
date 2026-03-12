@@ -1,28 +1,24 @@
+import { HTMLProps, Ref, forwardRef } from 'react';
 import './input.scss';
 
-type InputProps = {
-  name: string;
+interface InputProps extends HTMLProps<HTMLInputElement> {
   label?: string;
   errorMessage?: string;
-} & React.InputHTMLAttributes<HTMLInputElement>;
+}
 
-export function Input({
-  className,
-  errorMessage,
-  label,
-  name,
-  ...props
-}: InputProps) {
+const InputRender = (
+  { className, label, errorMessage, ...props }: InputProps,
+  ref: Ref<HTMLInputElement>,
+) => {
   return (
     <div className={'v-stack gap'}>
-      {!!label && <label htmlFor={name}>{label}</label>}
+      {!!label && <label htmlFor={props.name}>{label}</label>}
       <input
-        id={name}
-        className={`input ${className ?? ''}`}
+        {...props}
         aria-invalid={!!errorMessage}
         aria-describedby={errorMessage ? 'input-error' : undefined}
-        autoComplete={name}
-        {...props}
+        ref={ref}
+        className={`input ${className ?? ''}`}
       />
 
       <span className="error-message" id="input-error" role="alert">
@@ -30,4 +26,8 @@ export function Input({
       </span>
     </div>
   );
-}
+};
+
+export const Input = forwardRef(InputRender);
+
+Input.displayName = 'Input';
