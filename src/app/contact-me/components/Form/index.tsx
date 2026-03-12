@@ -1,27 +1,51 @@
 'use client';
 
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Input, Textarea, Button } from '@/Components';
+import { useFormContext } from '../../context/FormContext';
 
-interface Inputs {
+export interface Inputs {
   name: string;
   email: string;
   message: string;
 }
 
 export const ContactForm = () => {
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { values, setValues, setValue } = useFormContext();
+  const { register, handleSubmit } = useForm<Inputs>({
+    defaultValues: values,
+  });
+
+  // Sincroniza valores do contexto com react-hook-form
 
   const onSubmit = (data: Inputs) => {
-    console.log(data, 'asdasd');
+    setValues(data);
+    // Aqui você pode enviar os dados ou fazer outras ações
+    console.log(data, 'dados enviados');
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="esq">
-      <Input {...register('name', { required: true })} label="_name:" />
-      <Input {...register('email', { required: true })} label="_email:" />
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Input
+        {...register('name', {
+          required: true,
+          onChange: (e) => setValue('name', e.target.value),
+        })}
+        label="_name:"
+      />
+      <Input
+        {...register('email', {
+          required: true,
+          onChange: (e) => setValue('email', e.target.value),
+        })}
+        label="_email:"
+      />
       <Textarea
-        {...register('message', { required: true })}
+        {...register('message', {
+          required: true,
+          onChange: (e) => setValue('message', e.target.value),
+        })}
         placeholder="your message here..."
         label="_message:"
       />
