@@ -5,6 +5,7 @@ import '@/styles/_reset.scss';
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <link rel="icon" type="image/svg+xml" href="/favicon.svg"></link>
       <body>
         <div className="outside-container">
           <Header />
