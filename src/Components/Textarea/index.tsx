@@ -1,28 +1,21 @@
+import { forwardRef, HTMLProps, Ref } from 'react';
 import '../Input/input.scss';
-
-interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  name: string;
+interface TextAreaProps extends HTMLProps<HTMLTextAreaElement> {
   label?: string;
   errorMessage?: string;
 }
 
-export const Textarea = ({
-  label,
-  name,
-  errorMessage,
-  className,
-  ...props
-}: TextAreaProps) => {
+const TextareaRender = (
+  { className, errorMessage, label, ...props }: TextAreaProps,
+  ref: Ref<HTMLTextAreaElement>,
+) => {
   return (
     <div className={'v-stack gap'}>
-      {!!label && <label htmlFor={name}>{label}</label>}
+      {!!label && <label htmlFor={props.name}>{label}</label>}
       <textarea
-        id={name}
-        className={`input ${className ?? ''}`}
-        aria-invalid={!!errorMessage}
-        aria-describedby={errorMessage ? 'input-error' : undefined}
-        autoComplete={name}
         {...props}
+        ref={ref}
+        className={`input ${className ?? ''}`}
       ></textarea>
       <span className="error-message" id="input-error" role="alert">
         {errorMessage}
@@ -30,3 +23,7 @@ export const Textarea = ({
     </div>
   );
 };
+
+export const Textarea = forwardRef(TextareaRender);
+
+Textarea.displayName = 'Textarea';
