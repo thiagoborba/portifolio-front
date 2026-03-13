@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import Highlighter from './components/Highlight';
 import ContactForm from './components/Form';
 import { FormProvider } from './context/FormContext';
