@@ -1,17 +1,19 @@
 import React from 'react';
 import ShikiHighlighter from 'react-shiki';
 import { useFormContext } from '../../context/FormContext';
-import { snippetTamplate } from '@/Constants';
+import { snippetTemplate } from '@/Constants';
+import { formatDate } from '@/Utils';
 
 export function Highlighter() {
   const { values } = useFormContext();
 
-  const snippetCode = React.useMemo(() => {
-    return snippetTamplate
+  const snippetCode = () => {
+    return snippetTemplate
       .replace('{{name}}', values.name || '')
       .replace('{{email}}', values.email || '')
-      .replace('{{message}}', values.message || '');
-  }, [values]);
+      .replace('{{message}}', values.message || '')
+      .replace('{{date}}', formatDate(new Date()) || '');
+  };
 
   return (
     <ShikiHighlighter
@@ -21,7 +23,7 @@ export function Highlighter() {
       language="typescript"
       theme="dracula"
     >
-      {snippetCode}
+      {snippetCode()}
     </ShikiHighlighter>
   );
 }

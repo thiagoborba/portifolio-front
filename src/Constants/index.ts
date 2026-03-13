@@ -5,17 +5,17 @@ export const ROUTES = {
   contact: '/contact-me',
 };
 
-export const snippetTamplate = `
-  const button = document.querySelector('#sendBtn');
+export const snippetTemplate = `
+const button = document.querySelector('#sendBtn');
 
-  const message = {
-    name: "{{name}}",
-    email: "{{email}}",
-    message: "{{message}}",
-    date: "Thu 21 Apr"
-  }
+const message = {
+  name: "{{name}}",
+  email: "{{email}}",
+  message: \`{{message}}\`,
+  date: "{{date}}"
+}
 
-  button.addEventListener('click', () => {
-    form.send(message);
-  })
+button.addEventListener('click', () => {
+  form.send(message);
+})
 `;

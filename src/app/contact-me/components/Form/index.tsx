@@ -17,11 +17,8 @@ export const ContactForm = () => {
     defaultValues: values,
   });
 
-  // Sincroniza valores do contexto com react-hook-form
-
   const onSubmit = (data: Inputs) => {
     setValues(data);
-    // Aqui você pode enviar os dados ou fazer outras ações
     console.log(data, 'dados enviados');
   };
 
