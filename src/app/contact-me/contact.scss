@@ -17,21 +17,60 @@
 .contact {
   display: flex;
   height: 100%;
-  width: stretch;
+  width: 100%;
   code {
     white-space: pre-wrap;
   }
 
   .esq {
-    max-width: 632px;
     width: stretch;
     border-right: 1px solid variables.$lines !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    padding: 9rem;
+    form {
+      max-width: 50%;
+    }
   }
 
   .dir {
     width: stretch;
     border-right: 1px solid variables.$lines !important;
+  }
+
+  @media (max-width: 1239px) {
+    flex-direction: column;
+    overflow: scroll;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-right: 1px solid variables.$lines !important;
+
+    .esq {
+      border-bottom: none !important;
+      border-right: none !important;
+
+      form {
+        width: 100%;
+      }
+    }
+
+    .dir {
+      display: none;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .esq {
+      form {
+        max-width: none;
+        width: 100%;
+        padding: 3rem;
+      }
+    }
   }
 }
