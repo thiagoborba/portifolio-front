@@ -1,4 +1,3 @@
-import React from 'react';
 import ShikiHighlighter from 'react-shiki';
 import { useFormContext } from '../../context/FormContext';
 import { snippetTemplate } from '@/Constants';
