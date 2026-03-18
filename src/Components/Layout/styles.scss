@@ -3,10 +3,10 @@
 main {
   display: flex;
   flex-direction: row;
-  height: calc(100vh - (variables.$height-header * 2));
+  height: calc(100dvh - (variables.$height-header * 2));
 }
 
 .outside-container {
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
 }
