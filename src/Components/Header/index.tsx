@@ -1,11 +1,11 @@
 import './styles.scss';
 import { HeaderTabs } from '@/Components';
-import { FaHamburger } from 'react-icons/fa';
+import { RxHamburgerMenu } from 'react-icons/rx';
 
 function Button() {
   return (
     <button className="header-button">
-      <FaHamburger size={25} />
+      <RxHamburgerMenu size={25} />
     </button>
   );
 }
