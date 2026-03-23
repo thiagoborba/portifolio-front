@@ -20,7 +20,9 @@
 }
 
 .collapse-button {
-  width: 100%;
+  width: calc(
+    variables.$side-bar-width - 2px
+  ); // -2px para diminuir a soma das bordas laterais
   background-color: transparent;
   border-style: none;
   display: flex;
