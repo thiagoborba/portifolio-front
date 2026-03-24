@@ -14,7 +14,7 @@ const fill = '#f8fafc';
 export const Collapse = ({
   children,
   title,
-  open: initialOpen,
+  open: initialOpen = true,
 }: CollapseProps) => {
   const [open, setOpen] = useState(initialOpen);
 

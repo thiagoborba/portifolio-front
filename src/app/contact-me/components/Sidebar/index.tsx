@@ -77,7 +77,7 @@ export function SideBarContent({ open }: { open?: boolean }) {
 export default function SidebarContact() {
   return (
     <Sidebar>
-      <SideBarContent />
+      <SideBarContent open={true} />
     </Sidebar>
   );
 }
