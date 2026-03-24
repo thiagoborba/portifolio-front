@@ -41,4 +41,8 @@
   :hover {
     color: #f8fafc;
   }
+
+  @media (max-width: 890px) {
+    width: stretch;
+  }
 }

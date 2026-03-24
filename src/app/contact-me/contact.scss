@@ -1,5 +1,31 @@
 @use '../../styles/variables';
 
+.contact-container {
+  width: 100%;
+
+  @media (max-width: 890px) {
+    overflow: scroll;
+  }
+
+  .decorator-contact {
+    width: stretch;
+    min-height: 42.33px;
+    border-right: 1px solid variables.$lines !important;
+    border-bottom: 1px solid variables.$lines;
+
+    .decorator-content {
+      @media (min-width: 890px) {
+        display: none;
+      }
+    }
+
+    @media (max-width: 890px) {
+      border-left: 1px solid variables.$lines !important;
+      border: none;
+    }
+  }
+}
+
 .h-stack {
   display: flex;
   flex-direction: row;
@@ -17,6 +43,9 @@
 .contact {
   display: flex;
   width: 100%;
+  justify-content: center;
+  height: 100%;
+
   code {
     white-space: pre-wrap;
   }
@@ -28,6 +57,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: stretch;
 
     form {
       width: 70%;
@@ -41,15 +71,13 @@
 
   @media (max-width: 1239px) {
     flex-direction: column;
-    overflow: scroll;
 
     display: flex;
-    justify-content: center;
-    align-items: center;
 
     border-right: 1px solid variables.$lines !important;
 
     .esq {
+      height: stretch;
       border-bottom: none !important;
       border-right: none !important;
     }
@@ -57,6 +85,10 @@
     .dir {
       display: none;
     }
+  }
+
+  @media (max-width: 890px) {
+    border-left: 1px solid variables.$lines !important;
   }
 
   @media (max-width: 500px) {

@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input, Textarea, Button } from '@/Components';
 import { useFormContext } from '../../context/FormContext';
+import './styles.scss';
 
 export interface Inputs {
   name: string;
@@ -60,7 +61,7 @@ export const ContactForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <Input
         {...register('name', {
           required: 'Name is required',
