@@ -20,10 +20,13 @@ $spacing-sm: 0.75rem;
 $spacing-lg: 3rem;
 
 .contact-container {
+  display: flex;
+  flex-direction: column;
   width: 100%;
 
   @media (max-width: $breakpoint-mobile) {
     overflow: auto;
+    display: block;
   }
 
   .decorator-contact {
