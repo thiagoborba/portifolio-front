@@ -1,5 +1,109 @@
 @use '../../styles/variables';
 
+// Breakpoints
+$breakpoint-tablet: 1239px;
+$breakpoint-mobile: 890px;
+$breakpoint-small: 500px;
+
+// Layout dimensions
+$sidebar-width: 312px;
+$form-width: 70%;
+
+// Colors & Borders
+$border-size: 1px;
+$border-color: variables.$lines;
+$border-style: $border-size solid $border-color;
+
+// Spacing
+$spacing-xs: 0.5rem;
+$spacing-sm: 0.75rem;
+$spacing-lg: 3rem;
+
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  @media (max-width: $breakpoint-mobile) {
+    overflow: auto;
+    display: block;
+  }
+
+  .decorator-contact {
+    width: stretch;
+    min-height: 42.33px;
+    border-right: $border-style !important;
+    border-bottom: $border-style;
+
+    .decorator-content {
+      @media (min-width: $breakpoint-mobile) {
+        display: none;
+      }
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+      border-left: $border-style !important;
+      border: none;
+    }
+  }
+
+  .contact {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    height: 100%;
+
+    code {
+      white-space: pre-wrap;
+    }
+
+    .esq {
+      width: stretch;
+      border-right: $border-style !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: stretch;
+
+      form {
+        width: $form-width;
+      }
+
+      @media (max-width: $breakpoint-small) {
+        form {
+          max-width: none;
+          width: 100%;
+          padding: $spacing-lg;
+        }
+      }
+    }
+
+    .dir {
+      width: stretch;
+      border-right: $border-style !important;
+    }
+
+    @media (max-width: $breakpoint-tablet) {
+      flex-direction: column;
+      border-right: $border-style !important;
+
+      .esq {
+        border-bottom: none !important;
+        border-right: none !important;
+      }
+
+      .dir {
+        display: none;
+      }
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+      border-left: $border-style !important;
+    }
+  }
+}
+
 .h-stack {
   display: flex;
   flex-direction: row;
@@ -9,65 +113,7 @@
 .ul-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  width: 312px;
-  padding: 0.75rem 0.75rem;
-}
-
-.contact {
-  display: flex;
-  width: 100%;
-  code {
-    white-space: pre-wrap;
-  }
-
-  .esq {
-    width: stretch;
-    border-right: 1px solid variables.$lines !important;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    form {
-      width: 70%;
-    }
-  }
-
-  .dir {
-    width: stretch;
-    border-right: 1px solid variables.$lines !important;
-  }
-
-  @media (max-width: 1239px) {
-    flex-direction: column;
-    overflow: scroll;
-
-    border-left: 1px solid variables.$lines !important;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    border-right: 1px solid variables.$lines !important;
-
-    .esq {
-      border-bottom: none !important;
-      border-right: none !important;
-    }
-
-    .dir {
-      display: none;
-    }
-  }
-
-  @media (max-width: 500px) {
-    .esq {
-      form {
-        max-width: none;
-        width: 100%;
-        padding: 3rem;
-      }
-    }
-  }
+  gap: $spacing-xs;
+  width: $sidebar-width;
+  padding: $spacing-sm;
 }

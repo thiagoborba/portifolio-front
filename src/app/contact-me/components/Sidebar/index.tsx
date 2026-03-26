@@ -13,7 +13,7 @@ type contacts = {
   contacts: contact[];
 };
 
-const data: contacts[] = [
+export const contactData: contacts[] = [
   {
     label: 'contacts',
     contacts: [
@@ -51,12 +51,12 @@ const data: contacts[] = [
   },
 ];
 
-export default function SidebarContact() {
+export function SideBarContent({ open }: { open?: boolean }) {
   return (
-    <Sidebar>
-      {data.map(({ label, contacts }) => {
+    <>
+      {contactData.map(({ label, contacts }) => {
         return (
-          <Collapse key={label} title={label}>
+          <Collapse open={!!open} key={label} title={label}>
             <ul className="ul-sidebar">
               {contacts.map(({ value, href, type }) => (
                 <SidebarItem
@@ -70,6 +70,14 @@ export default function SidebarContact() {
           </Collapse>
         );
       })}
+    </>
+  );
+}
+
+export default function SidebarContact() {
+  return (
+    <Sidebar>
+      <SideBarContent open={true} />
     </Sidebar>
   );
 }

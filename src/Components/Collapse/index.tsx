@@ -6,12 +6,17 @@ import { RiArrowDownSFill, RiArrowRightSFill } from 'react-icons/ri';
 
 type CollapseProps = {
   title: string;
+  open: boolean;
 } & React.ComponentProps<'div'>;
 
 const fill = '#f8fafc';
 
-export const Collapse = ({ children, title }: CollapseProps) => {
-  const [open, setOpen] = useState(true);
+export const Collapse = ({
+  children,
+  title,
+  open: initialOpen = true,
+}: CollapseProps) => {
+  const [open, setOpen] = useState(initialOpen);
 
   function tooggleOpen() {
     setOpen(!open);

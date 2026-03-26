@@ -1,0 +1,11 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow: hidden;
+  max-height: 700px;
+
+  button {
+    align-self: flex-start;
+  }
+}
