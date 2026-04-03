@@ -1,11 +1,17 @@
-// app/page.tsx
-import React from 'react';
-import Image from 'next/image';
+import { cache } from 'react';
 import './styles.scss';
+import { fetchSnippets } from '@/lib/github';
+import { CodeCarousel } from '@/Components/CodeCarousel';
 
-export default function Page() {
+export const revalidate = 86400;
+
+const getSnippets = cache(fetchSnippets);
+
+export default async function Page() {
+  const snippets = await getSnippets();
+
   return (
-    <div className="hello-container ">
+    <div className="hello-container">
       <div className="esq">
         <div className="top">
           <p className="greeting">Hi all. I am</p>
@@ -14,14 +20,18 @@ export default function Page() {
         </div>
 
         <div className="bottom">
-          <p>{'// complete the game to continue'}</p>
-          <p>{'// you can also see it on my Github page'}</p>
-          <p>const githubLink = “https://github.com/example/url”</p>
+          <p><span className="comment">{'// find my profile on Github:'}</span></p>
+          <p>
+            <span className="keyword">const </span>
+            <span className="variable">githubLink</span>
+            <span className="punctuation"> = </span>
+            <a className="string" href="https://github.com/thiagoborba/" target="_blank" rel="noopener noreferrer">{'"https://github.com/thiagoborba/"'}</a>
+          </p>
         </div>
       </div>
 
       <div className="dir">
-        <Image width={510} height={475} src="/game.png" alt="Thiago Borba" />
+        <CodeCarousel snippets={snippets} />
       </div>
     </div>
   );

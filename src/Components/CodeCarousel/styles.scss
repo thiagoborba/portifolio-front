@@ -1,0 +1,117 @@
+@use '../../styles/colors';
+
+$carousel-width: 510px;
+$carousel-height: 475px;
+$animation-duration: 120s;
+
+.code-carousel {
+  width: $carousel-width;
+  height: $carousel-height;
+  overflow: hidden;
+  position: relative;
+  cursor: grab;
+  user-select: none;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
+
+  &--empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid colors.$lines;
+    border-radius: 8px;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  &__placeholder {
+    color: colors.$secoundary-steel-blue;
+    font-family: 'Fira Code Retina', monospace;
+    font-size: 0.875rem;
+  }
+
+  &__track {
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+
+  &__block {
+    background-color: colors.$primary-midnight;
+    border: 1px solid colors.$lines;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(colors.$blue-velvet, 0.15),
+      0 4px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  &__header {
+    font-family: 'Fira Code Retina', monospace;
+    font-size: 0.7rem;
+    color: colors.$secoundary-steel-blue;
+    padding: 0.5rem 0.875rem;
+    border-bottom: 1px solid colors.$lines;
+    background-color: rgba(colors.$primary-deep-blue, 0.6);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: colors.$blue-velvet;
+      flex-shrink: 0;
+    }
+  }
+
+  &__code {
+    padding: 0.75rem 0.25rem;
+
+    pre {
+      background: transparent !important;
+      margin: 0;
+      padding: 0 0.5rem;
+      font-family: 'Fira Code Retina', monospace;
+      font-size: 0.72rem;
+      line-height: 1.65;
+      white-space: pre;
+    }
+
+    code {
+      font-family: inherit;
+      font-size: inherit;
+    }
+  }
+}
+
+@keyframes carousel-scroll {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
