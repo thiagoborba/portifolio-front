@@ -2,6 +2,7 @@ import { cache } from 'react';
 import './styles.scss';
 import { fetchSnippets } from '@/lib/github';
 import { CodeCarousel } from '@/Components/CodeCarousel';
+import Image from 'next/image';
 
 export const revalidate = 86400;
 
@@ -12,6 +13,15 @@ export default async function Page() {
 
   return (
     <div className="hello-container">
+      <Image
+        width={700}
+        height={700}
+        src="/Group.svg"
+        alt=""
+        className="bg-blob "
+        aria-hidden="true"
+      />
+
       <div className="esq">
         <div className="top">
           <p className="greeting">Hi all. I am</p>
@@ -20,12 +30,21 @@ export default async function Page() {
         </div>
 
         <div className="bottom">
-          <p><span className="comment">{'// find my profile on Github:'}</span></p>
+          <p>
+            <span className="comment">{'// find my profile on Github:'}</span>
+          </p>
           <p>
             <span className="keyword">const </span>
             <span className="variable">githubLink</span>
             <span className="punctuation"> = </span>
-            <a className="string" href="https://github.com/thiagoborba/" target="_blank" rel="noopener noreferrer">{'"https://github.com/thiagoborba/"'}</a>
+            <a
+              className="string"
+              href="https://github.com/thiagoborba/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {'"https://github.com/thiagoborba/"'}
+            </a>
           </p>
         </div>
       </div>

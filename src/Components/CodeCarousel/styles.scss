@@ -60,9 +60,6 @@ $animation-duration: 120s;
     border: 1px solid colors.$lines;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow:
-      0 0 0 1px rgba(colors.$blue-velvet, 0.15),
-      0 4px 24px rgba(0, 0, 0, 0.4);
   }
 
   &__header {

@@ -1,5 +1,12 @@
 @use '../styles/variables';
 
+.bg-blob {
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
 .hello-container {
   display: flex;
   flex-direction: row;
@@ -48,11 +55,11 @@
       }
 
       .keyword {
-        color: variables.$accent-coral;
+        color: #615fff;
       }
 
       .variable {
-        color: variables.$white;
+        color: #00d5be;
       }
 
       .punctuation {
@@ -60,7 +67,7 @@
       }
 
       .string {
-        color: variables.$accent-aqua-serenity;
+        color: #ffa1ad;
       }
     }
   }
