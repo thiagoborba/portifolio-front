@@ -6,6 +6,7 @@ interface TabProps {
   label: string;
   active?: boolean;
   to: string;
+  onClick?: () => void;
 }
 
 export function Tab({ label, active, to, ...props }: TabProps) {

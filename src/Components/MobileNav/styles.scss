@@ -1,0 +1,51 @@
+@use '../../styles/variables';
+
+.mobile-nav {
+  position: fixed;
+  top: variables.$height-header;
+  bottom: variables.$height-header;
+  left: 0;
+  right: 0;
+  z-index: variables.$z-index-fixed;
+  background-color: variables.$primary-deep-blue;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid variables.$lines;
+  border-left: 1px solid variables.$lines;
+
+  &__section {
+    color: variables.$secoundary-steel-blue;
+    font-size: 14px;
+    padding: 1.5rem 1.5rem 0.75rem;
+    border-bottom: 1px solid variables.$lines;
+  }
+
+  &__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      border-bottom: 1px solid variables.$lines;
+
+      a {
+        display: block;
+        width: 100%;
+        padding: 1rem 1.5rem;
+        height: auto;
+        border: none !important;
+        font-size: 14px;
+        color: variables.$secoundary-steel-blue;
+
+        &:hover {
+          color: variables.$white;
+        }
+
+        &.-active {
+          color: variables.$white;
+          border-left: 2px solid variables.$accent-coral !important;
+        }
+      }
+    }
+  }
+}
