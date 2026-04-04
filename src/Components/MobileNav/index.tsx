@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { Tab } from '@/Components/Tab';
 import { ROUTES } from '@/Constants';
@@ -13,6 +14,11 @@ interface MobileNavProps {
 export function MobileNav({ isOpen, onClose }: MobileNavProps) {
   const pathname = usePathname();
 
+  useEffect(() => {
+    if (isOpen) onClose();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
+
   const isHello = pathname === ROUTES.hello;
   const isAbout = pathname === ROUTES.about;
   const isProjects = pathname === ROUTES.projects;
@@ -25,16 +31,16 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
       <span className="mobile-nav__section"># navigate:</span>
       <ul className="mobile-nav__links">
         <li>
-          <Tab active={isHello} to={ROUTES.hello} label="_hello" onClick={onClose} />
+          <Tab active={isHello} to={ROUTES.hello} label="_hello" />
         </li>
         <li>
-          <Tab active={isAbout} to={ROUTES.about} label="_about-me" onClick={onClose} />
+          <Tab active={isAbout} to={ROUTES.about} label="_about-me" />
         </li>
         <li>
-          <Tab active={isProjects} to={ROUTES.projects} label="_projects" onClick={onClose} />
+          <Tab active={isProjects} to={ROUTES.projects} label="_projects" />
         </li>
         <li>
-          <Tab active={isContact} to={ROUTES.contact} label="_contact-me" onClick={onClose} />
+          <Tab active={isContact} to={ROUTES.contact} label="_contact-me" />
         </li>
       </ul>
     </div>
