@@ -2,22 +2,8 @@
 
 $breakpoint-tablet: 1239px;
 $breakpoint-mobile: 890px;
+$breakpoint-small: 670px;
 $border-style: 1px solid variables.$lines;
-$sidebar-width: 312px;
-$spacing-xs: 0.5rem;
-$spacing-sm: 0.75rem;
-
-.ul-sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-xs;
-  width: $sidebar-width;
-  padding: $spacing-sm;
-
-  .li {
-    list-style: none;
-  }
-}
 
 .projects-container {
   display: flex;
@@ -79,14 +65,18 @@ $spacing-sm: 0.75rem;
     grid-template-columns: repeat(2, 1fr);
   }
 
+  @media (max-width: $breakpoint-tablet) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   @media (max-width: $breakpoint-mobile) {
     grid-template-columns: 1fr;
   }
-  gap: 1rem;
-  padding: 1.25rem;
+
+  gap: 3rem;
+  padding: 4rem;
   align-content: start;
   overflow-y: auto;
   flex: 1;
   min-height: 0;
 }
-

@@ -1,10 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import SidebarProjects, { SideBarContent } from './components/Sidebar';
-import { ProjectCard } from '@/Components';
+import {
+  SidebarProjects,
+  SidebarProjectsContent,
+  ProjectCard,
+} from '@/Components';
 import { projects } from './data';
 import { getTech } from '@/lib/tech-icons';
+
+const allTags = Array.from(new Set(projects.flatMap((p) => p.tags)));
 
 export default function Projects() {
   const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
@@ -22,7 +27,11 @@ export default function Projects() {
 
   return (
     <div className="h-stack">
-      <SidebarProjects selected={selectedTechs} onToggle={toggleTech} />
+      <SidebarProjects
+        tags={allTags}
+        selected={selectedTechs}
+        onToggle={toggleTech}
+      />
       <div className="projects-container">
         <div className="decorator-projects">
           <div className="decorator-tabs">
@@ -33,7 +42,12 @@ export default function Projects() {
             ))}
           </div>
           <div className="decorator-content">
-            <SideBarContent open={false} selected={selectedTechs} onToggle={toggleTech} />
+            <SidebarProjectsContent
+              tags={allTags}
+              open={false}
+              selected={selectedTechs}
+              onToggle={toggleTech}
+            />
           </div>
         </div>
         <div className="projects-grid">

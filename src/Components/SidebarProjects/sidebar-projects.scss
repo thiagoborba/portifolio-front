@@ -1,0 +1,13 @@
+@use '../../styles/variables';
+
+.ul-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: variables.$side-bar-width;
+  padding: 0.75rem;
+
+  .li {
+    list-style: none;
+  }
+}

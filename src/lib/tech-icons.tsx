@@ -42,7 +42,7 @@ export const techDictionary: Record<string, TechEntry> = {
   python:     { label: 'Python',      icon: SiPython,      color: '#3776AB' },
   css:        { label: 'CSS',         icon: SiCss,         color: '#1572B6' },
   tailwind:   { label: 'Tailwind',    icon: SiTailwindcss, color: '#06B6D4' },
-  prisma:     { label: 'Prisma',      icon: SiPrisma,      color: '#2D3748' },
+  prisma:     { label: 'Prisma',      icon: SiPrisma,      color: '#94A3B8' },
   postgresql: { label: 'PostgreSQL',  icon: SiPostgresql,  color: '#4169E1' },
   mongodb:    { label: 'MongoDB',     icon: SiMongodb,     color: '#47A248' },
   docker:     { label: 'Docker',      icon: SiDocker,      color: '#2496ED' },

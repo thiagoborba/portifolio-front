@@ -2,6 +2,12 @@
 
 $border-style: 1px solid variables.$lines;
 
+.project-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
 .project-card {
   border: $border-style;
   border-radius: 8px;
@@ -9,12 +15,12 @@ $border-style: 1px solid variables.$lines;
   flex-direction: column;
   overflow: hidden;
   background-color: variables.$primary-dark-navy;
-  height: 200px;
+  height: 310px;
 
   &__image {
     position: relative;
     width: 100%;
-    height: 90px;
+    height: 170px;
     flex-shrink: 0;
     background-color: variables.$primary-midnight;
     border-bottom: $border-style;
@@ -32,13 +38,19 @@ $border-style: 1px solid variables.$lines;
 
     .project-tag {
       font-size: 0.65rem;
-      color: variables.$secoundary-steel-blue;
       background-color: rgba(variables.$primary-dark-navy, 0.85);
       border: 1px solid variables.$lines;
       padding: 0.15rem 0.4rem;
       border-radius: 3px;
       backdrop-filter: blur(2px);
+      display: flex;
+      align-items: center;
     }
+  }
+
+  &__title {
+    color: #f8fafc;
+    font-size: 0.8rem;
   }
 
   &__body {
@@ -48,12 +60,6 @@ $border-style: 1px solid variables.$lines;
     gap: 0.4rem;
     flex: 1;
     overflow: hidden;
-  }
-
-  &__title {
-    color: #f8fafc;
-    font-size: 0.8rem;
-    flex-shrink: 0;
   }
 
   &__description {
