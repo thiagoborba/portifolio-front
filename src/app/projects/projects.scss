@@ -1,0 +1,148 @@
+@use '../../styles/variables';
+
+$breakpoint-tablet: 1239px;
+$breakpoint-mobile: 890px;
+$border-style: 1px solid variables.$lines;
+$sidebar-width: 312px;
+$spacing-xs: 0.5rem;
+$spacing-sm: 0.75rem;
+
+.ul-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  width: $sidebar-width;
+  padding: $spacing-sm;
+
+  .li {
+    list-style: none;
+  }
+}
+
+.projects-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  @media (max-width: $breakpoint-mobile) {
+    overflow: auto;
+    display: block;
+  }
+}
+
+.decorator-projects {
+  width: stretch;
+  min-height: 42.33px;
+  border-right: $border-style;
+  border-bottom: $border-style;
+  display: flex;
+  align-items: center;
+
+  .decorator-tabs {
+    display: flex;
+    height: 100%;
+
+    @media (max-width: $breakpoint-mobile) {
+      display: none;
+    }
+  }
+
+  .decorator-content {
+    width: 100%;
+
+    @media (min-width: $breakpoint-mobile) {
+      display: none;
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    border-left: $border-style;
+    border-bottom: none;
+  }
+}
+
+.decorator-tab {
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  height: 100%;
+  border-right: $border-style;
+  border-bottom: 3px solid variables.$accent-coral;
+  color: #f8fafc;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 2rem;
+  align-content: start;
+
+  @media (max-width: $breakpoint-tablet) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+}
+
+.project-card {
+  border: $border-style;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: variables.$primary-dark-navy;
+
+  &__image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: variables.$primary-midnight;
+    border-bottom: $border-style;
+    flex-shrink: 0;
+  }
+
+  &__body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex: 1;
+  }
+
+  &__title {
+    color: #f8fafc;
+    font-size: 0.9rem;
+  }
+
+  &__description {
+    color: variables.$secoundary-steel-blue;
+    font-size: 0.875rem;
+    flex: 1;
+  }
+
+  &__footer {
+    display: inline-block;
+    text-decoration: none;
+    margin-top: auto;
+  }
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.project-tag {
+  font-size: 0.75rem;
+  color: variables.$secoundary-steel-blue;
+  border: 1px solid variables.$lines;
+  padding: 0.2rem 0.5rem;
+}
+

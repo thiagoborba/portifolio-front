@@ -1,0 +1,53 @@
+@use '../../styles/variables';
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  color: variables.$secoundary-steel-blue;
+  font-size: 0.9rem;
+
+  &:hover {
+    color: #f8fafc;
+
+    .checkbox-input {
+      border-color: #f8fafc;
+    }
+  }
+}
+
+.checkbox-input {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid variables.$lines;
+  background-color: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+
+  &:checked {
+    background-color: variables.$accent-coral;
+    border-color: variables.$accent-coral;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 1px;
+      left: 3px;
+      width: 5px;
+      height: 8px;
+      border: 2px solid #fff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+  }
+}
+
+.checkbox-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
