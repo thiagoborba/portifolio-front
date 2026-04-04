@@ -10,3 +10,5 @@ export { Button } from '@/Components/Button';
 export { CodeCarousel } from '@/Components/CodeCarousel';
 export { MobileNav } from '@/Components/MobileNav';
 export { Checkbox } from '@/Components/Checkbox';
+export { ProjectCard } from '@/Components/ProjectCard';
+export type { ProjectCardProps } from '@/Components/ProjectCard';

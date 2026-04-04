@@ -1,17 +1,21 @@
-import { HTMLProps, Ref, forwardRef } from 'react';
+import React, { HTMLProps, Ref, forwardRef } from 'react';
 import './checkbox.scss';
 
-interface CheckboxProps extends HTMLProps<HTMLInputElement> {
+interface CheckboxProps extends Omit<HTMLProps<HTMLInputElement>, 'prefix'> {
   label?: string;
+  prefix?: React.ReactNode;
+  suffix?: React.ReactNode;
 }
 
 const CheckboxRender = (
-  { label, id, ...props }: CheckboxProps,
+  { label, id, prefix, suffix, ...props }: CheckboxProps,
   ref: Ref<HTMLInputElement>,
 ) => (
   <label className="checkbox-label" htmlFor={id}>
     <input {...props} id={id} ref={ref} type="checkbox" className="checkbox-input" />
+    {prefix}
     {label && <span className="checkbox-text">{label}</span>}
+    {suffix}
   </label>
 );
 

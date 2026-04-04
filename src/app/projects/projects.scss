@@ -22,16 +22,14 @@ $spacing-sm: 0.75rem;
 .projects-container {
   display: flex;
   flex-direction: column;
-  width: 100%;
-
-  @media (max-width: $breakpoint-mobile) {
-    overflow: auto;
-    display: block;
-  }
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .decorator-projects {
-  width: stretch;
+  flex-shrink: 0;
+  width: 100%;
   min-height: 42.33px;
   border-right: $border-style;
   border-bottom: $border-style;
@@ -76,9 +74,6 @@ $spacing-sm: 0.75rem;
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  padding: 2rem;
-  align-content: start;
 
   @media (max-width: $breakpoint-tablet) {
     grid-template-columns: repeat(2, 1fr);
@@ -86,63 +81,12 @@ $spacing-sm: 0.75rem;
 
   @media (max-width: $breakpoint-mobile) {
     grid-template-columns: 1fr;
-    padding: 1rem;
   }
-}
-
-.project-card {
-  border: $border-style;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background-color: variables.$primary-dark-navy;
-
-  &__image {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background-color: variables.$primary-midnight;
-    border-bottom: $border-style;
-    flex-shrink: 0;
-  }
-
-  &__body {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    flex: 1;
-  }
-
-  &__title {
-    color: #f8fafc;
-    font-size: 0.9rem;
-  }
-
-  &__description {
-    color: variables.$secoundary-steel-blue;
-    font-size: 0.875rem;
-    flex: 1;
-  }
-
-  &__footer {
-    display: inline-block;
-    text-decoration: none;
-    margin-top: auto;
-  }
-}
-
-.project-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.project-tag {
-  font-size: 0.75rem;
-  color: variables.$secoundary-steel-blue;
-  border: 1px solid variables.$lines;
-  padding: 0.2rem 0.5rem;
+  gap: 1rem;
+  padding: 1.25rem;
+  align-content: start;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
 }
 
