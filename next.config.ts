@@ -1,5 +1,7 @@
-import type { NextConfig } from 'next';
+import path from 'path';
 
-const nextConfig: NextConfig = {};
-
-export default nextConfig;
+export default module.exports = {
+  turbopack: {
+    root: path.join(__dirname, '..'),
+  },
+};

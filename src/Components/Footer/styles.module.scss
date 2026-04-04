@@ -4,8 +4,87 @@
   position: absolute;
   bottom: 0;
   left: 0;
+  right: 0;
   z-index: variables.$z-index-fixed;
   border: 1px solid variables.$lines;
   border-bottom-left-radius: variables.$radius;
   border-bottom-right-radius: variables.$radius;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+
+  &__left,
+  &__right {
+    display: flex;
+    align-items: stretch;
+  }
+
+  &__left {
+    @media (max-width: 480px) {
+      flex: 1;
+    }
+  }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    color: variables.$secoundary-steel-blue;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  &__left > &__label {
+    padding: 0 16px;
+
+    @media (max-width: 480px) {
+      flex: 1;
+    }
+  }
+
+  &__icons {
+    display: flex;
+    align-items: stretch;
+    border-left: 1px solid variables.$lines;
+    border-right: 1px solid variables.$lines;
+
+    @media (max-width: 480px) {
+      border-right: none;
+    }
+  }
+
+  &__right > &__icons {
+    border-right: none;
+  }
+
+  &__icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 16px;
+    color: variables.$secoundary-steel-blue;
+    transition: color 0.2s;
+
+    & + & {
+      border-left: 1px solid variables.$lines;
+    }
+
+    &:hover {
+      color: variables.$white;
+
+      svg,
+      #github-icon {
+        color: variables.$white;
+        fill: variables.$white;
+      }
+    }
+  }
+
+  &__icon-link &__label {
+    color: inherit;
+
+    @media (max-width: 480px) {
+      display: none;
+    }
+  }
 }

@@ -8,6 +8,11 @@
   padding: 0;
 }
 
+main {
+  border-right: 1px solid variables.$lines;
+  border-left: 1px solid variables.$lines;
+}
+
 @font-face {
   font-family: 'Fira Code Retina';
   src: url('../Assets/Fonts/ttf/FiraCode-Retina.ttf') format('ttf');
