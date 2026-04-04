@@ -1,0 +1,82 @@
+@use '../../styles/variables';
+
+$breakpoint-tablet: 1239px;
+$breakpoint-mobile: 890px;
+$breakpoint-small: 670px;
+$border-style: 1px solid variables.$lines;
+
+.projects-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.decorator-projects {
+  flex-shrink: 0;
+  width: 100%;
+  min-height: 42.33px;
+  border-right: $border-style;
+  border-bottom: $border-style;
+  display: flex;
+  align-items: center;
+
+  .decorator-tabs {
+    display: flex;
+    height: 100%;
+
+    @media (max-width: $breakpoint-mobile) {
+      display: none;
+    }
+  }
+
+  .decorator-content {
+    width: 100%;
+
+    @media (min-width: $breakpoint-mobile) {
+      display: none;
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    border-left: $border-style;
+    border-bottom: none;
+  }
+}
+
+.decorator-tab {
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  height: 100%;
+  border-right: $border-style;
+  border-bottom: 3px solid variables.$accent-coral;
+  color: #f8fafc;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  @media (max-width: $breakpoint-tablet) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    grid-template-columns: 1fr;
+  }
+
+  gap: 3rem;
+  padding: 4rem;
+  align-content: start;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
