@@ -6,7 +6,7 @@ $animation-duration: 120s;
 
 .code-carousel {
   width: $carousel-width;
-  height: $carousel-height;
+  height: 100%;
   overflow: hidden;
   position: relative;
   cursor: grab;
