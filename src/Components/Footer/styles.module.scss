@@ -19,6 +19,12 @@
     align-items: stretch;
   }
 
+  &__left {
+    @media (max-width: 480px) {
+      flex: 1;
+    }
+  }
+
   &__label {
     display: flex;
     align-items: center;
@@ -29,6 +35,10 @@
 
   &__left > &__label {
     padding: 0 16px;
+
+    @media (max-width: 480px) {
+      flex: 1;
+    }
   }
 
   &__icons {
@@ -36,6 +46,10 @@
     align-items: stretch;
     border-left: 1px solid variables.$lines;
     border-right: 1px solid variables.$lines;
+
+    @media (max-width: 480px) {
+      border-right: none;
+    }
   }
 
   &__right > &__icons {
@@ -68,5 +82,9 @@
 
   &__icon-link &__label {
     color: inherit;
+
+    @media (max-width: 480px) {
+      display: none;
+    }
   }
 }

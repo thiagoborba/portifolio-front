@@ -17,7 +17,7 @@ export function Footer() {
             <FaXTwitter size={18} />
           </a>
           <a
-            href="https://linkedin.com/in/thiagoborba"
+            href="https://linkedin.com/in/thborba"
             target="_blank"
             rel="noopener noreferrer"
             className={styles['footer__icon-link']}
