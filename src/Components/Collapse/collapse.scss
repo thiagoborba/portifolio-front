@@ -1,6 +1,10 @@
 @use '../../styles/variables';
 
-.collapse-container {}
+.collapse-container {
+  &.-open {
+    border-bottom: 1px solid variables.$lines !important;
+  }
+}
 
 .collapse-content {
   display: flex;
@@ -16,9 +20,7 @@
 }
 
 .collapse-button {
-  width: calc(
-    variables.$side-bar-width - 2px
-  ); // -2px para diminuir a soma das bordas laterais
+  width: stretch; // -2px para diminuir a soma das bordas laterais
   background-color: transparent;
   border-style: none;
   display: flex;

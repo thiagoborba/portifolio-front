@@ -1,8 +1,7 @@
 @use '../../styles/variables';
 
 .sidebar {
-  width: variables.$side-bar-width;
-  min-width: variables.$side-bar-width;
+  width: variables.$side-bar-width - 1px;
   border-right: 1px solid variables.$lines;
   display: flex;
   flex-direction: column;
