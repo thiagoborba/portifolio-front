@@ -19,11 +19,19 @@ export type Project = {
 };
 
 export async function getSnippets(): Promise<Snippet[]> {
-  const { data } = await client.get<Snippet[]>('/github/snippets');
-  return data;
+  try {
+    const { data } = await client.get<Snippet[]>('/github/snippets');
+    return data;
+  } catch {
+    return [];
+  }
 }
 
 export async function getProjects(): Promise<Project[]> {
-  const { data } = await client.get<Project[]>('/github/projects');
-  return data;
+  try {
+    const { data } = await client.get<Project[]>('/github/projects');
+    return data;
+  } catch {
+    return [];
+  }
 }
