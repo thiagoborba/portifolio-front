@@ -59,24 +59,19 @@ $border-style: 1px solid variables.$lines;
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-
-  @media (max-width: $breakpoint-tablet) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: $breakpoint-tablet) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: $breakpoint-mobile) {
-    grid-template-columns: 1fr;
-  }
-
-  gap: 3rem;
-  padding: 4rem;
-  align-content: start;
+  grid-template-columns: repeat(3, minmax(0, 407px));
+  gap: 2rem;
+  justify-content: center;
+  padding: 3rem 2rem;
   overflow-y: auto;
   flex: 1;
   min-height: 0;
+
+  @media (max-width: $breakpoint-tablet) {
+    grid-template-columns: repeat(2, minmax(0, 407px));
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    grid-template-columns: minmax(0, 407px);
+  }
 }
