@@ -1,7 +1,7 @@
 'use client';
 
 import './styles.scss';
-import type { Snippet } from '@/lib/github';
+import type { Snippet } from '@/api';
 import { useCarouselScroll } from './useCarouselScroll';
 
 type Props = { snippets: Snippet[] };

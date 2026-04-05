@@ -1,6 +1,6 @@
 import { cache } from 'react';
 import './styles.scss';
-import { fetchSnippets } from '@/lib/github';
+import { getSnippets as fetchSnippets } from '@/api';
 import { CodeCarousel } from '@/Components/CodeCarousel';
 import Image from 'next/image';
 

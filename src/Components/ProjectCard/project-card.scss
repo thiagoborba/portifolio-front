@@ -6,21 +6,21 @@ $border-style: 1px solid variables.$lines;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  width: 100%;
 }
 
 .project-card {
   border: $border-style;
-  border-radius: 8px;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   background-color: variables.$primary-dark-navy;
-  height: 310px;
 
   &__image {
     position: relative;
     width: 100%;
-    height: 170px;
+    height: 145px;
     flex-shrink: 0;
     background-color: variables.$primary-midnight;
     border-bottom: $border-style;
@@ -38,8 +38,7 @@ $border-style: 1px solid variables.$lines;
 
     .project-tag {
       font-size: 0.65rem;
-      background-color: rgba(variables.$primary-dark-navy, 0.85);
-      border: 1px solid variables.$lines;
+      background-color: transparent;
       padding: 0.15rem 0.4rem;
       border-radius: 3px;
       backdrop-filter: blur(2px);
@@ -49,24 +48,25 @@ $border-style: 1px solid variables.$lines;
   }
 
   &__title {
-    color: #f8fafc;
-    font-size: 0.8rem;
+    color: variables.$blue-velvet;
+    font-size: 1rem;
+    line-height: 24px;
   }
 
   &__body {
-    padding: 0.75rem;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 1.125rem;
     flex: 1;
     overflow: hidden;
   }
 
   &__description {
     color: variables.$secoundary-steel-blue;
-    font-size: 0.75rem;
+    font-size: 1.125rem;
     flex: 1;
-    line-height: 1.4;
+    line-height: 27px;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;

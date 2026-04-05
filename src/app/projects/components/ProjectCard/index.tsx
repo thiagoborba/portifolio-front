@@ -1,6 +1,13 @@
 import Image from 'next/image';
 import { Button } from '@/Components';
-import { Project } from '../../data';
+type Project = {
+  id: string;
+  title: string;
+  description: string;
+  tags: string[];
+  href?: string;
+  image?: string;
+};
 
 export function ProjectCard({ title, description, tags, href, image }: Project) {
   return (
@@ -19,7 +26,7 @@ export function ProjectCard({ title, description, tags, href, image }: Project) 
         <h3 className="project-card__title">{`// ${title}`}</h3>
         <p className="project-card__description">{description}</p>
         <div className="project-tags">
-          {tags.map((tag) => (
+          {tags.map((tag: string) => (
             <span key={tag} className="project-tag">
               {tag}
             </span>

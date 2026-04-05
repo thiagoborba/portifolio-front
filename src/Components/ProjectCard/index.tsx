@@ -25,7 +25,12 @@ export function ProjectCard({
       <div className="project-card">
         <div className="project-card__image">
           {image && (
-            <Image src={image} alt={title} fill style={{ objectFit: 'cover' }} />
+            <Image
+              src={image}
+              alt={title}
+              fill
+              style={{ objectFit: 'cover' }}
+            />
           )}
           <div className="project-tags">
             {tags.map((tag) => {
@@ -38,7 +43,14 @@ export function ProjectCard({
                   className="project-tag"
                   title={tech?.label ?? tag}
                 >
-                  {Icon ? <Icon size={12} style={{ color: tech?.color, fill: tech?.color }} /> : tag}
+                  {Icon ? (
+                    <Icon
+                      size={20}
+                      style={{ color: tech?.color, fill: tech?.color }}
+                    />
+                  ) : (
+                    tag
+                  )}
                 </span>
               );
             })}
