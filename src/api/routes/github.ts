@@ -9,7 +9,7 @@ export type Snippet = {
 export type Project = {
   id: string;
   name: string;
-  description: string | null;
+  description: string;
   githubUrl: string;
   technologies: string[];
   language: string | null;

@@ -7,6 +7,7 @@ import {
   ProjectCard,
 } from '@/Components';
 import { getTech } from '@/lib/tech-icons';
+import { getProjectImage } from '@/lib/project-images';
 import type { Project } from '@/api';
 
 interface ProjectsViewProps {
@@ -26,7 +27,9 @@ export default function ProjectsView({ projects }: ProjectsViewProps) {
   const filtered =
     selectedTechs.length === 0
       ? projects
-      : projects.filter((p) => p.technologies.some((t) => selectedTechs.includes(t)));
+      : projects.filter((p) =>
+          p.technologies.some((t) => selectedTechs.includes(t)),
+        );
 
   return (
     <div className="h-stack">
@@ -59,9 +62,11 @@ export default function ProjectsView({ projects }: ProjectsViewProps) {
               key={project.id}
               id={project.id}
               title={project.name}
-              description={project.description ?? ''}
+              description={project.description}
               tags={project.technologies}
               href={project.githubUrl}
+              image={getProjectImage(project)}
+              language={project.language}
             />
           ))}
         </div>

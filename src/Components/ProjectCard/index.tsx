@@ -10,6 +10,7 @@ export type ProjectCardProps = {
   tags: string[];
   href?: string;
   image?: string;
+  language?: string | null;
 };
 
 export function ProjectCard({
@@ -29,6 +30,8 @@ export function ProjectCard({
               src={image}
               alt={title}
               fill
+              sizes="(max-width: 890px) 100vw, (max-width: 1239px) 50vw, 407px"
+              unoptimized={image?.startsWith('https://')}
               style={{ objectFit: 'cover' }}
             />
           )}
