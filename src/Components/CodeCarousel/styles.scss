@@ -30,10 +30,9 @@ $animation-duration: 120s;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid colors.$lines;
-    border-radius: 8px;
     mask-image: none;
     -webkit-mask-image: none;
+    border: none;
   }
 
   &__placeholder {
@@ -94,7 +93,7 @@ $animation-duration: 120s;
       font-family: 'Fira Code Retina', monospace;
       font-size: 0.72rem;
       line-height: 1.65;
-      white-space: pre;
+      white-space: pre-wrap;
     }
 
     code {
