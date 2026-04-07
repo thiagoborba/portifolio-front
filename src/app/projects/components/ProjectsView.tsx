@@ -65,6 +65,7 @@ export default function ProjectsView({ projects }: ProjectsViewProps) {
               description={project.description}
               tags={project.technologies}
               href={project.githubUrl}
+              homepage={project.homepage}
               image={getProjectImage(project)}
               language={project.language}
             />

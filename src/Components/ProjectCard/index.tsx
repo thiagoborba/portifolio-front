@@ -9,6 +9,7 @@ export type ProjectCardProps = {
   description: string;
   tags: string[];
   href?: string;
+  homepage?: string | null;
   image?: string;
   language?: string | null;
 };
@@ -18,6 +19,7 @@ export function ProjectCard({
   description,
   tags,
   href,
+  homepage,
   image,
 }: ProjectCardProps) {
   return (
@@ -61,15 +63,19 @@ export function ProjectCard({
         </div>
         <div className="project-card__body">
           <p className="project-card__description">{description}</p>
-          {href && (
-            <a
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="project-card__footer"
-            >
-              <Button variant="secondary">view-project</Button>
-            </a>
+          {(href || homepage) && (
+            <div className="project-card__actions">
+              {href && (
+                <a href={href} target="_blank" rel="noopener noreferrer" className="project-card__footer">
+                  <Button variant="secondary">view-project</Button>
+                </a>
+              )}
+              {homepage && (
+                <a href={homepage} target="_blank" rel="noopener noreferrer" className="project-card__footer">
+                  <Button variant="secondary">open-live</Button>
+                </a>
+              )}
+            </div>
           )}
         </div>
       </div>

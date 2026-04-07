@@ -73,6 +73,12 @@ $border-style: 1px solid #1d293d;
     -webkit-box-orient: vertical;
   }
 
+  &__actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
   &__footer {
     display: inline-block;
     text-decoration: none;
