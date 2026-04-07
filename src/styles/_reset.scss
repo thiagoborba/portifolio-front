@@ -31,3 +31,31 @@ body {
   background-size: cover;
   background-color: variables.$primary-deep-blue;
 }
+
+@media (hover: hover) and (pointer: fine) {
+  ::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+    border-left: 1px solid variables.$lines;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #62748e;
+    border-radius: 0;
+    border: 4px solid variables.$primary-deep-blue;
+    border-left: 1px solid variables.$lines;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #62748e transparent;
+  }
+}
