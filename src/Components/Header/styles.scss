@@ -1,8 +1,8 @@
 @use '../../styles/variables';
 
 header {
-  position: relative;
   display: flex;
+  position: relative;
   z-index: variables.$z-index-fixed;
 
   @media (max-width: variables.$responsiveMd) {
@@ -39,12 +39,12 @@ header {
 .name-container {
   display: flex;
   align-items: center;
-  width: variables.$side-bar-width;
-  align-self: center;
+  width: calc(var(--sidebar-col) + 1px);
   padding-left: 28px;
   border: variables.$border;
   border-top-left-radius: variables.$radius;
   height: 100%;
+
   @media (max-width: variables.$responsiveMd) {
     flex: 1;
     justify-content: space-between;

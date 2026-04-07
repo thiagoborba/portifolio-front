@@ -23,26 +23,13 @@ $spacing-lg: 3rem;
   display: flex;
   flex-direction: column;
   width: 100%;
+  flex: 1;
+  min-height: 0;
 
   @media (max-width: $breakpoint-mobile) {
-    overflow: auto;
     display: block;
-  }
-
-  .decorator-contact {
-    width: stretch;
-    min-height: 42.33px;
-    border-bottom: $border-style;
-
-    .decorator-content {
-      @media (min-width: $breakpoint-mobile) {
-        display: none;
-      }
-    }
-
-    @media (max-width: $breakpoint-mobile) {
-      border: none;
-    }
+    padding-top: 1.5rem;
+    height: auto;
   }
 
   .contact {

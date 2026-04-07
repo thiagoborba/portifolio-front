@@ -12,8 +12,8 @@ $breakpoint-mobile: 890px;
 }
 
 .sidebar {
-  width: variables.$side-bar-width;
-  min-width: variables.$side-bar-width;
+  width: var(--sidebar-col);
+  min-width: var(--sidebar-col);
   flex-shrink: 0;
   border-right: 1px solid variables.$lines;
   display: flex;
