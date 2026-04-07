@@ -8,7 +8,7 @@ export function Footer() {
         <span className={styles['footer__label']}>find me in:</span>
         <div className={styles['footer__icons']}>
           <a
-            href="https://x.com/thiagoborba"
+            href="https://x.com/thborba_"
             target="_blank"
             rel="noopener noreferrer"
             className={styles['footer__icon-link']}
