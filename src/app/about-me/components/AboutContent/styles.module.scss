@@ -1,0 +1,34 @@
+@use '../../../../styles/variables';
+
+.editor {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem 0;
+  border-right: 1px solid variables.$lines;
+}
+
+.line {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0 1rem;
+  line-height: 1.8;
+
+  &:hover {
+    background-color: rgba(variables.$lines, 0.2);
+  }
+}
+
+.lineNumber {
+  color: variables.$secoundary-steel-blue;
+  min-width: 2rem;
+  text-align: right;
+  user-select: none;
+  opacity: 0.5;
+  font-size: 0.875rem;
+}
+
+.lineContent {
+  color: variables.$secoundary-steel-blue;
+  font-size: 0.875rem;
+  white-space: pre;
+}
