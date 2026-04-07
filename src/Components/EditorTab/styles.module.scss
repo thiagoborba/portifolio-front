@@ -1,0 +1,63 @@
+@use '../../styles/variables';
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1rem 0 1.25rem;
+  height: 100%;
+  border-right: 1px solid variables.$lines;
+  border-bottom: 3px solid variables.$accent-coral;
+  color: #f8fafc;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &.dragging {
+    opacity: 0.4;
+  }
+
+  &.dragOver {
+    border-left: 2px solid variables.$accent-coral;
+  }
+
+  &.active {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: variables.$secoundary-steel-blue;
+}
+
+.label {
+  font-family: 'Fira Code Retina', monospace;
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  color: variables.$secoundary-steel-blue;
+  border-radius: 2px;
+  flex-shrink: 0;
+  line-height: 0;
+
+  &:hover {
+    color: #f8fafc;
+    background: rgba(255, 255, 255, 0.1);
+  }
+}

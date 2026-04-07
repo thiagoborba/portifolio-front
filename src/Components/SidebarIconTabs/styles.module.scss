@@ -1,0 +1,32 @@
+@use '../../styles/variables';
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  width: 40px;
+  border-right: 1px solid variables.$lines;
+  flex-shrink: 0;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  background: none;
+  border: none;
+  border-left: 2px solid transparent;
+  cursor: pointer;
+  color: variables.$secoundary-steel-blue;
+  padding: 0;
+
+  &:hover {
+    color: #f8fafc;
+  }
+}
+
+.active {
+  color: #f8fafc;
+  border-left-color: variables.$accent-coral;
+}

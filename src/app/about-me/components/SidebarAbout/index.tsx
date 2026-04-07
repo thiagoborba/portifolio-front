@@ -1,27 +1,27 @@
 'use client';
 
-import Sidebar from '@/Components/Sidebar';
+import { SidebarIconTabs } from '@/Components/SidebarIconTabs';
 import { Collapse } from '@/Components/Collapse';
 import { TreeView } from '@/Components/TreeView';
 import { PersonalTree } from '../PersonalTree';
 import { hobbiesTree, codeTree, type TreeLeaf } from '../../data';
 import { VscAccount, VscHeart, VscCode } from 'react-icons/vsc';
-import type { IconType } from 'react-icons';
+import type { SidebarIconTab } from '@/Components/SidebarIconTabs';
 import styles from './styles.module.scss';
 
 type Tab = 'personal' | 'hobbies' | 'code';
 
-interface SidebarAboutProps {
+export interface SidebarAboutProps {
   activeTab: Tab;
   onTabChange: (tab: Tab) => void;
   selectedId: string | null;
   onFileSelect: (file: TreeLeaf) => void;
 }
 
-const tabs: { id: Tab; icon: IconType }[] = [
-  { id: 'personal', icon: VscAccount },
-  { id: 'hobbies', icon: VscHeart },
-  { id: 'code', icon: VscCode },
+const iconTabs: SidebarIconTab[] = [
+  { id: 'personal', icon: VscAccount, title: 'personal' },
+  { id: 'hobbies', icon: VscHeart, title: 'hobbies' },
+  { id: 'code', icon: VscCode, title: 'code' },
 ];
 
 export function SidebarAbout({
@@ -31,47 +31,37 @@ export function SidebarAbout({
   onFileSelect,
 }: SidebarAboutProps) {
   return (
-    <Sidebar>
-      <div className={styles.wrapper}>
-        <div className={styles.tabs}>
-          {tabs.map(({ id, icon: Icon }) => (
-            <button
-              key={id}
-              className={`${styles.tab} ${activeTab === id ? styles.active : ''}`}
-              onClick={() => onTabChange(id)}
-              title={id}
-            >
-              <Icon size={20} />
-            </button>
-          ))}
-        </div>
+    <div className={styles.wrapper}>
+      <SidebarIconTabs
+        tabs={iconTabs}
+        activeTab={activeTab}
+        onTabChange={(id) => onTabChange(id as Tab)}
+      />
+      <div className={styles.content}>
+        {activeTab === 'personal' && (
+          <PersonalTree selectedId={selectedId} onFileSelect={onFileSelect} />
+        )}
 
-        <div className={styles.content}>
-          {activeTab === 'personal' && (
-            <PersonalTree selectedId={selectedId} onFileSelect={onFileSelect} />
-          )}
+        {activeTab === 'hobbies' && (
+          <Collapse title="hobbies" open={true}>
+            <TreeView
+              data={hobbiesTree[0].children}
+              selectedId={selectedId}
+              onFileSelect={onFileSelect}
+            />
+          </Collapse>
+        )}
 
-          {activeTab === 'hobbies' && (
-            <Collapse title="hobbies" open={true}>
-              <TreeView
-                data={hobbiesTree[0].children}
-                selectedId={selectedId}
-                onFileSelect={onFileSelect}
-              />
-            </Collapse>
-          )}
-
-          {activeTab === 'code' && (
-            <Collapse title="code-snippets" open={true}>
-              <TreeView
-                data={codeTree[0].children}
-                selectedId={selectedId}
-                onFileSelect={onFileSelect}
-              />
-            </Collapse>
-          )}
-        </div>
+        {activeTab === 'code' && (
+          <Collapse title="code-snippets" open={true}>
+            <TreeView
+              data={codeTree[0].children}
+              selectedId={selectedId}
+              onFileSelect={onFileSelect}
+            />
+          </Collapse>
+        )}
       </div>
-    </Sidebar>
+    </div>
   );
 }

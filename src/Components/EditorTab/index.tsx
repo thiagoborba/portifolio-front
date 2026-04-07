@@ -1,0 +1,72 @@
+'use client';
+
+import { VscClose } from 'react-icons/vsc';
+import styles from './styles.module.scss';
+
+export interface EditorTabProps {
+  label: string;
+  icon?: React.ReactNode;
+  isActive?: boolean;
+  onClose: () => void;
+  onClick?: () => void;
+  isDragging?: boolean;
+  isDragOver?: boolean;
+  onDragStart?: React.DragEventHandler<HTMLDivElement>;
+  onDragEnter?: React.DragEventHandler<HTMLDivElement>;
+  onDragOver?: React.DragEventHandler<HTMLDivElement>;
+  onDrop?: React.DragEventHandler<HTMLDivElement>;
+  onDragEnd?: React.DragEventHandler<HTMLDivElement>;
+}
+
+export function EditorTab({
+  label,
+  icon,
+  isActive = false,
+  onClose,
+  onClick,
+  isDragging = false,
+  isDragOver = false,
+  onDragStart,
+  onDragEnter,
+  onDragOver,
+  onDrop,
+  onDragEnd,
+}: EditorTabProps) {
+  const classNames = [
+    styles.tab,
+    isActive ? styles.active : '',
+    isDragging ? styles.dragging : '',
+    isDragOver ? styles.dragOver : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  const hasDragHandlers = Boolean(onDragStart);
+
+  return (
+    <div
+      className={classNames}
+      draggable={hasDragHandlers}
+      onClick={onClick}
+      onDragStart={onDragStart}
+      onDragEnter={onDragEnter}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+      onDragEnd={onDragEnd}
+    >
+      {icon && <span className={styles.icon}>{icon}</span>}
+      <span className={styles.label}>{label}</span>
+      <button
+        className={styles.closeButton}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
+        aria-label={`Fechar aba ${label}`}
+        type="button"
+      >
+        <VscClose size={14} />
+      </button>
+    </div>
+  );
+}

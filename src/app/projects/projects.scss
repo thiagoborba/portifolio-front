@@ -3,57 +3,6 @@
 $breakpoint-tablet: 1239px;
 $breakpoint-mobile: 890px;
 $breakpoint-small: 670px;
-$border-style: 1px solid variables.$lines;
-
-.projects-container {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-}
-
-.decorator-projects {
-  flex-shrink: 0;
-  width: 100%;
-  min-height: 42.33px;
-  border-bottom: $border-style;
-  display: flex;
-  align-items: center;
-
-  .decorator-tabs {
-    display: flex;
-    height: 100%;
-
-    @media (max-width: $breakpoint-mobile) {
-      display: none;
-    }
-  }
-
-  .decorator-content {
-    width: 100%;
-
-    @media (min-width: $breakpoint-mobile) {
-      display: none;
-    }
-  }
-
-  @media (max-width: $breakpoint-mobile) {
-    border-bottom: none;
-  }
-}
-
-.decorator-tab {
-  display: flex;
-  align-items: center;
-  padding: 0 1.5rem;
-  height: 100%;
-  border-right: $border-style;
-  border-bottom: 3px solid variables.$accent-coral;
-  color: #f8fafc;
-  font-size: 0.9rem;
-  white-space: nowrap;
-}
 
 .projects-grid {
   display: grid;

@@ -1,0 +1,31 @@
+@use '../../styles/variables';
+
+.bar {
+  display: flex;
+  flex-direction: row;
+  height: 42px;
+  min-height: 42px;
+  border-bottom: 1px solid variables.$lines;
+  flex-shrink: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.spacer {
+  flex: 1;
+  min-width: 0;
+  border-bottom: 1px solid variables.$lines;
+  margin-bottom: -1px;
+  align-self: flex-end;
+  height: 100%;
+}
+
+@media (max-width: 890px) {
+  .bar {
+    display: none;
+  }
+}
