@@ -17,7 +17,6 @@ $border-style: 1px solid variables.$lines;
   flex-shrink: 0;
   width: 100%;
   min-height: 42.33px;
-  border-right: $border-style;
   border-bottom: $border-style;
   display: flex;
   align-items: center;
@@ -40,7 +39,6 @@ $border-style: 1px solid variables.$lines;
   }
 
   @media (max-width: $breakpoint-mobile) {
-    border-left: $border-style;
     border-bottom: none;
   }
 }

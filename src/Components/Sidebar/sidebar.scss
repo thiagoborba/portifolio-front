@@ -2,6 +2,8 @@
 
 .sidebar {
   width: variables.$side-bar-width - 1px;
+  min-width: variables.$side-bar-width - 1px;
+  flex-shrink: 0;
   border-right: 1px solid variables.$lines;
   display: flex;
   flex-direction: column;

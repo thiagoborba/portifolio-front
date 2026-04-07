@@ -32,7 +32,6 @@ $spacing-lg: 3rem;
   .decorator-contact {
     width: stretch;
     min-height: 42.33px;
-    border-right: $border-style !important;
     border-bottom: $border-style;
 
     .decorator-content {
@@ -42,7 +41,6 @@ $spacing-lg: 3rem;
     }
 
     @media (max-width: $breakpoint-mobile) {
-      border-left: $border-style !important;
       border: none;
     }
   }
@@ -81,12 +79,10 @@ $spacing-lg: 3rem;
 
     .dir {
       width: stretch;
-      border-right: $border-style !important;
     }
 
     @media (max-width: $breakpoint-tablet) {
       flex-direction: column;
-      border-right: $border-style !important;
 
       .esq {
         border-bottom: none !important;
@@ -99,7 +95,7 @@ $spacing-lg: 3rem;
     }
 
     @media (max-width: $breakpoint-mobile) {
-      border-left: $border-style !important;
+      border-left: none;
     }
   }
 }
