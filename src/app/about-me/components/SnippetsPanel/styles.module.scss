@@ -1,0 +1,85 @@
+@use '../../../../styles/colors';
+@use '../../../../styles/variables';
+
+.panel {
+  width: 510px;
+  min-width: 510px;
+  height: 100%;
+  overflow-y: auto;
+  border-left: 1px solid variables.$lines;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem 1rem;
+
+  @media (max-width: 1239px) {
+    display: none;
+  }
+}
+
+.empty {
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder {
+  color: variables.$secoundary-steel-blue;
+  font-family: 'Fira Code Retina', monospace;
+  font-size: 0.875rem;
+}
+
+.card {
+  background-color: colors.$primary-midnight;
+  border: 1px solid variables.$lines;
+  overflow: hidden;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid variables.$lines;
+  font-size: 0.8rem;
+}
+
+.username {
+  color: variables.$secoundary-steel-blue;
+  flex: 1;
+
+  span {
+    color: colors.$accent-aqua-serenity;
+  }
+}
+
+.details {
+  background: transparent;
+  border: 1px solid variables.$lines;
+  color: variables.$secoundary-steel-blue;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  font-family: 'Fira Code Retina';
+
+  &:hover {
+    color: #f8fafc;
+  }
+}
+
+.stars {
+  color: variables.$secoundary-steel-blue;
+  font-size: 0.75rem;
+}
+
+.code {
+  padding: 0.75rem 0.5rem;
+
+  pre {
+    background: transparent !important;
+    margin: 0;
+    font-family: 'Fira Code Retina', monospace;
+    font-size: 0.72rem;
+    line-height: 1.65;
+    white-space: pre-wrap;
+  }
+}

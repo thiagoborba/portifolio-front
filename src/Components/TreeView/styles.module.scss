@@ -1,0 +1,75 @@
+@use '../../styles/variables';
+
+.root {
+  padding: 0.5rem 0;
+}
+
+.nodeButton {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: 100%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  padding-right: 0.5rem;
+  font-family: 'Fira Code Retina', monospace;
+  font-size: 0.875rem;
+  color: variables.$secoundary-steel-blue;
+
+  &:hover {
+    color: #f8fafc;
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+.chevron {
+  color: #f8fafc;
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+.icon {
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+.nodeLabel {
+  color: #f8fafc;
+  white-space: nowrap;
+}
+
+.leaf {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  padding-right: 0.5rem;
+  font-size: 0.875rem;
+  font-family: 'Fira Code Retina', monospace;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+
+  &:hover .leafLabel {
+    color: #f8fafc;
+  }
+
+  &.selected {
+    background: rgba(255, 255, 255, 0.06);
+
+    .leafLabel {
+      color: #f8fafc;
+    }
+  }
+}
+
+.leafLabel {
+  color: variables.$secoundary-steel-blue;
+  white-space: nowrap;
+}

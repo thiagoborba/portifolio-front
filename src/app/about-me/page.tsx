@@ -1,3 +1,5 @@
-export default function About() {
-  return <div>About</div>;
+import AboutView from './components/AboutView';
+
+export default function AboutPage() {
+  return <AboutView />;
 }

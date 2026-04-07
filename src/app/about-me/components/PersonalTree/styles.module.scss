@@ -1,0 +1,33 @@
+@use '../../../../styles/variables';
+@use '../../../../styles/colors';
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  list-style: none;
+  margin: 0;
+}
+
+.leaf {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  font-family: 'Fira Code Retina', monospace;
+}
+
+.fileIcon {
+  color: variables.$secoundary-steel-blue;
+  flex-shrink: 0;
+}
+
+.leafLabel {
+  color: variables.$secoundary-steel-blue;
+}
+
+.leafValue {
+  color: colors.$accent-aqua-serenity;
+}
