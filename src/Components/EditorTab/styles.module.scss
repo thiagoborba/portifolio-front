@@ -1,6 +1,7 @@
 @use '../../styles/variables';
 
 .tab {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -22,14 +23,36 @@
     opacity: 0.4;
   }
 
-  &.dragOver {
-    border-left: 2px solid variables.$accent-coral;
-  }
-
   &.active {
     background: rgba(255, 255, 255, 0.05);
     border-bottom: 3px solid variables.$accent-coral;
     margin-bottom: -1px;
+  }
+
+  &.dropBefore {
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 4px;
+      bottom: 4px;
+      width: 2px;
+      background: variables.$accent-coral;
+      border-radius: 1px;
+    }
+  }
+
+  &.dropAfter {
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 4px;
+      bottom: 4px;
+      width: 2px;
+      background: variables.$accent-coral;
+      border-radius: 1px;
+    }
   }
 }
 

@@ -1,11 +1,11 @@
 'use client';
 
-import { useRef, useState } from 'react';
 import { EditorLayout } from '@/Components/EditorLayout';
 import { EditorTabBar } from '@/Components/EditorTabBar';
 import { EditorTab } from '@/Components/EditorTab';
 import { SidebarProjectsContent, ProjectCard } from '@/Components';
 import { useEditorTabs } from '@/contexts/EditorTabsContext';
+import { useTabDrag } from '@/hooks/useTabDrag';
 import { getTech } from '@/lib/tech-icons';
 import { getProjectImage } from '@/lib/project-images';
 import type { Project } from '@/api';
@@ -17,14 +17,11 @@ interface ProjectsViewProps {
 }
 
 export default function ProjectsView({ projects }: ProjectsViewProps) {
-  const { tabs, openTab, closeTab, reorderTabs } = useEditorTabs();
+  const { openTab, closeTab } = useEditorTabs();
   const allTags = Array.from(new Set(projects.flatMap((p) => p.technologies)));
 
-  const pageTabs = tabs[PATH] ?? [];
-  const selectedTechs = pageTabs.map((t) => t.id);
-
-  const dragSourceIndex = useRef<number | null>(null);
-  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+  const drag = useTabDrag(PATH);
+  const selectedTechs = drag.pageTabs.map((t) => t.id);
 
   function toggleTech(tag: string) {
     if (selectedTechs.includes(tag)) {
@@ -33,38 +30,6 @@ export default function ProjectsView({ projects }: ProjectsViewProps) {
       const tech = getTech(tag);
       openTab(PATH, { id: tag, label: tech?.label ?? tag, iconKey: tag });
     }
-  }
-
-  function handleDragStart(index: number) {
-    dragSourceIndex.current = index;
-  }
-
-  function handleDragEnter(index: number) {
-    setDragOverIndex(index);
-  }
-
-  function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
-    e.preventDefault();
-  }
-
-  function handleDrop(targetIndex: number) {
-    const sourceIndex = dragSourceIndex.current;
-    if (sourceIndex === null || sourceIndex === targetIndex) {
-      setDragOverIndex(null);
-      dragSourceIndex.current = null;
-      return;
-    }
-    const next = [...pageTabs];
-    const [moved] = next.splice(sourceIndex, 1);
-    next.splice(targetIndex, 0, moved);
-    reorderTabs(PATH, next);
-    dragSourceIndex.current = null;
-    setDragOverIndex(null);
-  }
-
-  function handleDragEnd() {
-    dragSourceIndex.current = null;
-    setDragOverIndex(null);
   }
 
   const filtered =
@@ -85,8 +50,11 @@ export default function ProjectsView({ projects }: ProjectsViewProps) {
         />
       }
       tabBar={
-        <EditorTabBar>
-          {pageTabs.map((tab, index) => {
+        <EditorTabBar
+          onSpacerDragOver={drag.handleSpacerDragOver}
+          onSpacerDrop={drag.handleSpacerDrop}
+        >
+          {drag.pageTabs.map((tab, index) => {
             const tech = tab.iconKey ? getTech(tab.iconKey) : undefined;
             const Icon = tech?.icon;
             return (
@@ -98,14 +66,18 @@ export default function ProjectsView({ projects }: ProjectsViewProps) {
                     <Icon size={14} color={tech?.color} aria-hidden="true" />
                   ) : undefined
                 }
+                isDragging={drag.draggingTabId === tab.id}
+                dropIndicator={
+                  drag.dropIndicatorIndex === index
+                    ? drag.dropIndicatorSide ?? undefined
+                    : undefined
+                }
                 onClose={() => closeTab(PATH, tab.id)}
-                isDragging={dragSourceIndex.current === index}
-                isDragOver={dragOverIndex === index}
-                onDragStart={() => handleDragStart(index)}
-                onDragEnter={() => handleDragEnter(index)}
-                onDragOver={handleDragOver}
-                onDrop={() => handleDrop(index)}
-                onDragEnd={handleDragEnd}
+                onDragStart={(e) => drag.handleDragStart(e, index)}
+                onDragEnter={() => drag.handleDragEnter(index)}
+                onDragOver={(e) => drag.handleDragOver(e, index)}
+                onDrop={(e) => drag.handleDrop(e, index)}
+                onDragEnd={drag.handleDragEnd}
               />
             );
           })}

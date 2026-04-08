@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { VscFile } from 'react-icons/vsc';
 import { SidebarAbout } from '../SidebarAbout';
 import { AboutContent } from '../AboutContent';
@@ -11,6 +11,7 @@ import { EditorTab } from '@/Components/EditorTab';
 import { Collapse } from '@/Components/Collapse';
 import { TreeView } from '@/Components/TreeView';
 import { useEditorTabs } from '@/contexts/EditorTabsContext';
+import { useTabDrag } from '@/hooks/useTabDrag';
 import {
   personalTree,
   hobbiesTree,
@@ -20,91 +21,134 @@ import {
 } from '../../data';
 
 const PATH = '/about-me';
+const SPLIT_PATH = '/about-me__split';
 
 type SidebarTab = 'personal' | 'hobbies' | 'code';
 
+type SplitState = {
+  side: 'left' | 'right';
+};
+
 export default function AboutView() {
-  const { tabs, activeTabIds, openTab, closeTab, reorderTabs, setActiveTab } = useEditorTabs();
+  const { openTab, closeTab, setActiveTab } = useEditorTabs();
   const [activeSidebarTab, setActiveSidebarTab] = useState<SidebarTab>('personal');
+  const [split, setSplit] = useState<SplitState | null>(null);
 
-  const dragSourceIndex = useRef<number | null>(null);
-  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
-
-  const pageTabs = tabs[PATH] ?? [];
-  const activeTabId = activeTabIds[PATH] ?? null;
+  const primary = useTabDrag(PATH);
+  const splitPane = useTabDrag(SPLIT_PATH);
 
   const allLeaves = getAllLeaves([...personalTree, ...hobbiesTree, ...codeTree]);
-  const selectedFile = activeTabId ? (allLeaves.find((l) => l.id === activeTabId) ?? null) : null;
+
+  // Collapse split when the split pane has no more tabs
+  useEffect(() => {
+    if (split && splitPane.pageTabs.length === 0) {
+      setSplit(null);
+    }
+  }, [split, splitPane.pageTabs.length]);
+
+  function getContent(activeTabId: string | null) {
+    const file = activeTabId ? (allLeaves.find((l) => l.id === activeTabId) ?? null) : null;
+    return <AboutContent lines={file?.content ?? []} />;
+  }
 
   function handleFileSelect(file: TreeLeaf) {
     openTab(PATH, { id: file.id, label: file.label });
     setActiveTab(PATH, file.id);
   }
 
-  function handleTabClick(tabId: string) {
-    setActiveTab(PATH, tabId);
-  }
-
-  function handleCloseTab(tabId: string) {
-    closeTab(PATH, tabId);
-    if (activeTabId === tabId) {
-      const remaining = pageTabs.filter((t) => t.id !== tabId);
-      const next = remaining.length > 0 ? remaining[remaining.length - 1].id : null;
-      setActiveTab(PATH, next);
+  function handleSplitDrop(tabId: string, tabData: string, side: 'left' | 'right') {
+    if (primary.pageTabs.length <= 1) return;
+    primary.resetDragState();
+    try {
+      const tab = JSON.parse(tabData);
+      openTab(SPLIT_PATH, tab);
+      setActiveTab(SPLIT_PATH, tab.id);
+      closeTab(PATH, tabId);
+      setSplit({ side });
+    } catch {
+      // malformed tabData — ignore
     }
-  }
-
-  function handleDragStart(index: number) {
-    dragSourceIndex.current = index;
-  }
-
-  function handleDragEnter(index: number) {
-    setDragOverIndex(index);
-  }
-
-  function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
-    e.preventDefault();
-  }
-
-  function handleDrop(targetIndex: number) {
-    const sourceIndex = dragSourceIndex.current;
-    if (sourceIndex === null || sourceIndex === targetIndex) {
-      setDragOverIndex(null);
-      dragSourceIndex.current = null;
-      return;
-    }
-    const next = [...pageTabs];
-    const [moved] = next.splice(sourceIndex, 1);
-    next.splice(targetIndex, 0, moved);
-    reorderTabs(PATH, next);
-    dragSourceIndex.current = null;
-    setDragOverIndex(null);
-  }
-
-  function handleDragEnd() {
-    dragSourceIndex.current = null;
-    setDragOverIndex(null);
   }
 
   const mobileSidebarContent = (
     <>
-      <PersonalTree selectedId={activeTabId} onFileSelect={handleFileSelect} />
+      <PersonalTree selectedId={primary.activeTabId} onFileSelect={handleFileSelect} />
       <Collapse title="hobbies" open={false}>
         <TreeView
           data={hobbiesTree[0].children}
-          selectedId={activeTabId}
+          selectedId={primary.activeTabId}
           onFileSelect={handleFileSelect}
         />
       </Collapse>
       <Collapse title="code-snippets" open={false}>
         <TreeView
           data={codeTree[0].children}
-          selectedId={activeTabId}
+          selectedId={primary.activeTabId}
           onFileSelect={handleFileSelect}
         />
       </Collapse>
     </>
   );
+
+  const primaryTabBar = (
+    <EditorTabBar
+      onSpacerDragOver={primary.handleSpacerDragOver}
+      onSpacerDrop={primary.handleSpacerDrop}
+      isReceiving={split !== null && splitPane.draggingTabId !== null}
+    >
+      {primary.pageTabs.map((tab, index) => (
+        <EditorTab
+          key={tab.id}
+          label={tab.label}
+          icon={<VscFile size={14} />}
+          isActive={primary.activeTabId === tab.id}
+          isDragging={primary.draggingTabId === tab.id}
+          dropIndicator={
+            primary.dropIndicatorIndex === index
+              ? primary.dropIndicatorSide ?? undefined
+              : undefined
+          }
+          onClose={() => primary.handleCloseTab(tab.id)}
+          onClick={() => primary.handleTabClick(tab.id)}
+          onDragStart={(e) => primary.handleDragStart(e, index)}
+          onDragEnter={() => primary.handleDragEnter(index)}
+          onDragOver={(e) => primary.handleDragOver(e, index)}
+          onDrop={(e) => primary.handleDrop(e, index)}
+          onDragEnd={primary.handleDragEnd}
+        />
+      ))}
+    </EditorTabBar>
+  );
+
+  const splitTabBar = split ? (
+    <EditorTabBar
+      onSpacerDragOver={splitPane.handleSpacerDragOver}
+      onSpacerDrop={splitPane.handleSpacerDrop}
+      isReceiving={primary.draggingTabId !== null}
+    >
+      {splitPane.pageTabs.map((tab, index) => (
+        <EditorTab
+          key={tab.id}
+          label={tab.label}
+          icon={<VscFile size={14} />}
+          isActive={splitPane.activeTabId === tab.id}
+          isDragging={splitPane.draggingTabId === tab.id}
+          dropIndicator={
+            splitPane.dropIndicatorIndex === index
+              ? splitPane.dropIndicatorSide ?? undefined
+              : undefined
+          }
+          onClose={() => splitPane.handleCloseTab(tab.id)}
+          onClick={() => splitPane.handleTabClick(tab.id)}
+          onDragStart={(e) => splitPane.handleDragStart(e, index)}
+          onDragEnter={() => splitPane.handleDragEnter(index)}
+          onDragOver={(e) => splitPane.handleDragOver(e, index)}
+          onDrop={(e) => splitPane.handleDrop(e, index)}
+          onDragEnd={splitPane.handleDragEnd}
+        />
+      ))}
+    </EditorTabBar>
+  ) : undefined;
 
   return (
     <EditorLayout
@@ -112,34 +156,18 @@ export default function AboutView() {
         <SidebarAbout
           activeTab={activeSidebarTab}
           onTabChange={setActiveSidebarTab}
-          selectedId={activeTabId}
+          selectedId={primary.activeTabId}
           onFileSelect={handleFileSelect}
         />
       }
       mobileSidebarContent={mobileSidebarContent}
-      tabBar={
-        <EditorTabBar>
-          {pageTabs.map((tab, index) => (
-            <EditorTab
-              key={tab.id}
-              label={tab.label}
-              icon={<VscFile size={14} />}
-              isActive={activeTabId === tab.id}
-              onClose={() => handleCloseTab(tab.id)}
-              onClick={() => handleTabClick(tab.id)}
-              isDragging={dragSourceIndex.current === index}
-              isDragOver={dragOverIndex === index}
-              onDragStart={() => handleDragStart(index)}
-              onDragEnter={() => handleDragEnter(index)}
-              onDragOver={handleDragOver}
-              onDrop={() => handleDrop(index)}
-              onDragEnd={handleDragEnd}
-            />
-          ))}
-        </EditorTabBar>
-      }
+      tabBar={primaryTabBar}
+      splitTabBar={splitTabBar}
+      splitContent={split ? getContent(splitPane.activeTabId) : undefined}
+      splitSide={split?.side}
+      onSplitDrop={handleSplitDrop}
     >
-      <AboutContent lines={selectedFile?.content ?? []} />
+      {getContent(primary.activeTabId)}
     </EditorLayout>
   );
 }
