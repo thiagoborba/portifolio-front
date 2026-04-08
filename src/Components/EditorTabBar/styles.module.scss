@@ -8,7 +8,9 @@
   min-height: 42px;
   border-bottom: 1px solid variables.$lines;
   flex-shrink: 0;
-  transition: background 0.15s ease, border-bottom-color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    border-bottom-color 0.15s ease;
 
   &.receiving {
     background: rgba(254, 165, 95, 0.06);
@@ -47,15 +49,15 @@
 
 .scrollThumb {
   position: absolute;
-  height: 3px;
-  background: variables.$lines;
+  height: 4px;
+  background: transparent;
   border-radius: 2px;
   cursor: pointer;
   pointer-events: all;
   transition: background 0.15s ease;
 
   &:hover {
-    background: variables.$secoundary-steel-blue;
+    border: 1px solid variables.$secoundary-steel-blue;
   }
 }
 
