@@ -1,23 +1,9 @@
 'use client';
-import { useState } from 'react';
-import { useEditor } from '@/contexts/EditorContext';
-import type { Tab } from '@/contexts/EditorContext';
-
-interface DragState {
-  tabId: string;
-  fromPaneId: string;
-}
-
-interface DropIndicator {
-  paneId: string;
-  tabId: string;
-  side: 'before' | 'after';
-}
+import { useEditor, useEditorDndState } from '@/contexts/EditorContext';
 
 export function useEditorDnd() {
-  const { reorderTabs, moveTab, openTabInNewPane, panes } = useEditor();
-  const [dragging, setDragging] = useState<DragState | null>(null);
-  const [dropIndicator, setDropIndicator] = useState<DropIndicator | null>(null);
+  const { dragging, setDragging, dropIndicator, setDropIndicator } = useEditorDndState();
+  const { reorderTabs, moveTab, panes } = useEditor();
 
   function tabDragHandlers(paneId: string, tabId: string) {
     return {
@@ -101,20 +87,5 @@ export function useEditorDnd() {
     };
   }
 
-  function edgeDropHandlers(paneId: string, side: 'left' | 'right') {
-    return {
-      onDragOver: (e: React.DragEvent) => { e.preventDefault(); },
-      onDrop: (e: React.DragEvent) => {
-        e.preventDefault();
-        const fromPaneId = e.dataTransfer.getData('fromPaneId');
-        const dragTabId = e.dataTransfer.getData('tabId');
-        if (!fromPaneId || !dragTabId) return;
-        openTabInNewPane(fromPaneId, dragTabId, side);
-        setDragging(null);
-        setDropIndicator(null);
-      },
-    };
-  }
-
-  return { dragging, dropIndicator, tabDragHandlers, tabDropHandlers, spacerDropHandlers, edgeDropHandlers };
+  return { dragging, dropIndicator, tabDragHandlers, tabDropHandlers, spacerDropHandlers };
 }

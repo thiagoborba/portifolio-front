@@ -1,5 +1,5 @@
 'use client';
-import React, { createContext, useContext, useReducer, useCallback } from 'react';
+import React, { createContext, useContext, useReducer, useCallback, useState } from 'react';
 
 export type Tab = {
   id: string;
@@ -226,6 +226,24 @@ function editorReducer(state: EditorState, action: EditorAction): EditorState {
   }
 }
 
+// Tipos de DnD (internos ao módulo)
+interface DragState {
+  tabId: string;
+  fromPaneId: string;
+}
+interface DropIndicator {
+  paneId: string;
+  tabId: string;
+  side: 'before' | 'after';
+}
+interface EditorDndContextValue {
+  dragging: DragState | null;
+  dropIndicator: DropIndicator | null;
+  setDragging: (s: DragState | null) => void;
+  setDropIndicator: (s: DropIndicator | null) => void;
+}
+const EditorDndContext = createContext<EditorDndContextValue | null>(null);
+
 const EditorContext = createContext<EditorContextValue | null>(null);
 
 export function EditorProvider({
@@ -236,6 +254,8 @@ export function EditorProvider({
   initialPanes?: Pane[];
 }) {
   const [state, dispatch] = useReducer(editorReducer, { panes: initialPanes });
+  const [dragging, setDragging] = useState<DragState | null>(null);
+  const [dropIndicator, setDropIndicator] = useState<DropIndicator | null>(null);
 
   const openTab = useCallback((paneId: string, tab: Omit<Tab, 'active'>) => {
     dispatch({ type: 'OPEN_TAB', paneId, tab });
@@ -275,7 +295,9 @@ export function EditorProvider({
     <EditorContext.Provider
       value={{ panes: state.panes, openTab, closeTab, activateTab, activatePane, reorderTabs, moveTab, openTabInNewPane }}
     >
-      {children}
+      <EditorDndContext.Provider value={{ dragging, setDragging, dropIndicator, setDropIndicator }}>
+        {children}
+      </EditorDndContext.Provider>
     </EditorContext.Provider>
   );
 }
@@ -283,5 +305,11 @@ export function EditorProvider({
 export function useEditor(): EditorContextValue {
   const ctx = useContext(EditorContext);
   if (!ctx) throw new Error('useEditor must be used within EditorProvider');
+  return ctx;
+}
+
+export function useEditorDndState(): EditorDndContextValue {
+  const ctx = useContext(EditorDndContext);
+  if (!ctx) throw new Error('useEditorDndState must be used within EditorProvider');
   return ctx;
 }

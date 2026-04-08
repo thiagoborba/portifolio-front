@@ -47,12 +47,6 @@ export function EditorPane({ paneId, staticContent }: EditorPaneProps) {
         })}
       </EditorTabBar>
       <div className={styles.content}>
-        {dnd.dragging && dnd.dragging.fromPaneId !== paneId && (
-          <>
-            <div className={`${styles.edgeZone} ${styles.edgeLeft}`} {...dnd.edgeDropHandlers(paneId, 'left')} />
-            <div className={`${styles.edgeZone} ${styles.edgeRight}`} {...dnd.edgeDropHandlers(paneId, 'right')} />
-          </>
-        )}
         {activeTab?.content ?? staticContent ?? null}
       </div>
     </div>

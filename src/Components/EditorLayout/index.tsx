@@ -1,6 +1,6 @@
 'use client';
-import React from 'react';
-import { useEditor } from '@/contexts/EditorContext';
+import React, { useState } from 'react';
+import { useEditor, useEditorDndState } from '@/contexts/EditorContext';
 import { EditorPane } from '@/Components/EditorPane';
 import styles from './styles.module.scss';
 
@@ -11,7 +11,25 @@ export interface EditorLayoutProps {
 }
 
 export function EditorLayout({ sidebarContent, mobileSidebarContent, staticContent }: EditorLayoutProps) {
-  const { panes } = useEditor();
+  const { panes, openTabInNewPane } = useEditor();
+  const { dragging, setDragging } = useEditorDndState();
+  const [hoveringEdge, setHoveringEdge] = useState<'left' | 'right' | null>(null);
+
+  function handleEdgeDrop(e: React.DragEvent, side: 'left' | 'right') {
+    e.preventDefault();
+    const fromPaneId = e.dataTransfer.getData('fromPaneId');
+    const tabId = e.dataTransfer.getData('tabId');
+    if (fromPaneId && tabId) {
+      openTabInNewPane(fromPaneId, tabId, side);
+    }
+    setDragging(null);
+    setHoveringEdge(null);
+  }
+
+  function edgeClassNames(side: 'left' | 'right') {
+    const base = side === 'left' ? `${styles.globalEdge} ${styles.globalEdgeLeft}` : `${styles.globalEdge} ${styles.globalEdgeRight}`;
+    return hoveringEdge === side ? `${base} ${styles.globalEdgeActive}` : base;
+  }
 
   return (
     <div className={styles.layout}>
@@ -19,12 +37,32 @@ export function EditorLayout({ sidebarContent, mobileSidebarContent, staticConte
       <div className={styles.main}>
         <div className={styles.mobileNav}>{mobileSidebarContent ?? sidebarContent}</div>
         <div className={styles.paneWrapper}>
+          {dragging && (
+            <div
+              className={edgeClassNames('left')}
+              onDragEnter={() => setHoveringEdge('left')}
+              onDragLeave={() => setHoveringEdge(null)}
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => handleEdgeDrop(e, 'left')}
+            />
+          )}
+
           {panes.map((pane, i) => (
             <React.Fragment key={pane.id}>
               {i > 0 && <div className={styles.paneDivider} />}
               <EditorPane paneId={pane.id} staticContent={staticContent} />
             </React.Fragment>
           ))}
+
+          {dragging && (
+            <div
+              className={edgeClassNames('right')}
+              onDragEnter={() => setHoveringEdge('right')}
+              onDragLeave={() => setHoveringEdge(null)}
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => handleEdgeDrop(e, 'right')}
+            />
+          )}
         </div>
       </div>
     </div>

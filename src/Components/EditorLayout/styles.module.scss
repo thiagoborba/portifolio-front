@@ -47,10 +47,36 @@ $breakpoint-mobile: 890px;
   flex: 1;
   min-height: 0;
   overflow: hidden;
+  position: relative;
 }
 
 .paneDivider {
   width: 1px;
   background-color: variables.$lines;
   flex-shrink: 0;
+}
+
+.globalEdge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  background: rgba(254, 165, 95, 0.04);
+  border: 1px dashed rgba(254, 165, 95, 0.25);
+  box-sizing: border-box;
+  z-index: 20;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.globalEdgeLeft {
+  left: 0;
+}
+
+.globalEdgeRight {
+  right: 0;
+}
+
+.globalEdgeActive {
+  background: rgba(254, 165, 95, 0.18);
+  border: 2px solid rgba(254, 165, 95, 0.7);
 }

@@ -17,21 +17,3 @@
   min-height: 0;
 }
 
-.edgeZone {
-  position: absolute;
-  top: 0;
-  width: 40px;
-  height: 100%;
-  background: rgba(254, 165, 95, 0.2);
-  border: 2px solid variables.$accent-coral;
-  box-sizing: border-box;
-  z-index: 10;
-
-  &.edgeLeft {
-    left: 0;
-  }
-
-  &.edgeRight {
-    right: 0;
-  }
-}
