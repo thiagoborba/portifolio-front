@@ -7,6 +7,7 @@ export interface EditorTabProps {
   label: string;
   icon?: React.ReactNode;
   isActive?: boolean;
+  isPaneActive?: boolean;
   onClose?: () => void;
   onClick?: () => void;
   isDragging?: boolean;
@@ -23,6 +24,7 @@ export function EditorTab({
   label,
   icon,
   isActive = false,
+  isPaneActive = false,
   onClose,
   onClick,
   isDragging = false,
@@ -37,6 +39,7 @@ export function EditorTab({
   const classNames = [
     styles.tab,
     isActive ? styles.active : '',
+    isActive && !isPaneActive ? styles.paneInactive : '',
     isDragging ? styles.dragging : '',
     dropIndicator === 'before' ? styles.dropBefore : '',
     dropIndicator === 'after' ? styles.dropAfter : '',

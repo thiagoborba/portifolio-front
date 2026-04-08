@@ -1,5 +1,4 @@
 import { Header, Footer } from '@/Components';
-import { EditorTabsProvider } from '@/contexts/EditorTabsContext';
 import '@/Components/Layout/styles.scss';
 import '@/styles/_reset.scss';
 
@@ -14,9 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <body>
         <div className="outside-container">
           <Header />
-          <main>
-            <EditorTabsProvider>{children}</EditorTabsProvider>
-          </main>
+          <main>{children}</main>
           <Footer />
         </div>
       </body>

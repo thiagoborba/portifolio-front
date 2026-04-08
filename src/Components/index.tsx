@@ -14,6 +14,7 @@ export { ProjectCard } from '@/Components/ProjectCard';
 export type { ProjectCardProps } from '@/Components/ProjectCard';
 export { SidebarProjects, SidebarProjectsContent } from '@/Components/SidebarProjects';
 export { EditorLayout } from '@/Components/EditorLayout';
+export { EditorPane } from '@/Components/EditorPane';
 export { EditorTabBar } from '@/Components/EditorTabBar';
 export { EditorTab } from '@/Components/EditorTab';
 export { SidebarIconTabs } from '@/Components/SidebarIconTabs';

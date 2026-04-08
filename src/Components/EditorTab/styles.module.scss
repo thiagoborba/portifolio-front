@@ -29,6 +29,10 @@
     margin-bottom: -1px;
   }
 
+  &.paneInactive {
+    opacity: 0.5;
+  }
+
   &.dropBefore {
     &::before {
       content: '';
