@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useEditor, useEditorDndState } from '@/contexts/EditorContext';
 import { EditorPane } from '@/Components/EditorPane';
+import { useIsMobile } from '@/hooks/useIsMobile';
 import styles from './styles.module.scss';
 
 export interface EditorLayoutProps {
@@ -14,6 +15,8 @@ export function EditorLayout({ sidebarContent, mobileSidebarContent, staticConte
   const { panes, openTabInNewPane } = useEditor();
   const { dragging, setDragging, setDropIndicator } = useEditorDndState();
   const [hoveringEdge, setHoveringEdge] = useState<'left' | 'right' | null>(null);
+  const isMobile = useIsMobile();
+  const visiblePanes = isMobile ? panes.slice(0, 1) : panes;
 
   function handleEdgeDrop(e: React.DragEvent, side: 'left' | 'right') {
     e.preventDefault();
@@ -38,7 +41,7 @@ export function EditorLayout({ sidebarContent, mobileSidebarContent, staticConte
       <div className={styles.main}>
         <div className={styles.mobileNav}>{mobileSidebarContent ?? sidebarContent}</div>
         <div className={styles.paneWrapper}>
-          {dragging && (
+          {!isMobile && dragging && (
             <div
               className={edgeClassNames('left')}
               onDragEnter={() => setHoveringEdge('left')}
@@ -48,14 +51,14 @@ export function EditorLayout({ sidebarContent, mobileSidebarContent, staticConte
             />
           )}
 
-          {panes.map((pane, i) => (
+          {visiblePanes.map((pane, i) => (
             <React.Fragment key={pane.id}>
               {i > 0 && <div className={styles.paneDivider} />}
               <EditorPane paneId={pane.id} staticContent={staticContent} />
             </React.Fragment>
           ))}
 
-          {dragging && (
+          {!isMobile && dragging && (
             <div
               className={edgeClassNames('right')}
               onDragEnter={() => setHoveringEdge('right')}

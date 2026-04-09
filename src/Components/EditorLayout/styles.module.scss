@@ -48,6 +48,12 @@ $breakpoint-mobile: 890px;
   min-height: 0;
   overflow: hidden;
   position: relative;
+
+  @media (max-width: $breakpoint-mobile) {
+    flex: none;
+    min-height: unset;
+    overflow: visible;
+  }
 }
 
 .paneDivider {
