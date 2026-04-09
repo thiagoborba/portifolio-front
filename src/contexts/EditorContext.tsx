@@ -3,7 +3,6 @@ import React, {
   createContext,
   useContext,
   useReducer,
-  useCallback,
   useEffect,
   useRef,
   useState,
@@ -365,39 +364,33 @@ export function EditorProvider({
     registry.saveSlice(routeKey, state.panes);
   }, [routeKey, state.panes]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const openTab = useCallback((paneId: string, tab: Omit<Tab, 'active'>) => {
+  function openTab(paneId: string, tab: Omit<Tab, 'active'>) {
     dispatch({ type: 'OPEN_TAB', paneId, tab });
-  }, []);
+  }
 
-  const closeTab = useCallback((paneId: string, tabId: string) => {
+  function closeTab(paneId: string, tabId: string) {
     dispatch({ type: 'CLOSE_TAB', paneId, tabId });
-  }, []);
+  }
 
-  const activateTab = useCallback((paneId: string, tabId: string) => {
+  function activateTab(paneId: string, tabId: string) {
     dispatch({ type: 'ACTIVATE_TAB', paneId, tabId });
-  }, []);
+  }
 
-  const activatePane = useCallback((paneId: string) => {
+  function activatePane(paneId: string) {
     dispatch({ type: 'ACTIVATE_PANE', paneId });
-  }, []);
+  }
 
-  const reorderTabs = useCallback((paneId: string, newTabs: Tab[]) => {
+  function reorderTabs(paneId: string, newTabs: Tab[]) {
     dispatch({ type: 'REORDER_TABS', paneId, newTabs });
-  }, []);
+  }
 
-  const moveTab = useCallback(
-    (fromPaneId: string, tabId: string, toPaneId: string, position: number) => {
-      dispatch({ type: 'MOVE_TAB', fromPaneId, tabId, toPaneId, position });
-    },
-    [],
-  );
+  function moveTab(fromPaneId: string, tabId: string, toPaneId: string, position: number) {
+    dispatch({ type: 'MOVE_TAB', fromPaneId, tabId, toPaneId, position });
+  }
 
-  const openTabInNewPane = useCallback(
-    (fromPaneId: string, tabId: string, side: 'left' | 'right') => {
-      dispatch({ type: 'OPEN_IN_NEW_PANE', fromPaneId, tabId, side });
-    },
-    [],
-  );
+  function openTabInNewPane(fromPaneId: string, tabId: string, side: 'left' | 'right') {
+    dispatch({ type: 'OPEN_IN_NEW_PANE', fromPaneId, tabId, side });
+  }
 
   return (
     <EditorContext.Provider

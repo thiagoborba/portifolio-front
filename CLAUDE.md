@@ -27,15 +27,19 @@ The UI mimics a VS Code editor: sidebar with icon tabs, tree-view file explorer,
 
 ### Page layout pattern
 
-Every page route follows this composition:
-1. `src/app/<route>/layout.tsx` — wraps with `EditorLayout`, passing a sidebar component and an `EditorTabBar`
-2. `EditorLayout` (`src/Components/EditorLayout/`) — renders `<aside>` (sidebar) + optional tab bar + `<div>` (content)
-3. `EditorTabBar` / `EditorTab` — tab strip mimicking VS Code; driven by `EditorTabsContext`
-4. `page.tsx` — the content rendered inside the editor area
+Every page route that uses the editor aesthetic follows this composition:
+
+1. A "View" client component (e.g. `AboutView`, `ProjectsView`) wraps its subtree with `EditorProvider`, passing a `routeKey` string and an `initialPanes` array.
+2. Inside the provider, `EditorLayout` renders an `<aside>` (sidebar) and a pane wrapper. For mobile, an alternative `mobileSidebarContent` node is rendered instead of the desktop sidebar.
+3. `EditorLayout` reads pane state from `useEditor()` and renders one `EditorPane` per pane, separated by dividers.
+4. Each `EditorPane` renders an `EditorTabBar` (with `EditorTab` children) above the active tab's `content` node.
+5. For `/contact-me`, `EditorProvider` + `EditorLayout` live in `src/app/contact-me/layout.tsx` and `page.tsx` is passed as `staticContent` (always visible, regardless of tabs).
 
 ### State management
 
-- **`EditorTabsContext`** (`src/contexts/EditorTabsContext.tsx`) — manages open tabs and active tab keyed by route path (`TabsState = Record<string, TabEntry[]>`). All pages consume it via `useEditorTabs()`.
+- **`EditorContext`** (`src/contexts/EditorContext.tsx`) — core editor state as `{ panes: Pane[] }` managed by `useReducer`. Exposes `openTab`, `closeTab`, `activateTab`, `activatePane`, `reorderTabs`, `moveTab`, `openTabInNewPane`. A sibling `EditorDndContext` (in the same file) tracks drag-and-drop state (`dragging`, `dropIndicator`) and is consumed by `useEditorDnd` (`src/hooks/useEditorDnd.ts`).
+- **`GlobalEditorRegistryContext`** (`src/contexts/GlobalEditorRegistryContext.tsx`) — in-memory registry of pane state keyed by `routeKey`. Mounted once at the app root via `ClientShell`. `EditorProvider` reads from it on mount (restoring layout on route re-entry) and writes to it on every state change (persisting across client-side navigations).
+- **`routeKey`** — a stable string passed to `EditorProvider` that identifies which registry slot to use (e.g. `"about-me"`, `"projects"`, `"contact-me"`).
 - **`FormContext`** (`src/app/contact-me/context/FormContext.tsx`) — syncs contact form field values to the live code snippet preview in the sidebar.
 
 ### Shared components

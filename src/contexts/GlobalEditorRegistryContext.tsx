@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useReducer, useCallback } from 'react';
+import React, { createContext, useContext, useReducer, useRef, useCallback } from 'react';
 import type { Pane } from './EditorContext';
 
 interface RegistrySlice {
@@ -33,10 +33,13 @@ const GlobalEditorRegistryContext = createContext<RegistryContextValue | null>(n
 
 export function GlobalEditorRegistryProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(registryReducer, {});
+  // Keep a ref so getSlice always reads the latest state without being recreated.
+  const stateRef = useRef(state);
+  stateRef.current = state;
 
   const getSlice = useCallback(
-    (routeKey: string): RegistrySlice | undefined => state[routeKey],
-    [state],
+    (routeKey: string): RegistrySlice | undefined => stateRef.current[routeKey],
+    [],
   );
 
   const saveSlice = useCallback((routeKey: string, panes: Pane[]) => {

@@ -12,7 +12,6 @@ export interface EditorTabProps {
   onClose?: () => void;
   onClick?: () => void;
   isDragging?: boolean;
-  isDragOver?: boolean;
   dropIndicator?: 'before' | 'after';
   onDragStart?: React.DragEventHandler<HTMLDivElement>;
   onDragEnter?: React.DragEventHandler<HTMLDivElement>;
@@ -31,7 +30,6 @@ export function EditorTab({
   onClose,
   onClick,
   isDragging = false,
-  isDragOver: _isDragOver = false,
   dropIndicator,
   onDragStart,
   onDragEnter,

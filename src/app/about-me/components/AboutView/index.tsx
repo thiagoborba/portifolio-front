@@ -8,7 +8,7 @@ import { EditorLayout } from '@/Components/EditorLayout';
 import { Collapse } from '@/Components/Collapse';
 import { TreeView } from '@/Components/TreeView';
 import { EditorProvider, useEditor } from '@/contexts/EditorContext';
-import { personalTree, hobbiesTree, codeTree, type TreeLeaf, type TreeNode } from '../../data';
+import { personalTree, hobbiesTree, codeTree, type TreeLeaf } from '../../data';
 
 type SidebarTab = 'personal' | 'hobbies' | 'code';
 
@@ -35,8 +35,6 @@ function AboutViewInner({
   const activePane = panes.find((p) => p.active) ?? panes[0];
   const activePaneId = activePane?.id ?? 'main';
   const activeTabId = activePane?.tabs.find((t) => t.active)?.id ?? null;
-
-  const allLeaves = getAllLeaves([...personalTree, ...hobbiesTree, ...codeTree]);
 
   function handleFileSelect(file: TreeLeaf) {
     openTab(activePaneId, {
@@ -83,14 +81,3 @@ function AboutViewInner({
   );
 }
 
-function getAllLeaves(nodes: (TreeNode | TreeLeaf)[]): TreeLeaf[] {
-  const results: TreeLeaf[] = [];
-  for (const node of nodes) {
-    if (!('children' in node)) {
-      results.push(node);
-    } else {
-      results.push(...getAllLeaves(node.children));
-    }
-  }
-  return results;
-}
