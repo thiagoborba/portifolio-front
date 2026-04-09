@@ -1,89 +1,51 @@
 'use client';
-
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { VscFile } from 'react-icons/vsc';
 import { SidebarAbout } from '../SidebarAbout';
 import { AboutContent } from '../AboutContent';
 import { PersonalTree } from '../PersonalTree';
 import { EditorLayout } from '@/Components/EditorLayout';
-import { EditorTabBar } from '@/Components/EditorTabBar';
-import { EditorTab } from '@/Components/EditorTab';
 import { Collapse } from '@/Components/Collapse';
 import { TreeView } from '@/Components/TreeView';
-import { useEditorTabs } from '@/contexts/EditorTabsContext';
-import {
-  personalTree,
-  hobbiesTree,
-  codeTree,
-  type TreeLeaf,
-  type TreeNode,
-} from '../../data';
-
-const PATH = '/about-me';
+import { EditorProvider, useEditor } from '@/contexts/EditorContext';
+import { personalTree, hobbiesTree, codeTree, type TreeLeaf, type TreeNode } from '../../data';
 
 type SidebarTab = 'personal' | 'hobbies' | 'code';
 
 export default function AboutView() {
-  const { tabs, activeTabIds, openTab, closeTab, reorderTabs, setActiveTab } = useEditorTabs();
   const [activeSidebarTab, setActiveSidebarTab] = useState<SidebarTab>('personal');
+  return (
+    <EditorProvider initialPanes={[{ id: 'main', tabs: [], active: true }]}>
+      <AboutViewInner
+        activeSidebarTab={activeSidebarTab}
+        onSidebarTabChange={setActiveSidebarTab}
+      />
+    </EditorProvider>
+  );
+}
 
-  const dragSourceIndex = useRef<number | null>(null);
-  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
-
-  const pageTabs = tabs[PATH] ?? [];
-  const activeTabId = activeTabIds[PATH] ?? null;
+function AboutViewInner({
+  activeSidebarTab,
+  onSidebarTabChange,
+}: {
+  activeSidebarTab: SidebarTab;
+  onSidebarTabChange: (tab: SidebarTab) => void;
+}) {
+  const { panes, openTab, activateTab } = useEditor();
+  const activePane = panes.find((p) => p.active) ?? panes[0];
+  const activePaneId = activePane?.id ?? 'main';
+  const activeTabId = activePane?.tabs.find((t) => t.active)?.id ?? null;
 
   const allLeaves = getAllLeaves([...personalTree, ...hobbiesTree, ...codeTree]);
-  const selectedFile = activeTabId ? (allLeaves.find((l) => l.id === activeTabId) ?? null) : null;
 
   function handleFileSelect(file: TreeLeaf) {
-    openTab(PATH, { id: file.id, label: file.label });
-    setActiveTab(PATH, file.id);
-  }
-
-  function handleTabClick(tabId: string) {
-    setActiveTab(PATH, tabId);
-  }
-
-  function handleCloseTab(tabId: string) {
-    closeTab(PATH, tabId);
-    if (activeTabId === tabId) {
-      const remaining = pageTabs.filter((t) => t.id !== tabId);
-      const next = remaining.length > 0 ? remaining[remaining.length - 1].id : null;
-      setActiveTab(PATH, next);
-    }
-  }
-
-  function handleDragStart(index: number) {
-    dragSourceIndex.current = index;
-  }
-
-  function handleDragEnter(index: number) {
-    setDragOverIndex(index);
-  }
-
-  function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
-    e.preventDefault();
-  }
-
-  function handleDrop(targetIndex: number) {
-    const sourceIndex = dragSourceIndex.current;
-    if (sourceIndex === null || sourceIndex === targetIndex) {
-      setDragOverIndex(null);
-      dragSourceIndex.current = null;
-      return;
-    }
-    const next = [...pageTabs];
-    const [moved] = next.splice(sourceIndex, 1);
-    next.splice(targetIndex, 0, moved);
-    reorderTabs(PATH, next);
-    dragSourceIndex.current = null;
-    setDragOverIndex(null);
-  }
-
-  function handleDragEnd() {
-    dragSourceIndex.current = null;
-    setDragOverIndex(null);
+    openTab(activePaneId, {
+      id: file.id,
+      title: file.label,
+      icon: <VscFile size={14} />,
+      content: <AboutContent lines={file.content ?? []} />,
+    });
+    activateTab(activePaneId, file.id);
   }
 
   const mobileSidebarContent = (
@@ -111,36 +73,13 @@ export default function AboutView() {
       sidebarContent={
         <SidebarAbout
           activeTab={activeSidebarTab}
-          onTabChange={setActiveSidebarTab}
+          onTabChange={onSidebarTabChange}
           selectedId={activeTabId}
           onFileSelect={handleFileSelect}
         />
       }
       mobileSidebarContent={mobileSidebarContent}
-      tabBar={
-        <EditorTabBar>
-          {pageTabs.map((tab, index) => (
-            <EditorTab
-              key={tab.id}
-              label={tab.label}
-              icon={<VscFile size={14} />}
-              isActive={activeTabId === tab.id}
-              onClose={() => handleCloseTab(tab.id)}
-              onClick={() => handleTabClick(tab.id)}
-              isDragging={dragSourceIndex.current === index}
-              isDragOver={dragOverIndex === index}
-              onDragStart={() => handleDragStart(index)}
-              onDragEnter={() => handleDragEnter(index)}
-              onDragOver={handleDragOver}
-              onDrop={() => handleDrop(index)}
-              onDragEnd={handleDragEnd}
-            />
-          ))}
-        </EditorTabBar>
-      }
-    >
-      <AboutContent lines={selectedFile?.content ?? []} />
-    </EditorLayout>
+    />
   );
 }
 

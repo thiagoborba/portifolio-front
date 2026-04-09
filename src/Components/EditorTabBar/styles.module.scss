@@ -1,12 +1,28 @@
 @use '../../styles/variables';
 
 .bar {
+  position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   height: 42px;
   min-height: 42px;
   border-bottom: 1px solid variables.$lines;
   flex-shrink: 0;
+  transition:
+    background 0.15s ease,
+    border-bottom-color 0.15s ease;
+
+  &.receiving {
+    background: rgba(254, 165, 95, 0.06);
+    border-bottom-color: variables.$accent-coral;
+  }
+}
+
+.scroll {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  min-width: 0;
   overflow-x: auto;
   scrollbar-width: none;
 
@@ -20,6 +36,29 @@
   min-width: 0;
   align-self: flex-end;
   height: 100%;
+}
+
+.scrollTrack {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  pointer-events: none;
+}
+
+.scrollThumb {
+  position: absolute;
+  height: 4px;
+  background: transparent;
+  border-radius: 2px;
+  cursor: pointer;
+  pointer-events: all;
+  transition: background 0.15s ease;
+
+  &:hover {
+    border: 1px solid variables.$secoundary-steel-blue;
+  }
 }
 
 @media (max-width: 890px) {
