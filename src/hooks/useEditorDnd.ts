@@ -1,9 +1,11 @@
 'use client';
+import { useRef } from 'react';
 import { useEditor, useEditorDndState } from '@/contexts/EditorContext';
 
 export function useEditorDnd() {
   const { dragging, setDragging, dropIndicator, setDropIndicator } = useEditorDndState();
   const { reorderTabs, moveTab, panes } = useEditor();
+  const lastIndicatorRef = useRef<string | null>(null);
 
   function tabDragHandlers(paneId: string, tabId: string) {
     return {
@@ -17,6 +19,7 @@ export function useEditorDnd() {
       onDragEnd: () => {
         setDragging(null);
         setDropIndicator(null);
+        lastIndicatorRef.current = null;
       },
     };
   }
@@ -27,13 +30,18 @@ export function useEditorDnd() {
         e.preventDefault();
         const rect = e.currentTarget.getBoundingClientRect();
         const side: 'before' | 'after' = e.clientX < rect.left + rect.width / 2 ? 'before' : 'after';
+        const key = `${paneId}|${tabId}|${side}`;
+        if (lastIndicatorRef.current === key) return;
+        lastIndicatorRef.current = key;
         setDropIndicator({ paneId, tabId, side });
       },
       onDragLeave: () => {
+        lastIndicatorRef.current = null;
         setDropIndicator(null);
       },
       onDrop: (e: React.DragEvent) => {
         e.preventDefault();
+        lastIndicatorRef.current = null;
         const fromPaneId = e.dataTransfer.getData('fromPaneId');
         const dragTabId = e.dataTransfer.getData('tabId');
         if (!fromPaneId || !dragTabId) return;
