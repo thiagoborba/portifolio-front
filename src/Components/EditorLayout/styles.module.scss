@@ -31,6 +31,10 @@ $breakpoint-mobile: 890px;
   flex: 1;
   min-width: 0;
   overflow-y: auto;
+
+  @media (max-width: $breakpoint-mobile) {
+    overflow: hidden;
+  }
 }
 
 .mobileNav {
@@ -50,9 +54,9 @@ $breakpoint-mobile: 890px;
   position: relative;
 
   @media (max-width: $breakpoint-mobile) {
-    flex: none;
-    min-height: unset;
-    overflow: visible;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
   }
 }
 
