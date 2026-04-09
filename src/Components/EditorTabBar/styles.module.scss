@@ -61,6 +61,10 @@
   }
 }
 
+.bar:hover .scrollThumb {
+  background: variables.$secoundary-steel-blue;
+}
+
 @media (max-width: 890px) {
   .bar {
     display: none;
