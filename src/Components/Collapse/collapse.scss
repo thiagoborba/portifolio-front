@@ -20,15 +20,24 @@
 }
 
 .collapse-button {
-  width: stretch; // -2px para diminuir a soma das bordas laterais
+  width: stretch;
   background-color: transparent;
   border-style: none;
   display: flex;
+  align-items: center;
   cursor: pointer;
   padding: 12px 28px;
+  min-height: 42px;
   border-bottom: 1px solid variables.$lines;
 
+  .collapse-icon {
+    display: flex;
+    align-items: center;
+  }
+
   .collapse-title {
+    display: inline-flex;
+    align-items: center;
     margin-left: 16px;
 
     &.-open {
@@ -42,5 +51,10 @@
 
   @media (max-width: 890px) {
     width: stretch;
+    background-color: variables.$lines;
+
+    .collapse-title {
+      color: #f8fafc;
+    }
   }
 }

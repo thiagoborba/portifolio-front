@@ -48,6 +48,7 @@ function ProjectsViewInner({ projects }: ProjectsViewProps) {
     <EditorLayout
       singlePane
       disableTabDrag
+      mobilePageName="_projects"
       sidebarContent={
         <SidebarProjectsContent
           tags={allTags}

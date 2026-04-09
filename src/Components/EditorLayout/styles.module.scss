@@ -37,11 +37,25 @@ $breakpoint-mobile: 890px;
   }
 }
 
-.mobileNav {
+.mobilePageTitle {
   display: none;
 
   @media (max-width: $breakpoint-mobile) {
     display: block;
+    padding: 24px;
+    font-size: 0.875rem;
+    color: #f8fafc;
+  }
+}
+
+.mobileNav {
+  display: none;
+
+  @media (max-width: $breakpoint-mobile) {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 4px 0;
     flex-shrink: 0;
   }
 }
@@ -75,7 +89,9 @@ $breakpoint-mobile: 890px;
   border: 1px dashed rgba(254, 165, 95, 0.25);
   box-sizing: border-box;
   z-index: 20;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .globalEdgeLeft {

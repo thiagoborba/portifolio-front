@@ -8,14 +8,18 @@ import { EditorLayout } from '@/Components/EditorLayout';
 import { Collapse } from '@/Components/Collapse';
 import { TreeView } from '@/Components/TreeView';
 import { EditorProvider, useEditor } from '@/contexts/EditorContext';
-import { personalTree, hobbiesTree, codeTree, type TreeLeaf } from '../../data';
+import { hobbiesTree, codeTree, type TreeLeaf } from '../../data';
 
 type SidebarTab = 'personal' | 'hobbies' | 'code';
 
 export default function AboutView() {
-  const [activeSidebarTab, setActiveSidebarTab] = useState<SidebarTab>('personal');
+  const [activeSidebarTab, setActiveSidebarTab] =
+    useState<SidebarTab>('personal');
   return (
-    <EditorProvider initialPanes={[{ id: 'main', tabs: [], active: true }]} routeKey="about-me">
+    <EditorProvider
+      initialPanes={[{ id: 'main', tabs: [], active: true }]}
+      routeKey="about-me"
+    >
       <AboutViewInner
         activeSidebarTab={activeSidebarTab}
         onSidebarTabChange={setActiveSidebarTab}
@@ -48,7 +52,7 @@ function AboutViewInner({
 
   const mobileSidebarContent = (
     <>
-      <PersonalTree selectedId={activeTabId} onFileSelect={handleFileSelect} />
+      <PersonalTree selectedId={activeTabId} onFileSelect={handleFileSelect} initialOpen={false} />
       <Collapse title="hobbies" open={false}>
         <TreeView
           data={hobbiesTree[0].children}
@@ -68,6 +72,7 @@ function AboutViewInner({
 
   return (
     <EditorLayout
+      mobilePageName="_about-me"
       sidebarContent={
         <SidebarAbout
           activeTab={activeSidebarTab}
@@ -80,4 +85,3 @@ function AboutViewInner({
     />
   );
 }
-

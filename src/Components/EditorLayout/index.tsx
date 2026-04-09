@@ -11,6 +11,7 @@ export interface EditorLayoutProps {
   staticContent?: React.ReactNode;
   singlePane?: boolean;
   disableTabDrag?: boolean;
+  mobilePageName?: string;
 }
 
 export function EditorLayout({
@@ -19,6 +20,7 @@ export function EditorLayout({
   staticContent,
   singlePane = false,
   disableTabDrag = false,
+  mobilePageName,
 }: EditorLayoutProps) {
   const { panes, openTabInNewPane } = useEditor();
   const { dragging, setDragging, setDropIndicator } = useEditorDndState();
@@ -49,6 +51,7 @@ export function EditorLayout({
     <div className={styles.layout}>
       <aside className={styles.sidebar}>{sidebarContent}</aside>
       <div className={styles.main}>
+        {mobilePageName && <p className={styles.mobilePageTitle}>{mobilePageName}</p>}
         <div className={styles.mobileNav}>{mobileSidebarContent ?? sidebarContent}</div>
         <div className={styles.paneWrapper}>
           {showEdges && (

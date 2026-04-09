@@ -16,11 +16,7 @@ export const Collapse = ({
   title,
   open: initialOpen = true,
 }: CollapseProps) => {
-  const [open, setOpen] = useState(() => {
-    if (typeof window === 'undefined') return initialOpen;
-    const isMobileNow = window.matchMedia('(max-width: 890px)').matches;
-    return isMobileNow ? false : initialOpen;
-  });
+  const [open, setOpen] = useState(initialOpen);
 
   return (
     <div className={`collapse-container${open ? ' -open' : ''}`}>
