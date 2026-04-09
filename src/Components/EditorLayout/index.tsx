@@ -9,14 +9,24 @@ export interface EditorLayoutProps {
   sidebarContent: React.ReactNode;
   mobileSidebarContent?: React.ReactNode;
   staticContent?: React.ReactNode;
+  singlePane?: boolean;
+  disableTabDrag?: boolean;
 }
 
-export function EditorLayout({ sidebarContent, mobileSidebarContent, staticContent }: EditorLayoutProps) {
+export function EditorLayout({
+  sidebarContent,
+  mobileSidebarContent,
+  staticContent,
+  singlePane = false,
+  disableTabDrag = false,
+}: EditorLayoutProps) {
   const { panes, openTabInNewPane } = useEditor();
   const { dragging, setDragging, setDropIndicator } = useEditorDndState();
   const [hoveringEdge, setHoveringEdge] = useState<'left' | 'right' | null>(null);
   const isMobile = useIsMobile();
-  const visiblePanes = isMobile ? panes.slice(0, 1) : panes;
+  const forceSingle = singlePane || isMobile;
+  const visiblePanes = forceSingle ? panes.slice(0, 1) : panes;
+  const showEdges = !forceSingle && dragging;
 
   function handleEdgeDrop(e: React.DragEvent, side: 'left' | 'right') {
     e.preventDefault();
@@ -41,7 +51,7 @@ export function EditorLayout({ sidebarContent, mobileSidebarContent, staticConte
       <div className={styles.main}>
         <div className={styles.mobileNav}>{mobileSidebarContent ?? sidebarContent}</div>
         <div className={styles.paneWrapper}>
-          {!isMobile && dragging && (
+          {showEdges && (
             <div
               className={edgeClassNames('left')}
               onDragEnter={() => setHoveringEdge('left')}
@@ -54,11 +64,11 @@ export function EditorLayout({ sidebarContent, mobileSidebarContent, staticConte
           {visiblePanes.map((pane, i) => (
             <React.Fragment key={pane.id}>
               {i > 0 && <div className={styles.paneDivider} />}
-              <EditorPane paneId={pane.id} staticContent={staticContent} />
+              <EditorPane paneId={pane.id} staticContent={staticContent} disableTabDrag={disableTabDrag} />
             </React.Fragment>
           ))}
 
-          {!isMobile && dragging && (
+          {showEdges && (
             <div
               className={edgeClassNames('right')}
               onDragEnter={() => setHoveringEdge('right')}

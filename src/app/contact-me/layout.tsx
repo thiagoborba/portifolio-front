@@ -8,6 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <EditorProvider initialPanes={[{ id: 'contact', tabs: [], active: true }]} routeKey="contact-me">
       <EditorLayout
+        singlePane
         sidebarContent={<SideBarContent open={true} />}
         mobileSidebarContent={<SideBarContent open={false} />}
         staticContent={children}

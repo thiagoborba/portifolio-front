@@ -9,9 +9,10 @@ import styles from './styles.module.scss';
 interface EditorPaneProps {
   paneId: string;
   staticContent?: React.ReactNode;
+  disableTabDrag?: boolean;
 }
 
-export function EditorPane({ paneId, staticContent }: EditorPaneProps) {
+export function EditorPane({ paneId, staticContent, disableTabDrag = false }: EditorPaneProps) {
   const { panes, activateTab, closeTab, activatePane } = useEditor();
   const dnd = useEditorDnd();
   const pane = panes.find((p) => p.id === paneId);
@@ -22,8 +23,8 @@ export function EditorPane({ paneId, staticContent }: EditorPaneProps) {
     <div className={styles.pane} onMouseDown={() => activatePane(paneId)}>
       <EditorTabBar
         activeTabId={activeTab?.id}
-        onSpacerDragOver={dnd.spacerDropHandlers(paneId).onDragOver}
-        onSpacerDrop={dnd.spacerDropHandlers(paneId).onDrop}
+        onSpacerDragOver={disableTabDrag ? undefined : dnd.spacerDropHandlers(paneId).onDragOver}
+        onSpacerDrop={disableTabDrag ? undefined : dnd.spacerDropHandlers(paneId).onDrop}
       >
         {pane.tabs.map((tab, index) => {
           const indicator =
@@ -42,8 +43,8 @@ export function EditorPane({ paneId, staticContent }: EditorPaneProps) {
               dropIndicator={indicator}
               onClick={() => activateTab(paneId, tab.id)}
               onClose={() => closeTab(paneId, tab.id)}
-              {...dnd.tabDragHandlers(paneId, tab.id)}
-              {...dnd.tabDropHandlers(paneId, tab.id, index)}
+              {...(disableTabDrag ? {} : dnd.tabDragHandlers(paneId, tab.id))}
+              {...(disableTabDrag ? {} : dnd.tabDropHandlers(paneId, tab.id, index))}
             />
           );
         })}

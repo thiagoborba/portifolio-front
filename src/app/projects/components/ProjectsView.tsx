@@ -46,6 +46,8 @@ function ProjectsViewInner({ projects }: ProjectsViewProps) {
 
   return (
     <EditorLayout
+      singlePane
+      disableTabDrag
       sidebarContent={
         <SidebarProjectsContent
           tags={allTags}
