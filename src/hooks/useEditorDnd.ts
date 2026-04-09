@@ -35,7 +35,8 @@ export function useEditorDnd() {
         lastIndicatorRef.current = key;
         setDropIndicator({ paneId, tabId, side });
       },
-      onDragLeave: () => {
+      onDragLeave: (e: React.DragEvent) => {
+        if (e.currentTarget.contains(e.relatedTarget as Node)) return;
         lastIndicatorRef.current = null;
         setDropIndicator(null);
       },

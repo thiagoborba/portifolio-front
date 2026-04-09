@@ -16,6 +16,7 @@ export interface EditorTabProps {
   onDragStart?: React.DragEventHandler<HTMLDivElement>;
   onDragEnter?: React.DragEventHandler<HTMLDivElement>;
   onDragOver?: React.DragEventHandler<HTMLDivElement>;
+  onDragLeave?: React.DragEventHandler<HTMLDivElement>;
   onDrop?: React.DragEventHandler<HTMLDivElement>;
   onDragEnd?: React.DragEventHandler<HTMLDivElement>;
 }
@@ -33,6 +34,7 @@ export function EditorTab({
   onDragStart,
   onDragEnter,
   onDragOver,
+  onDragLeave,
   onDrop,
   onDragEnd,
 }: EditorTabProps) {
@@ -57,6 +59,7 @@ export function EditorTab({
       onDragStart={onDragStart}
       onDragEnter={onDragEnter}
       onDragOver={onDragOver}
+      onDragLeave={onDragLeave}
       onDrop={onDrop}
       onDragEnd={onDragEnd}
     >

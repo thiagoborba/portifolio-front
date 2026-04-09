@@ -12,7 +12,7 @@ export interface EditorLayoutProps {
 
 export function EditorLayout({ sidebarContent, mobileSidebarContent, staticContent }: EditorLayoutProps) {
   const { panes, openTabInNewPane } = useEditor();
-  const { dragging, setDragging } = useEditorDndState();
+  const { dragging, setDragging, setDropIndicator } = useEditorDndState();
   const [hoveringEdge, setHoveringEdge] = useState<'left' | 'right' | null>(null);
 
   function handleEdgeDrop(e: React.DragEvent, side: 'left' | 'right') {
@@ -23,6 +23,7 @@ export function EditorLayout({ sidebarContent, mobileSidebarContent, staticConte
       openTabInNewPane(fromPaneId, tabId, side);
     }
     setDragging(null);
+    setDropIndicator(null);
     setHoveringEdge(null);
   }
 
