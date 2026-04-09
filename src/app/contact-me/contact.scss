@@ -83,6 +83,7 @@ $spacing-lg: 3rem;
 
     @media (max-width: $breakpoint-mobile) {
       border-left: none;
+      height: auto;
     }
   }
 }
