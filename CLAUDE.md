@@ -62,3 +62,58 @@ Sass modules (`.module.scss`) per component. Global partials in `src/styles/`: `
 ### API client
 
 `src/api/client.ts` — axios instance pointing at `NEXT_PUBLIC_API_URL`. Route helpers in `src/api/routes/github.ts`.
+
+Both `getSnippets` and `getProjects` use fail-silently error handling — `try/catch` returns `[]` on any failure so the page renders empty rather than throwing.
+
+### Data fetching strategy per route
+
+| Route | Strategy | Revalidation | Reason |
+|---|---|---|---|
+| `/` | ISR | 86400s (24h) | Snippets rarely change |
+| `/projects` | ISR | 3600s (1h) | Repos update more frequently |
+| `/about-me` | SSG | never | Data is a local TS module (`data.ts`) |
+| `/contact-me` | CSR | — | Form only, no fetched data |
+
+#### How ISR works here
+
+At **build/revalidation time**, Next.js executes the async Server Components for `/` and `/projects` on the server, calls the backend, and saves the resulting HTML to static cache.
+
+On every **user request within the revalidation window**, Next.js serves the cached HTML instantly — no backend or GitHub API call happens.
+
+When the cache **expires and a new request arrives**, Next.js simultaneously:
+1. Serves the stale cached HTML to the current visitor (no wait)
+2. Regenerates the page in background (re-runs the Server Component, calls backend, saves new HTML)
+
+The next request receives the updated HTML. This is the stale-while-revalidate pattern applied to full pages.
+
+#### Data flow
+
+```
+Deploy / Revalidation
+  └─ Next.js runs Page() as async Server Component (Node.js)
+       └─ getSnippets() / getProjects()  [src/api/routes/github.ts]
+            └─ axios → NEXT_PUBLIC_API_URL (Express backend)
+                 └─ backend calls GitHub API + caches 1h in memory
+                      └─ returns typed JSON: Snippet[] | Project[]
+       └─ HTML saved to Next.js static cache
+
+User request (cache valid)
+  └─ Next.js serves cached HTML — backend never called
+       └─ Server Component passes data as props to Client Components
+            └─ React hydration in browser — no additional fetch
+```
+
+#### `cache()` wrapper on the home page
+
+`src/app/page.tsx` wraps `fetchSnippets` with React's `cache()`:
+
+```ts
+const getSnippets = cache(fetchSnippets);
+```
+
+`cache()` deduplicates identical calls within the same render tree. If `getSnippets()` were called from multiple places in the same server render (e.g. page and layout), only one HTTP request would fire. There is currently only one call site, but the wrapper is a defensive best practice for shared fetch functions.
+
+#### Revalidation window rationale
+
+- **86400s for snippets**: The code carousel on the home page shows random interesting functions extracted from repos. This content is decorative and can be stale for a full day without user impact.
+- **3600s for projects**: The projects listing reflects actual GitHub repos and is more likely to change (new repos, updated descriptions, new topics). 1h keeps it reasonably fresh without hammering the GitHub API.

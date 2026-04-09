@@ -6,12 +6,35 @@ Personal portfolio website built with a VS Code-inspired aesthetic: sidebar with
 
 ## Pages
 
-| Route         | Description                                                                   |
-| ------------- | ----------------------------------------------------------------------------- |
-| `/`           | Landing — name, title, and a carousel of code snippets fetched from GitHub    |
-| `/about-me`   | Interactive file-tree explorer with personal info, hobbies, and code snippets |
-| `/projects`   | GitHub repositories fetched from the backend, displayed as project cards      |
-| `/contact-me` | Contact form with a live code-snippet preview that updates as you type        |
+| Route | Description | Rendering |
+| --- | --- | --- |
+| `/` | Landing — name, title, and a carousel of code snippets fetched from GitHub | ISR — revalidates every 24h |
+| `/about-me` | Interactive file-tree explorer with personal info, hobbies, and code snippets | SSG — data is a local TS module |
+| `/projects` | GitHub repositories fetched from the backend, displayed as project cards | ISR — revalidates every 1h |
+| `/contact-me` | Contact form with a live code-snippet preview that updates as you type | CSR — no server data |
+
+### Data fetching
+
+`/` and `/projects` use **Incremental Static Regeneration (ISR)**. At build time (and after each revalidation window), Next.js runs the page as an async Server Component, fetches data from the backend, and saves the result as static HTML. Every user request within the window receives the cached HTML instantly — the backend is never called at request time.
+
+When the cache expires and a new request arrives, Next.js serves the stale page immediately and regenerates it in background (stale-while-revalidate). The revalidation windows reflect how often the content changes:
+
+- **86400s (24h)** for snippets — the code carousel is decorative and can be stale for a full day
+- **3600s (1h)** for projects — repo metadata updates more frequently
+
+Data flow during build/revalidation:
+
+```
+Next.js Server Component
+  └─ axios → NEXT_PUBLIC_API_URL (Express backend)
+       └─ backend → GitHub API (cached 1h in memory)
+            └─ Snippet[] | Project[] (typed)
+  └─ HTML saved to Next.js static cache
+
+User request
+  └─ cached HTML served — no backend call
+       └─ React hydration in browser — no additional fetch
+```
 
 ## Tech stack
 
