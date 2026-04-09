@@ -1,5 +1,11 @@
 'use client';
-import React, { createContext, useContext, useReducer, useCallback, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  useCallback,
+  useState,
+} from 'react';
 
 export type Tab = {
   id: string;
@@ -22,8 +28,17 @@ export interface EditorContextValue {
   activateTab: (paneId: string, tabId: string) => void;
   activatePane: (paneId: string) => void;
   reorderTabs: (paneId: string, newTabs: Tab[]) => void;
-  moveTab: (fromPaneId: string, tabId: string, toPaneId: string, position: number) => void;
-  openTabInNewPane: (fromPaneId: string, tabId: string, side: 'left' | 'right') => void;
+  moveTab: (
+    fromPaneId: string,
+    tabId: string,
+    toPaneId: string,
+    position: number,
+  ) => void;
+  openTabInNewPane: (
+    fromPaneId: string,
+    tabId: string,
+    side: 'left' | 'right',
+  ) => void;
 }
 
 type EditorAction =
@@ -32,14 +47,29 @@ type EditorAction =
   | { type: 'ACTIVATE_TAB'; paneId: string; tabId: string }
   | { type: 'ACTIVATE_PANE'; paneId: string }
   | { type: 'REORDER_TABS'; paneId: string; newTabs: Tab[] }
-  | { type: 'MOVE_TAB'; fromPaneId: string; tabId: string; toPaneId: string; position: number }
-  | { type: 'OPEN_IN_NEW_PANE'; fromPaneId: string; tabId: string; side: 'left' | 'right' };
+  | {
+      type: 'MOVE_TAB';
+      fromPaneId: string;
+      tabId: string;
+      toPaneId: string;
+      position: number;
+    }
+  | {
+      type: 'OPEN_IN_NEW_PANE';
+      fromPaneId: string;
+      tabId: string;
+      side: 'left' | 'right';
+    };
 
 interface EditorState {
   panes: Pane[];
 }
 
-function closeTabFromPane(panes: Pane[], paneId: string, tabId: string): Pane[] {
+function closeTabFromPane(
+  panes: Pane[],
+  paneId: string,
+  tabId: string,
+): Pane[] {
   return panes.map((pane) => {
     if (pane.id !== paneId) return pane;
     const idx = pane.tabs.findIndex((t) => t.id === tabId);
@@ -58,7 +88,9 @@ function ensureActivePane(panes: Pane[]): Pane[] {
   const hasActive = panes.some((p) => p.active);
   if (hasActive) return panes;
   if (panes.length === 0) return panes;
-  return panes.map((p, i) => (i === panes.length - 1 ? { ...p, active: true } : p));
+  return panes.map((p, i) =>
+    i === panes.length - 1 ? { ...p, active: true } : p,
+  );
 }
 
 function editorReducer(state: EditorState, action: EditorAction): EditorState {
@@ -70,7 +102,19 @@ function editorReducer(state: EditorState, action: EditorAction): EditorState {
       if (existingPane) {
         const alreadyOpen = existingPane.tabs.some((t) => t.id === tab.id);
         if (alreadyOpen) {
-          return editorReducer(state, { type: 'ACTIVATE_TAB', paneId, tabId: tab.id });
+          const newPanes = state.panes.map((pane) => {
+            if (pane.id !== paneId) return { ...pane, active: false };
+            return {
+              ...pane,
+              active: true,
+              tabs: pane.tabs.map((t) =>
+                t.id === tab.id
+                  ? { ...tab, active: true }
+                  : { ...t, active: false },
+              ),
+            };
+          });
+          return { panes: newPanes };
         }
         const newPanes = state.panes.map((pane) => {
           if (pane.id !== paneId) return { ...pane, active: false };
@@ -93,10 +137,7 @@ function editorReducer(state: EditorState, action: EditorAction): EditorState {
         active: true,
       };
       return {
-        panes: [
-          ...state.panes.map((p) => ({ ...p, active: false })),
-          newPane,
-        ],
+        panes: [...state.panes.map((p) => ({ ...p, active: false })), newPane],
       };
     }
 
@@ -105,13 +146,20 @@ function editorReducer(state: EditorState, action: EditorAction): EditorState {
       const panesAfterClose = closeTabFromPane(state.panes, paneId, tabId);
       const targetPane = panesAfterClose.find((p) => p.id === paneId);
 
-      if (targetPane && targetPane.tabs.length === 0 && state.panes.length > 1) {
+      if (
+        targetPane &&
+        targetPane.tabs.length === 0 &&
+        state.panes.length > 1
+      ) {
         const filtered = panesAfterClose.filter((p) => p.id !== paneId);
-        const wasActive = state.panes.find((p) => p.id === paneId)?.active ?? false;
+        const wasActive =
+          state.panes.find((p) => p.id === paneId)?.active ?? false;
         if (wasActive) {
           const targetPaneIndex = state.panes.findIndex((p) => p.id === paneId);
           const adjacentIndex =
-            targetPaneIndex < filtered.length ? targetPaneIndex : filtered.length - 1;
+            targetPaneIndex < filtered.length
+              ? targetPaneIndex
+              : filtered.length - 1;
           return {
             panes: filtered.map((p, i) => ({
               ...p,
@@ -163,13 +211,25 @@ function editorReducer(state: EditorState, action: EditorAction): EditorState {
 
       let panesAfterRemove = closeTabFromPane(state.panes, fromPaneId, tabId);
 
-      const sourcePaneAfterRemove = panesAfterRemove.find((p) => p.id === fromPaneId);
-      if (sourcePaneAfterRemove && sourcePaneAfterRemove.tabs.length === 0 && panesAfterRemove.length > 1) {
-        const sourceIndex = panesAfterRemove.findIndex((p) => p.id === fromPaneId);
+      const sourcePaneAfterRemove = panesAfterRemove.find(
+        (p) => p.id === fromPaneId,
+      );
+      if (
+        sourcePaneAfterRemove &&
+        sourcePaneAfterRemove.tabs.length === 0 &&
+        panesAfterRemove.length > 1
+      ) {
+        const sourceIndex = panesAfterRemove.findIndex(
+          (p) => p.id === fromPaneId,
+        );
         panesAfterRemove = panesAfterRemove.filter((p) => p.id !== fromPaneId);
-        const wasActive = state.panes.find((p) => p.id === fromPaneId)?.active ?? false;
+        const wasActive =
+          state.panes.find((p) => p.id === fromPaneId)?.active ?? false;
         if (wasActive && fromPaneId !== toPaneId) {
-          const adjIdx = sourceIndex < panesAfterRemove.length ? sourceIndex : panesAfterRemove.length - 1;
+          const adjIdx =
+            sourceIndex < panesAfterRemove.length
+              ? sourceIndex
+              : panesAfterRemove.length - 1;
           panesAfterRemove = panesAfterRemove.map((p, i) => ({
             ...p,
             active: i === adjIdx,
@@ -179,6 +239,14 @@ function editorReducer(state: EditorState, action: EditorAction): EditorState {
 
       const newPanes = panesAfterRemove.map((pane) => {
         if (pane.id !== toPaneId) return { ...pane, active: false };
+        const alreadyExists = pane.tabs.some((t) => t.id === tab.id);
+        if (alreadyExists) {
+          return {
+            ...pane,
+            active: true,
+            tabs: pane.tabs.map((t) => ({ ...t, active: t.id === tab.id })),
+          };
+        }
         const newTabs = [...pane.tabs.map((t) => ({ ...t, active: false }))];
         const insertAt = Math.min(position, newTabs.length);
         newTabs.splice(insertAt, 0, { ...tab, active: true });
@@ -197,12 +265,26 @@ function editorReducer(state: EditorState, action: EditorAction): EditorState {
 
       let panesAfterRemove = closeTabFromPane(state.panes, fromPaneId, tabId);
 
-      const sourcePaneAfterRemove = panesAfterRemove.find((p) => p.id === fromPaneId);
-      if (sourcePaneAfterRemove && sourcePaneAfterRemove.tabs.length === 0 && panesAfterRemove.length > 1) {
-        const sourceIndex = panesAfterRemove.findIndex((p) => p.id === fromPaneId);
+      const sourcePaneAfterRemove = panesAfterRemove.find(
+        (p) => p.id === fromPaneId,
+      );
+      if (
+        sourcePaneAfterRemove &&
+        sourcePaneAfterRemove.tabs.length === 0 &&
+        panesAfterRemove.length > 1
+      ) {
+        const sourceIndex = panesAfterRemove.findIndex(
+          (p) => p.id === fromPaneId,
+        );
         panesAfterRemove = panesAfterRemove.filter((p) => p.id !== fromPaneId);
-        const adjIdx = sourceIndex < panesAfterRemove.length ? sourceIndex : panesAfterRemove.length - 1;
-        panesAfterRemove = panesAfterRemove.map((p, i) => ({ ...p, active: i === adjIdx }));
+        const adjIdx =
+          sourceIndex < panesAfterRemove.length
+            ? sourceIndex
+            : panesAfterRemove.length - 1;
+        panesAfterRemove = panesAfterRemove.map((p, i) => ({
+          ...p,
+          active: i === adjIdx,
+        }));
       }
 
       const newPane: Pane = {
@@ -211,7 +293,10 @@ function editorReducer(state: EditorState, action: EditorAction): EditorState {
         active: true,
       };
 
-      const inactivePanes = panesAfterRemove.map((p) => ({ ...p, active: false }));
+      const inactivePanes = panesAfterRemove.map((p) => ({
+        ...p,
+        active: false,
+      }));
 
       const resultPanes =
         side === 'left'
@@ -255,7 +340,9 @@ export function EditorProvider({
 }) {
   const [state, dispatch] = useReducer(editorReducer, { panes: initialPanes });
   const [dragging, setDragging] = useState<DragState | null>(null);
-  const [dropIndicator, setDropIndicator] = useState<DropIndicator | null>(null);
+  const [dropIndicator, setDropIndicator] = useState<DropIndicator | null>(
+    null,
+  );
 
   const openTab = useCallback((paneId: string, tab: Omit<Tab, 'active'>) => {
     dispatch({ type: 'OPEN_TAB', paneId, tab });
@@ -293,9 +380,20 @@ export function EditorProvider({
 
   return (
     <EditorContext.Provider
-      value={{ panes: state.panes, openTab, closeTab, activateTab, activatePane, reorderTabs, moveTab, openTabInNewPane }}
+      value={{
+        panes: state.panes,
+        openTab,
+        closeTab,
+        activateTab,
+        activatePane,
+        reorderTabs,
+        moveTab,
+        openTabInNewPane,
+      }}
     >
-      <EditorDndContext.Provider value={{ dragging, setDragging, dropIndicator, setDropIndicator }}>
+      <EditorDndContext.Provider
+        value={{ dragging, setDragging, dropIndicator, setDropIndicator }}
+      >
         {children}
       </EditorDndContext.Provider>
     </EditorContext.Provider>
@@ -310,6 +408,7 @@ export function useEditor(): EditorContextValue {
 
 export function useEditorDndState(): EditorDndContextValue {
   const ctx = useContext(EditorDndContext);
-  if (!ctx) throw new Error('useEditorDndState must be used within EditorProvider');
+  if (!ctx)
+    throw new Error('useEditorDndState must be used within EditorProvider');
   return ctx;
 }
