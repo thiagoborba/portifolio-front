@@ -12,7 +12,7 @@ interface ProjectsViewProps {
 
 export default function ProjectsView({ projects }: ProjectsViewProps) {
   return (
-    <EditorProvider initialPanes={[{ id: 'projects', tabs: [], active: true }]}>
+    <EditorProvider initialPanes={[{ id: 'projects', tabs: [], active: true }]} routeKey="projects">
       <ProjectsViewInner projects={projects} />
     </EditorProvider>
   );

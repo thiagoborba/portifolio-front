@@ -21,6 +21,7 @@ export function EditorPane({ paneId, staticContent }: EditorPaneProps) {
   return (
     <div className={styles.pane} onMouseDown={() => activatePane(paneId)}>
       <EditorTabBar
+        activeTabId={activeTab?.id}
         onSpacerDragOver={dnd.spacerDropHandlers(paneId).onDragOver}
         onSpacerDrop={dnd.spacerDropHandlers(paneId).onDrop}
       >
@@ -32,6 +33,7 @@ export function EditorPane({ paneId, staticContent }: EditorPaneProps) {
           return (
             <EditorTab
               key={tab.id}
+              tabId={tab.id}
               label={tab.title}
               icon={tab.icon}
               isActive={tab.active}

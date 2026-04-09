@@ -5,6 +5,7 @@ import styles from './styles.module.scss';
 
 export interface EditorTabProps {
   label: string;
+  tabId?: string;
   icon?: React.ReactNode;
   isActive?: boolean;
   isPaneActive?: boolean;
@@ -23,6 +24,7 @@ export interface EditorTabProps {
 
 export function EditorTab({
   label,
+  tabId,
   icon,
   isActive = false,
   isPaneActive = false,
@@ -55,6 +57,7 @@ export function EditorTab({
     <div
       className={classNames}
       draggable={hasDragHandlers}
+      data-tabid={tabId}
       onClick={onClick}
       onDragStart={onDragStart}
       onDragEnter={onDragEnter}

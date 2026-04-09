@@ -5,6 +5,7 @@ import styles from './styles.module.scss';
 
 export interface EditorTabBarProps {
   children?: React.ReactNode;
+  activeTabId?: string;
   onSpacerDragOver?: React.DragEventHandler<HTMLDivElement>;
   onSpacerDrop?: React.DragEventHandler<HTMLDivElement>;
   onBarDragEnter?: React.DragEventHandler<HTMLDivElement>;
@@ -14,6 +15,7 @@ export interface EditorTabBarProps {
 
 export function EditorTabBar({
   children,
+  activeTabId,
   onSpacerDragOver,
   onSpacerDrop,
   onBarDragEnter,
@@ -54,6 +56,15 @@ export function EditorTabBar({
   useEffect(() => {
     calcThumb();
   }, [children, calcThumb]);
+
+  // Scroll the active tab into view whenever it changes
+  useEffect(() => {
+    if (!activeTabId || !scrollRef.current) return;
+    const el = scrollRef.current.querySelector<HTMLElement>(
+      `[data-tabid="${activeTabId}"]`,
+    );
+    el?.scrollIntoView({ inline: 'nearest', block: 'nearest' });
+  }, [activeTabId]);
 
   function handleThumbPointerDown(e: React.PointerEvent<HTMLDivElement>) {
     e.preventDefault();

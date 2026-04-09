@@ -1,4 +1,5 @@
 import { Header, Footer } from '@/Components';
+import { ClientShell } from '@/Components/ClientShell';
 import '@/Components/Layout/styles.scss';
 import '@/styles/_reset.scss';
 
@@ -11,11 +12,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <title>thiago-borba</title>
       </head>
       <body>
-        <div className="outside-container">
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </div>
+        <ClientShell>
+          <div className="outside-container">
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </div>
+        </ClientShell>
       </body>
     </html>
   );

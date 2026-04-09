@@ -15,7 +15,7 @@ type SidebarTab = 'personal' | 'hobbies' | 'code';
 export default function AboutView() {
   const [activeSidebarTab, setActiveSidebarTab] = useState<SidebarTab>('personal');
   return (
-    <EditorProvider initialPanes={[{ id: 'main', tabs: [], active: true }]}>
+    <EditorProvider initialPanes={[{ id: 'main', tabs: [], active: true }]} routeKey="about-me">
       <AboutViewInner
         activeSidebarTab={activeSidebarTab}
         onSidebarTabChange={setActiveSidebarTab}

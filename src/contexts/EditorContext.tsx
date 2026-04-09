@@ -4,8 +4,11 @@ import React, {
   useContext,
   useReducer,
   useCallback,
+  useEffect,
+  useRef,
   useState,
 } from 'react';
+import { useGlobalEditorRegistry } from './GlobalEditorRegistryContext';
 
 export type Tab = {
   id: string;
@@ -334,15 +337,33 @@ const EditorContext = createContext<EditorContextValue | null>(null);
 export function EditorProvider({
   children,
   initialPanes = [],
+  routeKey,
 }: {
   children: React.ReactNode;
   initialPanes?: Pane[];
+  routeKey?: string;
 }) {
-  const [state, dispatch] = useReducer(editorReducer, { panes: initialPanes });
+  const registry = useGlobalEditorRegistry();
+
+  // Read the persisted state only once at mount time (useReducer ignores
+  // the initial value after the first render, so it is safe to capture it
+  // eagerly in a ref and pass it as the lazy initializer argument).
+  const initialPanesRef = useRef<Pane[] | null>(null);
+  if (initialPanesRef.current === null) {
+    const saved = routeKey ? registry.getSlice(routeKey) : undefined;
+    initialPanesRef.current = saved ? saved.panes : initialPanes;
+  }
+
+  const [state, dispatch] = useReducer(editorReducer, { panes: initialPanesRef.current });
   const [dragging, setDragging] = useState<DragState | null>(null);
   const [dropIndicator, setDropIndicator] = useState<DropIndicator | null>(
     null,
   );
+
+  useEffect(() => {
+    if (!routeKey) return;
+    registry.saveSlice(routeKey, state.panes);
+  }, [routeKey, state.panes]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const openTab = useCallback((paneId: string, tab: Omit<Tab, 'active'>) => {
     dispatch({ type: 'OPEN_TAB', paneId, tab });
