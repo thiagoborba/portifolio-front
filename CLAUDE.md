@@ -72,7 +72,26 @@ Both `getSnippets` and `getProjects` use fail-silently error handling — `try/c
 | `/` | ISR | 86400s (24h) | Snippets rarely change |
 | `/projects` | ISR | 3600s (1h) | Repos update more frequently |
 | `/about-me` | SSG | never | Data is a local TS module (`data.ts`) |
-| `/contact-me` | CSR | — | Form only, no fetched data |
+| `/contact-me` | SSG | never | Static content only; no fetched data |
+
+#### `'use client'` does not mean CSR
+
+A common misconception: `'use client'` does **not** prevent server rendering. Client Components are still pre-rendered on the server at build time — their initial HTML is included in the static output. The directive only means "include this component in the client bundle for hydration."
+
+The only way to opt out of server rendering in Next.js is:
+```ts
+const Component = dynamic(() => import('./Component'), { ssr: false })
+```
+
+**Practical difference between about-me and contact-me:**
+
+| | `/about-me` | `/contact-me` |
+|---|---|---|
+| `page.tsx` type | Server Component | Client Component (`'use client'`) |
+| Content in initial HTML | Yes | Yes |
+| `page.tsx` JS in client bundle | No | Yes (unnecessary overhead) |
+
+Both pages generate the same initial HTML. The `/contact-me` `page.tsx` being a Client Component is a minor inefficiency (it ships slightly more JS), but it does not affect rendering strategy — the sidebar contact info (email, phone, social links) is present in the server-rendered HTML in both cases.
 
 #### How ISR works here
 
