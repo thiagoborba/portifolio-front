@@ -27,29 +27,28 @@ $spacing-lg: 3rem;
   min-height: 0;
 
   @media (max-width: $breakpoint-mobile) {
-    display: block;
     padding-top: 1.5rem;
-    height: auto;
   }
 
   .contact {
     display: flex;
     width: 100%;
     justify-content: center;
-    height: 100%;
+    flex: 1;
+    min-height: 0;
 
     code {
       white-space: pre-wrap;
     }
 
     .esq {
-      width: stretch;
+      flex: 1;
       border-right: $border-style !important;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: stretch;
+      min-height: 0;
 
       form {
         width: $form-width;
@@ -65,7 +64,7 @@ $spacing-lg: 3rem;
     }
 
     .dir {
-      width: stretch;
+      flex: 1;
     }
 
     @media (max-width: $breakpoint-tablet) {
@@ -83,7 +82,6 @@ $spacing-lg: 3rem;
 
     @media (max-width: $breakpoint-mobile) {
       border-left: none;
-      height: auto;
     }
   }
 }
