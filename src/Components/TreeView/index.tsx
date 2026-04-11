@@ -1,18 +1,10 @@
 'use client';
 
 import { createContext, useContext, useState } from 'react';
-import {
-  VscFolder,
-  VscFolderOpened,
-  VscFile,
-  VscChevronDown,
-  VscChevronRight,
-} from 'react-icons/vsc';
+import { VscChevronDown, VscChevronRight } from 'react-icons/vsc';
 import { isLeaf, type TreeNode, type TreeLeaf } from '@/app/about-me/data';
+import { getFileIcon, getFolderIcon } from '@/lib/material-icons';
 import styles from './styles.module.scss';
-
-const FOLDER_COLORS = ['#fea55f', '#c98bdf', '#43d9ad'];
-const LEAF_COLORS = ['#e99287', '#43d9ad', '#c98bdf', '#fea55f', '#90a1b9'];
 
 // ─── Context ──────────────────────────────────────────────────────────────────
 
@@ -30,15 +22,12 @@ const TreeCtx = createContext<TreeContext>({
 
 function TreeLeafItem({
   leaf,
-  colorIndex,
   depth,
 }: {
   leaf: TreeLeaf;
-  colorIndex: number;
   depth: number;
 }) {
   const { selectedId, onFileSelect } = useContext(TreeCtx);
-  const color = LEAF_COLORS[colorIndex % LEAF_COLORS.length];
   const selected = selectedId === leaf.id;
 
   return (
@@ -47,7 +36,15 @@ function TreeLeafItem({
       style={{ paddingLeft: `${depth * 16 + 8}px` }}
       onClick={() => onFileSelect(leaf)}
     >
-      <VscFile style={{ color }} className={styles.icon} />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={getFileIcon(leaf.label)}
+        alt=""
+        width={16}
+        height={16}
+        aria-hidden="true"
+        className={styles.icon}
+      />
       <span className={styles.leafLabel}>{leaf.label}</span>
     </button>
   );
@@ -61,38 +58,39 @@ function TreeNodeItem({
 }: {
   node: TreeNode;
   depth: number;
-  colorIndex?: number;
 }) {
-  const [open, setOpen] = useState(true);
-  const folderColor = FOLDER_COLORS[depth % FOLDER_COLORS.length];
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <div>
       <button
         className={styles.nodeButton}
         style={{ paddingLeft: `${depth * 16 + 4}px` }}
-        onClick={() => setOpen(!open)}
+        onClick={() => setIsOpen(!isOpen)}
       >
-        {open ? (
+        {isOpen ? (
           <VscChevronDown className={styles.chevron} />
         ) : (
           <VscChevronRight className={styles.chevron} />
         )}
-        {open ? (
-          <VscFolderOpened style={{ color: folderColor }} className={styles.icon} />
-        ) : (
-          <VscFolder style={{ color: folderColor }} className={styles.icon} />
-        )}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={getFolderIcon(node.label, isOpen)}
+          alt=""
+          width={16}
+          height={16}
+          aria-hidden="true"
+          className={styles.icon}
+        />
         <span className={styles.nodeLabel}>{node.label}</span>
       </button>
-      {open && (
+      {isOpen && (
         <div>
-          {node.children.map((child, index) =>
+          {node.children.map((child) =>
             isLeaf(child) ? (
               <TreeLeafItem
                 key={child.id}
                 leaf={child}
-                colorIndex={index}
                 depth={depth + 1}
               />
             ) : (
@@ -100,7 +98,6 @@ function TreeNodeItem({
                 key={child.id}
                 node={child}
                 depth={depth + 1}
-                colorIndex={index}
               />
             ),
           )}
@@ -126,11 +123,11 @@ export function TreeView({
   return (
     <TreeCtx.Provider value={{ selectedId, onFileSelect }}>
       <div className={styles.root}>
-        {data.map((item, index) =>
+        {data.map((item) =>
           isLeaf(item) ? (
-            <TreeLeafItem key={item.id} leaf={item} colorIndex={index} depth={0} />
+            <TreeLeafItem key={item.id} leaf={item} depth={0} />
           ) : (
-            <TreeNodeItem key={item.id} node={item} depth={0} colorIndex={index} />
+            <TreeNodeItem key={item.id} node={item} depth={0} />
           ),
         )}
       </div>

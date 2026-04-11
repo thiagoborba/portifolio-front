@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { VscFile } from 'react-icons/vsc';
+import { getFileIcon } from '@/lib/material-icons';
 import { SidebarAbout } from '../SidebarAbout';
 import { AboutContent } from '../AboutContent';
 import { PersonalTree } from '../PersonalTree';
@@ -73,7 +73,7 @@ function AboutViewInner({
     openTab(activePaneId, {
       id: file.id,
       title: file.label,
-      icon: <VscFile size={14} />,
+      icon: <img src={getFileIcon(file.label)} alt="" width={14} height={14} aria-hidden="true" />,
       content: <AboutContent lines={file.content ?? []} />,
     });
     activateTab(activePaneId, file.id);
