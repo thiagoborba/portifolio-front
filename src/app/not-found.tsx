@@ -3,6 +3,7 @@
 import ShikiHighlighter from 'react-shiki';
 import styles from './not-found.module.scss';
 import Image from 'next/image';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 const notFoundSnippet = `const page = findPage('you-were-looking-for');
 
@@ -21,7 +22,15 @@ if (!page) {
 
 redirect('home');`;
 
+const mobileNotFoundSnippet = `throw new Error(
+  "404: PageNotFoundError 🙁"
+);
+
+goBack() || goHome();`;
+
 export default function NotFound() {
+  const isMobile = useIsMobile();
+
   return (
     <div className={styles.container}>
       <div className={styles.left}>
@@ -38,11 +47,11 @@ export default function NotFound() {
         <ShikiHighlighter
           language="javascript"
           theme="dracula"
-          showLineNumbers
+          showLineNumbers={!isMobile}
           rootStyle="background-color: transparent; width: 100%; height: 100%;"
           showLanguage={false}
         >
-          {notFoundSnippet}
+          {isMobile ? mobileNotFoundSnippet : notFoundSnippet}
         </ShikiHighlighter>
       </div>
     </div>
