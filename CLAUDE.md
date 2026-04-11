@@ -46,6 +46,18 @@ Every page route that uses the editor aesthetic follows this composition:
 
 Barrel-exported from `src/Components/index.tsx`. All reusable UI lives here; page-specific components live under `src/app/<route>/components/`.
 
+### Syntax highlighting
+
+`react-shiki` (`ShikiHighlighter`) is used in two places:
+- **`/about-me` — `AboutContent`**: renders `TreeLeaf.content` (string arrays) with theme `dracula`, `showLineNumbers`. The component is a flex-column wrapper — `overflow` is intentionally absent so scroll stays in `EditorPane .content`.
+- **`/contact-me` — `Highlighter`**: live preview of the contact form snippet, same theme.
+
+`CodeCarousel` and `SnippetsPanel` use `dangerouslySetInnerHTML` with pre-rendered Shiki HTML from the backend. Both sanitize via `sanitizeHtml()` (`src/lib/sanitize.ts`) before rendering.
+
+### Security headers
+
+`next.config.ts` applies HTTP security headers to all routes: `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`. CSP (`Content-Security-Policy`) is **not** set via static headers — Next.js injects inline scripts for hydration that `script-src 'self'` would block. Proper CSP requires nonce-based `middleware.ts`.
+
 ### Styling
 
 Sass modules (`.module.scss`) per component. Global partials in `src/styles/`: `_colors.scss`, `_variables.scss`, `_reset.scss`, `_responsive.scss`, `_typography.scss`. Import global styles only from layout files, not components.
@@ -54,10 +66,11 @@ Sass modules (`.module.scss`) per component. Global partials in `src/styles/`: `
 
 ### Static data
 
-- `src/app/about-me/data.ts` — `TreeNode`/`TreeLeaf` tree structures for the about-me explorer panel; `isLeaf` / `getFirstLeaf` helpers included.
+- `src/app/about-me/data.ts` — `TreeNode`/`TreeLeaf` tree structures for the about-me explorer panel (`personalTree`, `hobbiesTree`, `codeTree`); `isLeaf` / `getFirstLeaf` helpers included. `personalTree` contains real CV data: bio, expertise, education, and 6 work experiences.
 - `src/Constants/index.ts` — `ROUTES` map and `snippetTemplate` (the JS snippet shown in the contact-me sidebar).
 - `src/lib/tech-icons.tsx` — maps technology names to `react-icons` icons.
 - `src/lib/project-images.ts` — maps project names to image assets.
+- `src/lib/sanitize.ts` — `sanitizeHtml(html)` wrapper over `isomorphic-dompurify` with a Shiki-scoped allow-list (`pre/code/span`, `class/style`). Applied in `CodeCarousel` and `SnippetsPanel` before every `dangerouslySetInnerHTML`.
 
 ### API client
 

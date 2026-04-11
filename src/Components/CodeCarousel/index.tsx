@@ -2,6 +2,7 @@
 
 import './styles.scss';
 import type { Snippet } from '@/api';
+import { sanitizeHtml } from '@/lib/sanitize';
 import { useCarouselScroll } from './useCarouselScroll';
 
 type Props = { snippets: Snippet[] };
@@ -12,7 +13,7 @@ function CodeBlock({ snippet }: { snippet: Snippet }) {
       <div className="code-carousel__header">{`// ${snippet.repo} — ${snippet.filename}`}</div>
       <div
         className="code-carousel__code"
-        dangerouslySetInnerHTML={{ __html: snippet.html }}
+        dangerouslySetInnerHTML={{ __html: sanitizeHtml(snippet.html) }}
       />
     </div>
   );

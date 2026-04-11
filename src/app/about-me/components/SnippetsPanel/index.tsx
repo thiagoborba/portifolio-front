@@ -1,4 +1,5 @@
 import type { Snippet } from '@/api';
+import { sanitizeHtml } from '@/lib/sanitize';
 import styles from './styles.module.scss';
 
 interface SnippetsPanelProps {
@@ -9,7 +10,7 @@ export function SnippetsPanel({ snippets }: SnippetsPanelProps) {
   if (snippets.length === 0) {
     return (
       <div className={`${styles.panel} ${styles.empty}`}>
-        <span className={styles.placeholder}>// no snippets available</span>
+        <span className={styles.placeholder}>{'// no snippets available'}</span>
       </div>
     );
   }
@@ -26,7 +27,7 @@ export function SnippetsPanel({ snippets }: SnippetsPanelProps) {
           </div>
           <div
             className={styles.code}
-            dangerouslySetInnerHTML={{ __html: snippet.html }}
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(snippet.html) }}
           />
         </div>
       ))}

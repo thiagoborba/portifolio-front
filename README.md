@@ -2,16 +2,16 @@
 
 Personal portfolio website built with a VS Code-inspired aesthetic: sidebar with icon tabs, file-tree explorer, editor tabs, and a dark editor-style layout throughout.
 
-**Live:** https://portifolio-front-five.vercel.app
+**Live:** https://thiago-borba.vercel.app/
 
 ## Pages
 
-| Route | Description | Rendering |
-| --- | --- | --- |
-| `/` | Landing — name, title, and a carousel of code snippets fetched from GitHub | ISR — revalidates every 24h |
-| `/about-me` | Interactive file-tree explorer with personal info, hobbies, and code snippets | SSG — data is a local TS module |
-| `/projects` | GitHub repositories fetched from the backend, displayed as project cards | ISR — revalidates every 1h |
-| `/contact-me` | Contact form with a live code-snippet preview that updates as you type | CSR — no server data |
+| Route         | Description                                                                   | Rendering                       |
+| ------------- | ----------------------------------------------------------------------------- | ------------------------------- |
+| `/`           | Landing — name, title, and a carousel of code snippets fetched from GitHub    | ISR — revalidates every 24h     |
+| `/about-me`   | Interactive file-tree explorer with personal info, hobbies, and code snippets | SSG — data is a local TS module |
+| `/projects`   | GitHub repositories fetched from the backend, displayed as project cards      | ISR — revalidates every 1h      |
+| `/contact-me` | Contact form with a live code-snippet preview that updates as you type        | CSR — no server data            |
 
 ### Data fetching
 

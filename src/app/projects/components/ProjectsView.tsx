@@ -57,6 +57,14 @@ function ProjectsViewInner({ projects }: ProjectsViewProps) {
           open={true}
         />
       }
+      mobileSidebarContent={
+        <SidebarProjectsContent
+          tags={allTags}
+          selected={selectedTechs}
+          onToggle={toggleTech}
+          open={false}
+        />
+      }
       staticContent={
         <div className="projects-grid">
           {filtered.map((project) => (

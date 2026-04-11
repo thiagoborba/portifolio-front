@@ -1,3 +1,4 @@
+import ShikiHighlighter from 'react-shiki';
 import styles from './styles.module.scss';
 
 interface AboutContentProps {
@@ -11,12 +12,15 @@ export function AboutContent({ lines }: AboutContentProps) {
 
   return (
     <div className={styles.editor}>
-      {lines.map((line, index) => (
-        <div key={index} className={styles.line}>
-          <span className={styles.lineNumber}>{index + 1}</span>
-          <span className={styles.lineContent}>{line}</span>
-        </div>
-      ))}
+      <ShikiHighlighter
+        rootStyle="background-color: transparent; width: 100%; flex: 1; min-height: 0; overflow: visible;"
+        language="typescript"
+        theme="dracula"
+        showLineNumbers
+        showLanguage={false}
+      >
+        {lines.join('\n')}
+      </ShikiHighlighter>
     </div>
   );
 }
