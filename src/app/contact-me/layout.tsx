@@ -1,7 +1,7 @@
 'use client';
 import { EditorLayout } from '@/Components/EditorLayout';
 import { EditorProvider } from '@/contexts/EditorContext';
-import { SideBarContent } from './components/Sidebar';
+import { SidebarContent } from './components/Sidebar';
 import './contact.scss';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -10,8 +10,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <EditorLayout
         singlePane
         mobilePageName="_contact-me"
-        sidebarContent={<SideBarContent open={true} />}
-        mobileSidebarContent={<SideBarContent open={false} />}
+        sidebarContent={<SidebarContent open={true} />}
+        mobileSidebarContent={<SidebarContent open={false} />}
         staticContent={children}
       />
     </EditorProvider>

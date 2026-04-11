@@ -54,6 +54,12 @@ Barrel-exported from `src/Components/index.tsx`. All reusable UI lives here; pag
 
 `CodeCarousel` and `SnippetsPanel` use `dangerouslySetInnerHTML` with pre-rendered Shiki HTML from the backend. Both sanitize via `sanitizeHtml()` (`src/lib/sanitize.ts`) before rendering.
 
+### File icons (Material Icon Theme)
+
+SVG assets from the `vscode-material-icon-theme` package live in `public/icons/material/` (static, not bundled). `src/lib/material-icons.ts` maps file extensions and folder labels to their SVG URLs. Used in:
+- `src/Components/TreeView/index.tsx` — `<img>` replacing `VscFile`/`VscFolder`
+- `src/app/about-me/components/AboutView/index.tsx` — tab icon on file open
+
 ### Security headers
 
 `next.config.ts` applies HTTP security headers to all routes: `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`. CSP (`Content-Security-Policy`) is **not** set via static headers — Next.js injects inline scripts for hydration that `script-src 'self'` would block. Proper CSP requires nonce-based `middleware.ts`.
@@ -68,9 +74,10 @@ Sass modules (`.module.scss`) per component. Global partials in `src/styles/`: `
 
 - `src/app/about-me/data.ts` — `TreeNode`/`TreeLeaf` tree structures for the about-me explorer panel (`personalTree`, `hobbiesTree`, `codeTree`); `isLeaf` / `getFirstLeaf` helpers included. `personalTree` contains real CV data: bio, expertise, education, and 6 work experiences.
 - `src/Constants/index.ts` — `ROUTES` map and `snippetTemplate` (the JS snippet shown in the contact-me sidebar).
-- `src/lib/tech-icons.tsx` — maps technology names to `react-icons` icons.
-- `src/lib/project-images.ts` — maps project names to image assets.
+- `src/lib/tech-icons.tsx` — maps technology names to `react-icons` icons + colors.
+- `src/lib/project-images.ts` — maps project names to local image assets; falls back to Unsplash hash URL.
 - `src/lib/sanitize.ts` — `sanitizeHtml(html)` wrapper over `isomorphic-dompurify` with a Shiki-scoped allow-list (`pre/code/span`, `class/style`). Applied in `CodeCarousel` and `SnippetsPanel` before every `dangerouslySetInnerHTML`.
+- `src/lib/material-icons.ts` — `getFileIcon(label)` and `getFolderIcon(label, open)` returning URLs to SVG assets in `public/icons/material/`. Used in `TreeView` and `AboutView` tab icons.
 
 ### API client
 

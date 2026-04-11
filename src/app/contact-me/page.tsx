@@ -2,7 +2,7 @@
 
 import Highlighter from './components/Highlight';
 import ContactForm from './components/Form';
-import { FormProvider } from './context/FormContext';
+import { FormProvider } from '@/contexts/FormContext';
 
 export default function Contact() {
   return (

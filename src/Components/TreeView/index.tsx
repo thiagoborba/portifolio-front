@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState } from 'react';
 import { VscChevronDown, VscChevronRight } from 'react-icons/vsc';
-import { isLeaf, type TreeNode, type TreeLeaf } from '@/app/about-me/data';
+import { isLeaf, type TreeNode, type TreeLeaf } from '@/types/tree';
 import { getFileIcon, getFolderIcon } from '@/lib/material-icons';
 import styles from './styles.module.scss';
 

@@ -8,7 +8,14 @@ import { EditorLayout } from '@/Components/EditorLayout';
 import { Collapse } from '@/Components/Collapse';
 import { TreeView } from '@/Components/TreeView';
 import { EditorProvider, useEditor } from '@/contexts/EditorContext';
-import { personalTree, hobbiesTree, codeTree, isLeaf, type TreeLeaf, type TreeNode } from '../../data';
+import {
+  personalTree,
+  hobbiesTree,
+  codeTree,
+  isLeaf,
+  type TreeLeaf,
+  type TreeNode,
+} from '../../data';
 
 type SidebarTab = 'personal' | 'hobbies' | 'code';
 
@@ -73,7 +80,16 @@ function AboutViewInner({
     openTab(activePaneId, {
       id: file.id,
       title: file.label,
-      icon: <img src={getFileIcon(file.label)} alt="" width={14} height={14} aria-hidden="true" />,
+      icon: (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={getFileIcon(file.label)}
+          alt=""
+          width={14}
+          height={14}
+          aria-hidden="true"
+        />
+      ),
       content: <AboutContent lines={file.content ?? []} />,
     });
     activateTab(activePaneId, file.id);
@@ -81,7 +97,11 @@ function AboutViewInner({
 
   const mobileSidebarContent = (
     <>
-      <PersonalTree selectedId={activeTabId} onFileSelect={handleFileSelect} initialOpen={false} />
+      <PersonalTree
+        selectedId={activeTabId}
+        onFileSelect={handleFileSelect}
+        initialOpen={false}
+      />
       <Collapse title="hobbies" open={false}>
         <TreeView
           data={hobbiesTree[0].children}

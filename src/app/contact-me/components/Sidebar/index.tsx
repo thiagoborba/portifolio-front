@@ -1,6 +1,6 @@
 import Sidebar from '@/Components/Sidebar';
 import { Collapse } from '@/Components/Collapse';
-import { SidebarItem } from '../sidebar-item';
+import { SidebarItem } from '../SidebarItem';
 
 type contact = {
   href: string;
@@ -51,7 +51,7 @@ export const contactData: contacts[] = [
   },
 ];
 
-export function SideBarContent({ open }: { open?: boolean }) {
+export function SidebarContent({ open }: { open?: boolean }) {
   return (
     <>
       {contactData.map(({ label, contacts }) => {
@@ -77,7 +77,7 @@ export function SideBarContent({ open }: { open?: boolean }) {
 export default function SidebarContact() {
   return (
     <Sidebar>
-      <SideBarContent open={true} />
+      <SidebarContent open={true} />
     </Sidebar>
   );
 }

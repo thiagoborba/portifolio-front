@@ -1,16 +1,6 @@
-export type TreeLeaf = {
-  id: string;
-  label: string;
-  content: string[];
-};
-
-export type TreeNode = {
-  id: string;
-  label: string;
-  children: (TreeNode | TreeLeaf)[];
-};
-
-export type HobbyItem = { id: string; label: string };
+import type { TreeLeaf, TreeNode, HobbyItem } from '@/types/tree';
+export type { TreeLeaf, TreeNode, HobbyItem };
+export { isLeaf, getFirstLeaf } from '@/types/tree';
 
 // ─── Personal ────────────────────────────────────────────────────────────────
 
@@ -354,17 +344,3 @@ export const codeTree: TreeNode[] = [
   },
 ];
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
-export function isLeaf(node: TreeNode | TreeLeaf): node is TreeLeaf {
-  return !('children' in node);
-}
-
-export function getFirstLeaf(nodes: (TreeNode | TreeLeaf)[]): TreeLeaf | null {
-  for (const node of nodes) {
-    if (isLeaf(node)) return node;
-    const found = getFirstLeaf(node.children);
-    if (found) return found;
-  }
-  return null;
-}

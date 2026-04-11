@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input, Textarea, Button } from '@/Components';
-import { useFormContext } from '../../context/FormContext';
+import { useFormContext } from '@/contexts/FormContext';
+import client from '@/api/client';
 import './styles.scss';
 
 export interface Inputs {
@@ -32,29 +33,11 @@ export const ContactForm = () => {
     setLoading(true);
     try {
       const { email, message, name } = data;
-      const payload = {
-        name,
-        email,
-        message,
-      };
-
-      const response = await fetch(
-        'https://portifolio-back-iota.vercel.app/contact-form',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        },
-      );
-
-      const result = await response.json();
-      if (response.ok) {
-        alert('Mensagem enviada com sucesso!');
-      } else {
-        alert('Erro: ' + result.error);
-      }
+      await client.post('/contact-form', { name, email, message });
+      alert('Mensagem enviada com sucesso!');
     } catch (error: unknown) {
       console.error('Error submitting form:', error);
+      alert('Erro ao enviar mensagem. Tente novamente.');
     } finally {
       setLoading(false);
     }
