@@ -1,0 +1,44 @@
+@use '../styles/variables';
+
+.container {
+  display: flex;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+
+  @media (max-width: 890px) {
+    flex-direction: column;
+  }
+}
+
+.left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 890px) {
+    border-right: none;
+    border-bottom: 1px solid variables.$lines;
+    padding: 3rem 0;
+  }
+}
+
+.code {
+  font-size: clamp(6rem, 15vw, 10rem);
+  color: variables.$accent-coral;
+  letter-spacing: -4px;
+  line-height: 1;
+  text-shadow:
+    4px 4px 0 #c27a3a,
+    8px 8px 0 #8a5228;
+}
+
+.right {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  overflow: hidden;
+  padding: 1rem 0;
+}

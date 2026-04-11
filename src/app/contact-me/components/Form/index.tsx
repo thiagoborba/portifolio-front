@@ -15,11 +15,13 @@ export interface Inputs {
 
 export const ContactForm = () => {
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  const { values, setValue } = useFormContext();
+  const { values, setValue, setValues } = useFormContext();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: values,
@@ -34,13 +36,31 @@ export const ContactForm = () => {
     try {
       const { email, message, name } = data;
       await client.post('/contact-form', { name, email, message });
-      alert('Mensagem enviada com sucesso!');
+      reset();
+      setValues({ name: '', email: '', message: '' });
+      setSubmitted(true);
     } catch (error: unknown) {
       console.error('Error submitting form:', error);
       alert('Erro ao enviar mensagem. Tente novamente.');
     } finally {
       setLoading(false);
     }
+  }
+
+  if (submitted) {
+    return (
+      <div className="thank-you">
+        <h2>Thank you! 🤘</h2>
+        <p>
+          Your message has been accepted.
+          <br />
+          You will receive answer soon!
+        </p>
+        <Button type="button" onClick={() => setSubmitted(false)}>
+          send-new-message
+        </Button>
+      </div>
+    );
   }
 
   return (
