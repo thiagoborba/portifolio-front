@@ -28,6 +28,10 @@ $spacing-lg: 3rem;
 
   @media (max-width: $breakpoint-mobile) {
     padding-top: 1.5rem;
+
+    @media (max-height: 750px) {
+      padding-top: 0;
+    }
   }
 
   .contact {
@@ -59,6 +63,14 @@ $spacing-lg: 3rem;
           max-width: none;
           width: 100%;
           padding: $spacing-lg;
+        }
+      }
+
+      @media (max-width: $breakpoint-mobile) and (max-height: 750px) {
+        justify-content: flex-start;
+
+        form {
+          padding-top: 2rem;
         }
       }
     }
