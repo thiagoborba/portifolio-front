@@ -14,7 +14,14 @@ export const metadata: Metadata = {
   },
   description:
     'Portfolio of Thiago Borba, a front-end developer specializing in React, Next.js, and TypeScript. Explore projects, experience, and get in touch.',
-  keywords: ['front-end developer', 'React', 'Next.js', 'TypeScript', 'portfolio', 'Thiago Borba'],
+  keywords: [
+    'front-end developer',
+    'React',
+    'Next.js',
+    'TypeScript',
+    'portfolio',
+    'Thiago Borba',
+  ],
   authors: [{ name: 'Thiago Borba' }],
   creator: 'Thiago Borba',
   openGraph: {
@@ -55,6 +62,9 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.svg',
   },
+  verification: {
+    google: 'U9tFb1PFFpNvMR1HgqT0NzRcAqs2psR3v6L0E5MSygw',
+  },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -72,7 +82,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 jobTitle: 'Front-end Developer',
                 url: SITE_URL,
                 sameAs: ['https://github.com/thiagoborba'],
-                knowsAbout: ['React', 'Next.js', 'TypeScript', 'JavaScript', 'Node.js'],
+                knowsAbout: [
+                  'React',
+                  'Next.js',
+                  'TypeScript',
+                  'JavaScript',
+                  'Node.js',
+                ],
               },
               {
                 '@type': 'WebSite',
