@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { getFileIcon } from '@/lib/material-icons';
 import { SidebarAbout } from '../SidebarAbout';
 import { AboutContent } from '../AboutContent';
@@ -7,7 +8,12 @@ import { PersonalTree } from '../PersonalTree';
 import { EditorLayout } from '@/Components/EditorLayout';
 import { Collapse } from '@/Components/Collapse';
 import { TreeView } from '@/Components/TreeView';
-import { EditorProvider, useEditor } from '@/contexts/EditorContext';
+import {
+  EditorProvider,
+  useEditor,
+  type Pane,
+  type Tab,
+} from '@/contexts/EditorContext';
 import {
   personalTree,
   hobbiesTree,
@@ -42,14 +48,61 @@ function getSectionForLeafId(id: string): SidebarTab | null {
   return null;
 }
 
+function findLeafById(
+  items: (TreeNode | TreeLeaf)[],
+  id: string,
+): TreeLeaf | null {
+  for (const item of items) {
+    if (isLeaf(item)) {
+      if (item.id === id) return item;
+    } else {
+      const found = findLeafById(item.children, id);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
 export default function AboutView() {
   const [activeSidebarTab, setActiveSidebarTab] =
     useState<SidebarTab>('personal');
+
+  const bioLeaf = findLeafById(personalTree, 'bio-ts');
+  const dbcLeaf = findLeafById(personalTree, 'dbc');
+
+  function buildTab(leaf: TreeLeaf): Tab {
+    return {
+      id: leaf.id,
+      title: leaf.label,
+      icon: (
+        <Image
+          src={getFileIcon(leaf.label)}
+          alt=""
+          width={14}
+          height={14}
+          aria-hidden="true"
+        />
+      ),
+      content: <AboutContent lines={leaf.content ?? []} />,
+      active: true,
+    };
+  }
+
+  const initialPanes: Pane[] = [
+    {
+      id: 'main',
+      active: true,
+      tabs: bioLeaf ? [buildTab(bioLeaf)] : [],
+    },
+    {
+      id: 'right',
+      active: false,
+      tabs: dbcLeaf ? [buildTab(dbcLeaf)] : [],
+    },
+  ];
+
   return (
-    <EditorProvider
-      initialPanes={[{ id: 'main', tabs: [], active: true }]}
-      routeKey="about-me"
-    >
+    <EditorProvider initialPanes={initialPanes} routeKey="about-me">
       <AboutViewInner
         activeSidebarTab={activeSidebarTab}
         onSidebarTabChange={setActiveSidebarTab}
