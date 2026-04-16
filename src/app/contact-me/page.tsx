@@ -7,6 +7,7 @@ import { FormProvider } from '@/contexts/FormContext';
 export default function Contact() {
   return (
     <FormProvider>
+      <h1 className="sr-only">Contact Thiago Borba</h1>
       <div className="contact-container">
         <div className="contact">
           <div className="esq">
