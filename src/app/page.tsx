@@ -1,8 +1,13 @@
+import type { Metadata } from 'next';
 import { cache } from 'react';
 import './styles.scss';
 import { getSnippets as fetchSnippets } from '@/api';
 import { CodeCarousel } from '@/Components/CodeCarousel';
 import Image from 'next/image';
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+};
 
 export const revalidate = 86400;
 
