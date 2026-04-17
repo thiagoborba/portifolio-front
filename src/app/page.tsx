@@ -14,7 +14,12 @@ export const revalidate = 86400;
 const getSnippets = cache(fetchSnippets);
 
 export default async function Page() {
-  const snippets = await getSnippets();
+  let snippets: Awaited<ReturnType<typeof getSnippets>> = [];
+  try {
+    snippets = await getSnippets();
+  } catch {
+    snippets = [];
+  }
 
   return (
     <div className="hello-container">

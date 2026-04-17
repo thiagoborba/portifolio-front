@@ -1,4 +1,3 @@
-import path from 'path';
 import type { NextConfig } from 'next';
 
 // CSP via headers estáticos não funciona com Next.js — o framework injeta scripts
@@ -25,9 +24,6 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  turbopack: {
-    root: path.join(__dirname, '..'),
-  },
   images: {
     remotePatterns: [
       {
