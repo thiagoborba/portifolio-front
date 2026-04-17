@@ -124,7 +124,7 @@ export const personalTree: TreeNode[] = [
               'const dbcCompany = {',
               "  company: 'DBC Company / Grupo DPSP',",
               "  role: 'Senior Developer',",
-              "  period: '01/2025 – 04/2026',",
+              "  period: '01/2025 – 01/2026',",
               "  project: 'Balcão 2.0 — Drogaria São Paulo',",
               "  stack: ['React.js', 'TypeScript', 'MobX', 'GitLab CI'],",
               '  highlights: [',
