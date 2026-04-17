@@ -60,7 +60,11 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/favicon.svg',
+    icon: [
+      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: { url: '/apple-touch-icon.png', sizes: '180x180' },
   },
   verification: {
     google: 'U9tFb1PFFpNvMR1HgqT0NzRcAqs2psR3v6L0E5MSygw',
